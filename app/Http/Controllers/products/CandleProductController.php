@@ -44,12 +44,24 @@ class CandleProductController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'tenSanPham' => 'required',
+            'soBac' => 'required|numeric',
+            'nhaCungCap' => 'required|numeric',
+            'image' => 'mimes:png,jpg,jpeg|max:5048',
+            'trongLuong' => 'required|numeric|between:10,1000',
+            'giaNhap' => 'required|numeric',
+            'giaBan' => 'required|numeric'
+        ]);
+        $generatedImageName = 'image' . time() . '_' . $request->file('image')->getClientOriginalName();
+        $request->image->move(public_path('images'), $generatedImageName);
         $candle = CandleProduct::create([
             'tenSanPham' => $request->input('tenSanPham'),
             'muiHuong' => $request->input('muiHuong'),
             'mauSac' => $request->input('mauSac'),
             'soBac' => $request->input('soBac'),
             'nhaCungCap' => $request->input('nhaCungCap'),
+            'image_path' => $generatedImageName,
             'trongLuong' => $request->input('trongLuong'),
             'moTa' => $request->input('moTa'),
             'giaNhap' => $request->input('giaNhap'),
@@ -92,12 +104,33 @@ class CandleProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'tenSanPham' => 'required',
+            'soBac' => 'required|numeric',
+            'nhaCungCap' => 'required|numeric',
+            'image' => 'mimes:png,jpg,jpeg|max:5048',
+            'trongLuong' => 'required|numeric|between:10,1000',
+            'giaNhap' => 'required|numeric',
+            'giaBan' => 'required|numeric'
+        ]);
+
+        $new_image;
+        if ($request->image !== NULL) {
+            $generatedImageName = 'image' . time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->image->move(public_path('images'), $generatedImageName);
+            $new_image = $generatedImageName;
+        }
+        else {
+            $new_image = $request->old_image;
+        }
+        
         $candle = CandleProduct::where('id', $id)->update([
             'tenSanPham' => $request->input('tenSanPham'),
             'muiHuong' => $request->input('muiHuong'),
             'mauSac' => $request->input('mauSac'),
             'soBac' => $request->input('soBac'),
             'nhaCungCap' => $request->input('nhaCungCap'),
+            'image_path' => $new_image,
             'trongLuong' => $request->input('trongLuong'),
             'moTa' => $request->input('moTa'),
             'giaNhap' => $request->input('giaNhap'),

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('nhaCungCap')->references('id')->on('manufacturers')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedSmallInteger('trongLuong');
             $table->string('moTa')->nullable();
+            $table->string('image_path')->nullable()->default('');
             $table->unsignedBigInteger('giaNhap');
             $table->unsignedBigInteger('giaBan');
             $table->unsignedInteger('daBan')->default(0);

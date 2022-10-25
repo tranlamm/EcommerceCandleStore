@@ -31,6 +31,7 @@
       <thead>
         <tr>
           <th scope="col">ID</th>
+          <th scope="col">Hình ảnh</th>
           <th scope="col">Tên sản phẩm</th>
           <th scope="col">Nhà sản xuất</th>
           <th scope="col">Giá Nhập</th>
@@ -46,8 +47,13 @@
           @foreach ($candleProducts as $candleProduct)
               <tr>
                   <th scope="row">{{ $candleProduct->id }}</th>
+                  <td>
+                    <div class="product__image-wrapper">
+                      <img class="product__image" src="{{ asset('images/' . $candleProduct->image_path) }}" alt="">
+                    </div>
+                  </td>
                   <td>{{ $candleProduct->tenSanPham }}</td>
-                  <td>{{ $candleProduct->manufacturer()->ten }}</td>
+                  <td>{{ $candleProduct->manufacturer()->first()->ten }}</td>
                   <td>{{ $candleProduct->giaNhap }}</td>
                   <td>{{ $candleProduct->giaBan }}</td>
                   <td>{{ $candleProduct->conLai }}</td>

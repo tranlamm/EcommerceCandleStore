@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container mt-4">
-    <form action="{{ route('candleproduct.store') }}" method="post">
+    <form action="{{ route('candleproduct.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form-floating mb-4">
             <input type="text" class="form-control" id="input1" placeholder="name@example.com" name="tenSanPham">
@@ -26,23 +26,33 @@
             </div>
         </div>
         
-        <label class="form-label me-2">Số Bấc</label>
-        <div class="form-check form-check-inline mb-4">
-            <input class="form-check-input" type="radio" name="soBac" value="1" id="flexRadioDefault1" checked>
-            <label class="form-check-label" for="flexRadioDefault1">
-                Single Wick
-            </label>
+        <div class="row mb-3">
+            <div class="col col-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="input4" placeholder="name@example.com" name="trongLuong">
+                    <label for="input4" class="form-label">Trọng lượng</label>
+                </div> 
             </div>
-            <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="soBac" value="3" id="flexRadioDefault2">
-            <label class="form-check-label" for="flexRadioDefault2">
-                3 Wick
-            </label>
+            <div class="col col-6 d-flex align-items-center">
+                <label class="form-label me-3 mb-0"><strong>Số Bấc</strong></label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="soBac" value="1" id="flexRadioDefault1" checked>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Single Wick
+                    </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="soBac" value="3" id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        3 Wick
+                    </label>
+                </div>
+            </div>
         </div>
 
         <div class="row mb-3">
-            <div class="col col-8">
-                <label for="input3" class="form-label">Nhà cung cấp</label>
+            <div class="col col-6">
+                <label class="form-label"><strong>Nhà cung cấp</strong></label>
                 <select class="form-select" aria-label="Default select example" name="nhaCungCap">
                     @foreach ($manufacturers as $manufacturer)
                         <option value="{{ $manufacturer->id }}">{{ $manufacturer->ten }}</option>
@@ -50,17 +60,15 @@
                 </select>
             </div>
 
-            <div class="col col-4">
-                <div class="form-floating mb-3 mt-2">
-                    <input type="text" class="form-control" id="input4" placeholder="name@example.com" name="trongLuong">
-                    <label for="input4" class="form-label">Trọng lượng</label>
-                </div> 
+            <div class="col col-6">
+                <label class="form-label d-block"><strong>Ảnh</strong></label>
+                <input class="form-control" type="file" name="image">
             </div>
         </div>
         
         <div class="mb-4">
-            <label for="exampleFormControlTextarea1" class="form-label">Mô tả</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="moTa"></textarea>
+            <label for="exampleFormControlTextarea1" class="form-label"><strong>Mô tả</strong></label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="moTa"></textarea>
           </div>
         
         <div class="row">

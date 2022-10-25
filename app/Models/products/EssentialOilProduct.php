@@ -15,6 +15,6 @@ class EssentialOilProduct extends Model
     ];
 
     public function manufacturer() {
-        return $this->belongsTo(Manufacturer::class, 'nhaCungCap', 'id')->first();
+        return $this->belongsTo(Manufacturer::class, 'nhaCungCap', 'id');
     }
 }

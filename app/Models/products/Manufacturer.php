@@ -13,8 +13,16 @@ class Manufacturer extends Model
         'id', 'ten', 'diaChi', 'soDienThoai', 'mauSac', 'created_at', 'updated_at'
     ];
 
-    public function products() {
-        return $this->hasMany(CandleProduct::class, 'nhaCungCap', 'id')->first();
+    public function candleProducts() {
+        return $this->hasMany(CandleProduct::class, 'nhaCungCap', 'id');
     }
+
+    public function essentialOilProducts() {
+        return $this->hasMany(EssentialOilProduct::class, 'nhaCungCap', 'id');
+    }
+
+    // public function Products() {
+    //     return $this->hasMany(CandleProduct::class, 'nhaCungCap', 'id');
+    // }
 }
 

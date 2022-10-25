@@ -115,4 +115,10 @@ class EssentialOilController extends Controller
         $essentialOil->delete();
         return redirect(route('essentialoilproduct.index'));
     }
+
+    public function test()
+    {
+        $essentialOil = EssentialOilProduct::find(1);
+        dd($essentialOil->manufacturer->ten);
+    }
 }

@@ -1,10 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// Admin
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\products\CandleProductController;
 use App\Http\Controllers\products\EssentialOilController;
 use App\Http\Controllers\products\ManufacturerController;
+// Login
+use App\Http\Controllers\login\AdminLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +24,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Login
+Route::resource('/admin/login', AdminLoginController::class);
+
 // Admin
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+
+    // Products management
 Route::resource('/admin/candleproduct', CandleProductController::class);
 Route::resource('/admin/essentialoilproduct', EssentialOilController::class);
 Route::resource('/admin/manufacturer', ManufacturerController::class);
+Route::get('/admin/test', [EssentialOilController::class, 'test']);
