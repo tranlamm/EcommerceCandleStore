@@ -44,12 +44,19 @@
     overflow-y: auto;
     background: linear-gradient(60deg, #29323c 0%, #485563 100%);
 
-    a {
+    .nav_title {
+        color: rgb(177, 150, 150);
+        margin: 16px;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .nav_link {
         border-bottom: 1px solid #455A64;
-        color: rgb(204, 199, 199);
+        color: rgb(214, 210, 210);
         font-size: 14px;
         font-weight: 500;
-        padding: 18px 24px;
+        padding: 16px 32px;
 
         &:hover {
             background: #455A64;

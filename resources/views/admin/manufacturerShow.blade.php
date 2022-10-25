@@ -3,6 +3,7 @@
 @section('content')
 
 <div class="mt-4">
+  <h1 class="text-center mt-4 mb-4"><strong>Thông tin nhà cung cấp</strong></h1>
   <div class="container mb-3">
     <div class="row">
       <div class="col col-8 d-flex">

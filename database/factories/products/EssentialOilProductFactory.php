@@ -5,9 +5,9 @@ namespace Database\Factories\products;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\products\CandleProduct>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\products\EssentialOilProduct>
  */
-class CandleProductFactory extends Factory
+class EssentialOilProductFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,10 +19,8 @@ class CandleProductFactory extends Factory
         return [
             'tenSanPham' => fake()->name(),
             'muiHuong' => fake()->word(),
-            'mauSac' => fake()->word(),
-            'soBac' => fake()->randomElement([1,3]),
             'nhaCungCap' => fake()->numberBetween($min = 1, $max = 50),
-            'trongLuong' => fake()->numberBetween($min = 10, $max = 1000),
+            'theTich' => fake()->numberBetween($min = 1, $max = 100),
             'moTa' => fake()->text($maxNbChars = 100),
             'giaNhap' => fake()->randomNumber($nbDigits = 8, $strict = true),
             'giaBan' => fake()->randomNumber($nbDigits = 8, $strict = true)

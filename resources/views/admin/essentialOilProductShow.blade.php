@@ -3,26 +3,22 @@
 @section('content')
 
 <div class="mt-4">
-  @if (session()->has('message'))
-    <h1>{{ session()->get('message') }}</h1>
-    {{ session()->forget('message'); }}
-  @endif
-  <h1 class="text-center mt-4 mb-4"><strong>Thông tin sản phẩm "Nến"</strong></h1>
+  <h1 class="text-center mt-4 mb-4"><strong>Thông tin sản phẩm "Tinh dầu"</strong></h1>
   <div class="container mb-3">
     <div class="row">
       <div class="col col-8 d-flex">
         <div class="me-2">
-          <form class="d-flex" method="GET" action="{{ route('candleproduct.index') }}">
+          <form class="d-flex" method="GET" action="{{ route('essentialoilproduct.index') }}">
             <input class="form-control me-2" type="text" name="search" placeholder="Search" required/>
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         </div>
 
-        <a role="button" class="btn btn-outline-secondary" href="{{ route('candleproduct.index') }}">Reset</a>
+        <a role="button" class="btn btn-outline-secondary" href="{{ route('essentialoilproduct.index') }}">Reset</a>
       </div>
 
       <div class="col col-4 d-flex justify-content-end">
-        <a role="button" class="btn btn-primary" href="{{ route('candleproduct.create') }}">Thêm Mới</a>
+        <a role="button" class="btn btn-primary" href="{{ route('essentialoilproduct.create') }}">Thêm Mới</a>
       </div>
     </div>
   </div>
@@ -43,21 +39,21 @@
         </tr>
       </thead>
       <tbody>
-          @foreach ($candleProducts as $candleProduct)
+          @foreach ($essentialOils as $essentialOil)
               <tr>
-                  <th scope="row">{{ $candleProduct->id }}</th>
-                  <td>{{ $candleProduct->tenSanPham }}</td>
-                  <td>{{ $candleProduct->manufacturer()->ten }}</td>
-                  <td>{{ $candleProduct->giaNhap }}</td>
-                  <td>{{ $candleProduct->giaBan }}</td>
-                  <td>{{ $candleProduct->conLai }}</td>
-                  <td>{{ $candleProduct->daBan }}</td>
-                  <td>{{ $candleProduct->created_at }}</td>
-                  <td>{{ $candleProduct->updated_at }}</td>
+                  <th scope="row">{{ $essentialOil->id }}</th>
+                  <td>{{ $essentialOil->tenSanPham }}</td>
+                  <td>{{ $essentialOil->manufacturer()->ten }}</td>
+                  <td>{{ $essentialOil->giaNhap }}</td>
+                  <td>{{ $essentialOil->giaBan }}</td>
+                  <td>{{ $essentialOil->conLai }}</td>
+                  <td>{{ $essentialOil->daBan }}</td>
+                  <td>{{ $essentialOil->created_at }}</td>
+                  <td>{{ $essentialOil->updated_at }}</td>
                   <td>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                      <a role="button" href="/admin/candleproduct/{{ $candleProduct->id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
-                      <button class="btn btn-outline-danger btn-sm" data-id="{{ $candleProduct->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                      <a role="button" href="/admin/essentialoilproduct/{{ $essentialOil->id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
+                      <button class="btn btn-outline-danger btn-sm" data-id="{{ $essentialOil->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
                     </div>
                   </td>
               </tr>
@@ -65,7 +61,7 @@
       </tbody>
     </table>
     <div class="d-flex justify-content-center">
-      {{ $candleProducts->links('pagination::bootstrap-4') }}
+      {{ $essentialOils->links('pagination::bootstrap-4') }}
     </div>
 </div>
 <form method="post" id="deleteForm">
@@ -107,7 +103,7 @@
   exampleModal.addEventListener('show.bs.modal', event => {
     const button = event.relatedTarget
     const id = button.getAttribute('data-id')
-    formDelete.action = `/admin/candleproduct/${id}`;
+    formDelete.action = `/admin/essentialoilproduct/${id}`;
 
     btnDelete.onclick = function () {
       formDelete.submit();

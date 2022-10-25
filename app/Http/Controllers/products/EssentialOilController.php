@@ -4,10 +4,10 @@ namespace App\Http\Controllers\products;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\products\CandleProduct;
+use App\Models\products\EssentialOilProduct;
 use App\Models\products\Manufacturer;
 
-class CandleProductController extends Controller
+class EssentialOilController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,11 +18,11 @@ class CandleProductController extends Controller
     {
         $search = $request->input('search');
 
-        $candleProducts = CandleProduct::query()
+        $essentialOils = EssentialOilProduct::query()
             ->where('tenSanPham', 'LIKE', "%{$search}%")
             ->paginate(10);
 
-        return view('admin.candleProductShow', ['candleProducts' => $candleProducts]);
+        return view('admin.essentialOilProductShow', ['essentialOils' => $essentialOils]);
     }
 
     /**
@@ -33,7 +33,7 @@ class CandleProductController extends Controller
     public function create()
     {
         $manufacturers = Manufacturer::all();
-        return view('admin.candleProductCreate', ['manufacturers' => $manufacturers]);
+        return view('admin.essentialOilProductCreate', ['manufacturers' => $manufacturers]);
     }
 
     /**
@@ -44,19 +44,17 @@ class CandleProductController extends Controller
      */
     public function store(Request $request)
     {
-        $candle = CandleProduct::create([
+        $essentialOil = EssentialOilProduct::create([
             'tenSanPham' => $request->input('tenSanPham'),
             'muiHuong' => $request->input('muiHuong'),
-            'mauSac' => $request->input('mauSac'),
-            'soBac' => $request->input('soBac'),
             'nhaCungCap' => $request->input('nhaCungCap'),
-            'trongLuong' => $request->input('trongLuong'),
+            'theTich' => $request->input('theTich'),
             'moTa' => $request->input('moTa'),
             'giaNhap' => $request->input('giaNhap'),
             'giaBan' => $request->input('giaBan'),
         ]);
 
-        return redirect(route('candleproduct.index'));
+        return redirect(route('essentialoilproduct.index'));
     }
 
     /**
@@ -67,7 +65,7 @@ class CandleProductController extends Controller
      */
     public function show($id)
     {
-       
+        //
     }
 
     /**
@@ -78,9 +76,9 @@ class CandleProductController extends Controller
      */
     public function edit($id)
     {
-        $candle = CandleProduct::find($id);
+        $essentialOil = EssentialOilProduct::find($id);
         $manufacturers = Manufacturer::all();
-        return view('admin.candleProductEdit', ['candle' => $candle, 'manufacturers' => $manufacturers]);
+        return view('admin.essentialOilProductEdit', ['essentialOil' => $essentialOil, 'manufacturers' => $manufacturers]);
     }
 
     /**
@@ -92,18 +90,17 @@ class CandleProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $candle = CandleProduct::where('id', $id)->update([
+        $essentialOil = EssentialOilProduct::where('id', $id)->update([
             'tenSanPham' => $request->input('tenSanPham'),
             'muiHuong' => $request->input('muiHuong'),
-            'mauSac' => $request->input('mauSac'),
-            'soBac' => $request->input('soBac'),
             'nhaCungCap' => $request->input('nhaCungCap'),
-            'trongLuong' => $request->input('trongLuong'),
+            'theTich' => $request->input('theTich'),
             'moTa' => $request->input('moTa'),
             'giaNhap' => $request->input('giaNhap'),
             'giaBan' => $request->input('giaBan'),
         ]);
-        return redirect(route('candleproduct.index'));
+
+        return redirect(route('essentialoilproduct.index'));
     }
 
     /**
@@ -114,8 +111,8 @@ class CandleProductController extends Controller
      */
     public function destroy($id)
     {
-        $candle = CandleProduct::find($id);
-        $candle->delete();
-        return redirect(route('candleproduct.index'))->with('message', 'Deleted successfully!');
+        $essentialOil = EssentialOilProduct::find($id);
+        $essentialOil->delete();
+        return redirect(route('essentialoilproduct.index'));
     }
 }

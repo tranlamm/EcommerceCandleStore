@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             ManufacturerSeeder::class,
-            CandleProductSeeder::class
+            CandleProductSeeder::class,
+            EssentialOilProductSeeder::class
         ]);
     }
 }

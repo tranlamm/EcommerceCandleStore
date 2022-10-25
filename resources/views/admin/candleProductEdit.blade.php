@@ -46,7 +46,7 @@
                 <label for="input3" class="form-label">Nhà cung cấp</label>
                 <select class="form-select" aria-label="Default select example" name="nhaCungCap">
                     @foreach ($manufacturers as $manufacturer)
-                        <option value="{{ $manufacturer->id }} {{ ($candle->nhaSanXuat === $manufacturer->id) ? "selected" : "" }}">{{ $manufacturer->ten }}</option>
+                        <option value="{{ $manufacturer->id }}" {{ ($candle->nhaCungCap === $manufacturer->id) ? 'selected' : "" }}>{{ $manufacturer->ten }}</option>
                     @endforeach
                 </select>
             </div>

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\products\CandleProductController;
+use App\Http\Controllers\products\EssentialOilController;
 use App\Http\Controllers\products\ManufacturerController;
 
 /*
@@ -23,4 +24,5 @@ Route::get('/', function () {
 // Admin
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::resource('/admin/candleproduct', CandleProductController::class);
+Route::resource('/admin/essentialoilproduct', EssentialOilController::class);
 Route::resource('/admin/manufacturer', ManufacturerController::class);
