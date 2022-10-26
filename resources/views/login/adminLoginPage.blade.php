@@ -12,7 +12,8 @@
                 </div>
 
                 <div class="col col-12 col-md-6 offset-md-2">
-                    <form action="" class="login-form">
+                    <form action="{{ route('login_admin') }}" class="login-form" method="POST">
+                        @csrf
                         <span class="login-form-title">Administrator Login</span>
 
                         <div class="form__input-wrapper">
@@ -28,6 +29,10 @@
                                 <i class="fa fa-lock" aria-hidden="true"></i>
                             </span>
                         </div>
+
+                        @if (session()->has('message'))
+                            <p class="text-danger text-center"><strong>{{ session()->get('message') }}</strong></p>
+                        @endif
 
                         <button class="form__btn" type="submit">Login</button>
                     </form>

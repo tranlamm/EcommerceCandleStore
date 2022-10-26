@@ -8,6 +8,7 @@ use App\Http\Controllers\products\EssentialOilController;
 use App\Http\Controllers\products\ManufacturerController;
 // Login
 use App\Http\Controllers\login\AdminLoginController;
+use App\Http\Controllers\login\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,7 @@ Route::get('/', function () {
 
 // Login
 Route::resource('/admin/login', AdminLoginController::class);
+Route::post('/login_admin',[ AuthController::class, 'loginAdmin'])->name('login_admin');
 
 // Admin
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
