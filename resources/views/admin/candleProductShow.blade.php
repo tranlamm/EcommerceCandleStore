@@ -2,77 +2,96 @@
 
 @section('content')
 
-<div class="mt-4">
-  @if (session()->has('message'))
-    <h1>{{ session()->get('message') }}</h1>
-    {{ session()->forget('message'); }}
-  @endif
-  <h1 class="text-center mt-4 mb-4"><strong>Thông tin sản phẩm "Nến"</strong></h1>
-  <div class="container mb-3">
+<div class="page-wrapper">
+  <span class="page-title">Danh mục sản phẩm nến</span>
+  
+  <div class="page__content-wrapper">
     <div class="row">
       <div class="col col-8 d-flex">
         <div class="me-2">
-          <form class="d-flex" method="GET" action="{{ route('candleproduct.index') }}">
-            <input class="form-control me-2" type="text" name="search" placeholder="Search" required/>
-            <button class="btn btn-outline-success" type="submit">Search</button>
+          <form class="d-flex" id="form__search" method="GET" action="{{ route('candleproduct.index') }}">
+            <input class="form-control form-search-input" type="text" name="search" placeholder="Search"/>
+
+            <input type="hidden" name="order-type" id="order-type">
+            <input type="hidden" name="order-name" id="order-name">
+            <select id="form_order" class="form-select form-search-select">
+              <option value="">Sắp xếp</option>
+              <option value="giaNhap asc">Giá nhập tăng dần</option>
+              <option value="giaNhap desc">Giá nhập giảm dần</option>
+              <option value="giaBan asc">Giá bán tăng dần</option>
+              <option value="giaBan desc">Giá bán giảm dần</option>
+              <option value="conLai asc">Còn lại nhiều nhất</option>
+              <option value="conLai desc">Còn lại ít nhất</option>
+              <option value="daBan asc">Đã bán nhiều nhất</option>
+              <option value="daBan desc">Đã bán ít nhất</option>
+              <option value="updated_at desc">Mới nhất</option>
+              <option value="updated_at asc">Cũ nhất</option>
+            </select>
           </form>
         </div>
+
+        <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
 
         <a role="button" class="btn btn-outline-secondary" href="{{ route('candleproduct.index') }}">Reset</a>
       </div>
 
       <div class="col col-4 d-flex justify-content-end">
-        <a role="button" class="btn btn-primary" href="{{ route('candleproduct.create') }}">Thêm Mới</a>
+        <a role="button" class="btn btn-outline-primary" href="{{ route('candleproduct.create') }}">Thêm Mới<i class="fa-solid fa-plus ms-2"></i></a>
       </div>
     </div>
   </div>
 
-  <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Hình ảnh</th>
-          <th scope="col">Tên sản phẩm</th>
-          <th scope="col">Nhà sản xuất</th>
-          <th scope="col">Giá Nhập</th>
-          <th scope="col">Giá Bán</th>
-          <th scope="col">Còn lại</th>
-          <th scope="col">Đã bán</th>
-          <th scope="col">Created At</th>
-          <th scope="col">Updated At</th>
-          <th scope="col" colspan="2">Thao tác</th>
-        </tr>
-      </thead>
-      <tbody>
-          @foreach ($candleProducts as $candleProduct)
-              <tr>
-                  <th scope="row">{{ $candleProduct->id }}</th>
-                  <td>
-                    <div class="product__image-wrapper">
-                      <img class="product__image" src="{{ asset('images/' . $candleProduct->image_path) }}" alt="">
-                    </div>
-                  </td>
-                  <td>{{ $candleProduct->tenSanPham }}</td>
-                  <td>{{ $candleProduct->manufacturer()->first()->ten }}</td>
-                  <td>{{ $candleProduct->giaNhap }}</td>
-                  <td>{{ $candleProduct->giaBan }}</td>
-                  <td>{{ $candleProduct->conLai }}</td>
-                  <td>{{ $candleProduct->daBan }}</td>
-                  <td>{{ $candleProduct->created_at }}</td>
-                  <td>{{ $candleProduct->updated_at }}</td>
-                  <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                      <a role="button" href="/admin/candleproduct/{{ $candleProduct->id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
-                      <button class="btn btn-outline-danger btn-sm" data-id="{{ $candleProduct->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
-                    </div>
-                  </td>
-              </tr>
-          @endforeach
-      </tbody>
-    </table>
-    <div class="d-flex justify-content-center">
-      {{ $candleProducts->links('pagination::bootstrap-4') }}
-    </div>
+  <div class="page__content-wrapper">
+    @if (Session::has('message'))
+      <h5 class="text-success mb-2 ms-2"><strong>{{ Session::get('message') }}</strong></h5>
+    @endif
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Hình ảnh</th>
+            <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Nhà sản xuất</th>
+            <th scope="col">Giá Nhập</th>
+            <th scope="col">Giá Bán</th>
+            <th scope="col">Còn lại</th>
+            <th scope="col">Đã bán</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Updated At</th>
+            <th scope="col" colspan="2">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+            @foreach ($candleProducts as $candleProduct)
+                <tr>
+                    <th scope="row">{{ $candleProduct->id }}</th>
+                    <td>
+                      <div class="product__image-wrapper">
+                        <img class="product__image" src="{{ asset('images/' . $candleProduct->image_path) }}" alt="Ảnh sản phẩm">
+                      </div>
+                    </td>
+                    <td>{{ $candleProduct->tenSanPham }}</td>
+                    <td>{{ $candleProduct->manufacturer()->first()->ten }}</td>
+                    <td>@currency_format($candleProduct->giaNhap)</td>
+                    <td>@currency_format($candleProduct->giaBan)</td>
+                    <td>{{ $candleProduct->conLai }}</td>
+                    <td>{{ $candleProduct->daBan }}</td>
+                    <td>@date_format($candleProduct->created_at)</td>
+                    <td>@date_format($candleProduct->updated_at)</td>
+                    <td>
+                      <div class="btn-group" role="group" aria-label="Basic example">
+                        <a role="button" href="/admin/candleproduct/{{ $candleProduct->id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
+                        <button class="btn btn-outline-danger btn-sm" data-id="{{ $candleProduct->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                      </div>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-center">
+        {{ $candleProducts->links('pagination::bootstrap-4') }}
+      </div>
+  </div>
 </div>
 <form method="post" id="deleteForm">
   @csrf
@@ -119,5 +138,21 @@
       formDelete.submit();
     }
   })
+
+  const formSearch = document.getElementById('form__search')
+  const formSearchBtn = document.getElementById('form__search-btn')
+  formSearchBtn.onclick = function() {
+    const formOrder = document.getElementById('form_order');
+    if (formOrder.value) {
+      const orderNameInput = document.getElementById('order-name');
+      const orderTypeInput = document.getElementById('order-type');
+      const order = formOrder.value.split(' '); 
+      const orderName = order[0];
+      const orderType = order[1];
+      orderNameInput.value = orderName;
+      orderTypeInput.value = orderType;
+    }
+    formSearch.submit();
+  }
 </script>
 @endsection

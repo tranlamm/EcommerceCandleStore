@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="col col-12 col-md-6 offset-md-2">
-                    <form action="{{ route('login_admin') }}" class="login-form" method="POST">
+                    <form action="{{ route('login.post') }}" class="login-form" method="POST">
                         @csrf
                         <span class="login-form-title">Administrator Login</span>
 
@@ -28,6 +28,18 @@
                             <span class="form__input-icon">
                                 <i class="fa fa-lock" aria-hidden="true"></i>
                             </span>
+                        </div>
+
+                        <div class="form__helper">
+                            <div>
+                                <input class="form__input_remember-me" id="ckb1" type="checkbox" name="remember-me">
+                                <label class="form__label_remember-me" for="ckb1">
+                                    Remember me
+                                </label>
+                            </div>
+                            <a class="form__forget-password" href="#">
+                                Forgot Password?
+                            </a>
                         </div>
 
                         @if (session()->has('message'))

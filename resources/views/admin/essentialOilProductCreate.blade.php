@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container mt-4">
-    <form action="{{ route('essentialoilproduct.store') }}" method="post">
+    <form action="{{ route('essentialoilproduct.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form-floating mb-4">
             <input type="text" class="form-control" id="input1" placeholder="name@example.com" name="tenSanPham">
@@ -30,10 +30,17 @@
             </div>
 
             <div class="col col-4">
-                <div class="form-floating mb-3 mt-2">
+                <div class="form-floating mt-2">
                     <input type="text" class="form-control" id="input4" placeholder="name@example.com" name="theTich">
                     <label for="input4" class="form-label">Thể tích</label>
                 </div> 
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col col-12">
+                <label class="form-label d-block">Ảnh sản phẩm</label>
+                <input class="form-control" type="file" name="image">
             </div>
         </div>
         

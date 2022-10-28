@@ -22,10 +22,11 @@ class CandleProductFactory extends Factory
             'mauSac' => fake()->word(),
             'soBac' => fake()->randomElement([1,3]),
             'nhaCungCap' => fake()->numberBetween($min = 1, $max = 50),
-            'trongLuong' => fake()->numberBetween($min = 10, $max = 1000),
+            'trongLuong' => fake()->numberBetween($min = 1, $max = 100) * 10,
             'moTa' => fake()->text($maxNbChars = 100),
-            'giaNhap' => fake()->randomNumber($nbDigits = 8, $strict = true),
-            'giaBan' => fake()->randomNumber($nbDigits = 8, $strict = true)
+            'giaNhap' => fake()->numberBetween($min = 1, $max = 10000) * 1000,
+            'giaBan' => fake()->numberBetween($min = 1, $max = 10000) * 1000,
+            'image_path' => "productDefault.png"
         ];
     }
 }

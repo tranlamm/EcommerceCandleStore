@@ -2,61 +2,75 @@
 
 @section('content')
 
-<div class="mt-4">
-  <h1 class="text-center mt-4 mb-4"><strong>Thông tin nhà cung cấp</strong></h1>
-  <div class="container mb-3">
+<div class="page-wrapper">
+  <span class="page-title">Danh sách nhà cung cấp</span>
+  
+  <div class="page__content-wrapper">
     <div class="row">
       <div class="col col-8 d-flex">
         <div class="me-2">
-          <form class="d-flex" method="GET" action="{{ route('manufacturer.index') }}">
-            <input class="form-control me-2" type="text" name="search" placeholder="Search" required/>
-            <button class="btn btn-outline-success" type="submit">Search</button>
+          <form class="d-flex" id="form__search" method="GET" action="{{ route('manufacturer.index') }}">
+            <input class="form-control form-search-input" type="text" name="search" placeholder="Search" required/>
+
+            <input type="hidden" name="order-type" id="order-type">
+            <input type="hidden" name="order-name" id="order-name">
+            <select id="form_order" class="form-select form-search-select">
+              <option value="">Sắp xếp</option>
+              <option value="updated_at desc">Mới nhất</option>
+              <option value="updated_at asc">Cũ nhất</option>
+            </select>
           </form>
         </div>
 
+        <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
         <a role="button" class="btn btn-outline-secondary" href="{{ route('manufacturer.index') }}">Reset</a>
       </div>
 
       <div class="col col-4 d-flex justify-content-end">
-        <a role="button" class="btn btn-primary" href="{{ route('candleproduct.create') }}">Thêm Mới</a>
+        <a role="button" class="btn btn-primary" href="{{ route('manufacturer.create') }}">Thêm Mới</a>
       </div>
     </div>
   </div>
 
-  <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Nhà cung cấp</th>
-          <th scope="col">Địa chỉ</th>
-          <th scope="col">Số điện thoại</th>
-          <th scope="col">Created At</th>
-          <th scope="col">Updated At</th>
-          <th scope="col" colspan="2">Thao tác</th>
-        </tr>
-      </thead>
-      <tbody>
-          @foreach ($manufacturers as $manufacturer)
-              <tr>
-                  <th scope="row">{{ $manufacturer->id }}</th>
-                  <td>{{ $manufacturer->ten }}</td>
-                  <td>{{ $manufacturer->diaChi }}</td>
-                  <td>{{ $manufacturer->soDienThoai }}</td>
-                  <td>{{ $manufacturer->created_at }}</td>
-                  <td>{{ $manufacturer->updated_at }}</td>
-                  <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                      <a role="button" href="/admin/manufacturer/{{ $manufacturer->id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
-                      <button class="btn btn-outline-danger btn-sm" data-id="{{ $manufacturer->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
-                    </div>
-                  </td>
-              </tr>
-          @endforeach
-      </tbody>
-    </table>
-    <div class="d-flex justify-content-center">
-      {{ $manufacturers->links('pagination::bootstrap-4') }}
-    </div>
+  <div class="page__content-wrapper">
+    @if (Session::has('message'))
+      <h5 class="text-success mb-2 ms-2"><strong>{{ Session::get('message') }}</strong></h5>
+    @endif
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nhà cung cấp</th>
+            <th scope="col">Địa chỉ</th>
+            <th scope="col">Số điện thoại</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Updated At</th>
+            <th scope="col" colspan="2">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+            @foreach ($manufacturers as $manufacturer)
+                <tr>
+                    <th scope="row">{{ $manufacturer->id }}</th>
+                    <td>{{ $manufacturer->ten }}</td>
+                    <td>{{ $manufacturer->diaChi }}</td>
+                    <td>{{ $manufacturer->soDienThoai }}</td>
+                    <td>@date_format($manufacturer->created_at)</td>
+                    <td>@date_format($manufacturer->updated_at)</td>
+                    <td>
+                      <div class="btn-group" role="group" aria-label="Basic example">
+                        <a role="button" href="/admin/manufacturer/{{ $manufacturer->id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
+                        <button class="btn btn-outline-danger btn-sm" data-id="{{ $manufacturer->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                      </div>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-center">
+        {{ $manufacturers->links('pagination::bootstrap-4') }}
+      </div>
+  </div>
 </div>
 <form method="post" id="deleteForm">
   @csrf
@@ -103,5 +117,21 @@
       formDelete.submit();
     }
   })
+
+  const formSearch = document.getElementById('form__search')
+  const formSearchBtn = document.getElementById('form__search-btn')
+  formSearchBtn.onclick = function() {
+    const formOrder = document.getElementById('form_order');
+    if (formOrder.value) {
+      const orderNameInput = document.getElementById('order-name');
+      const orderTypeInput = document.getElementById('order-type');
+      const order = formOrder.value.split(' '); 
+      const orderName = order[0];
+      const orderType = order[1];
+      orderNameInput.value = orderName;
+      orderTypeInput.value = orderType;
+    }
+    formSearch.submit();
+  }
 </script>
 @endsection 

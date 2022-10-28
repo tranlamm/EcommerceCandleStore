@@ -26,14 +26,18 @@ Route::get('/', function () {
 });
 
 // Login
-Route::resource('/admin/login', AdminLoginController::class);
-Route::post('/login_admin',[ AuthController::class, 'loginAdmin'])->name('login_admin');
+Route::get('/admin/login', [ AuthController::class, 'getLoginAdmin'])->name('login.index');
+Route::post('/admin/login/post', [ AuthController::class, 'postLoginAdmin'])->name('login.post');
+Route::post('/admin/logout/post', [ AuthController::class, 'postLogoutAdmin'])->name('logout.post');
 
 // Admin
-Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-
+Route::group(['middleware' => 'login_admin'], function() {
+    // Admin Dashboard
+    Route::get('/admin', [AuthController::class, 'getAdminPage'])->name('admin.index');
+  
     // Products management
-Route::resource('/admin/candleproduct', CandleProductController::class);
-Route::resource('/admin/essentialoilproduct', EssentialOilController::class);
-Route::resource('/admin/manufacturer', ManufacturerController::class);
-Route::get('/admin/test', [EssentialOilController::class, 'test']);
+    Route::resource('/admin/candleproduct', CandleProductController::class);
+    Route::resource('/admin/essentialoilproduct', EssentialOilController::class);
+    Route::resource('/admin/manufacturer', ManufacturerController::class);
+    Route::get('/admin/test', [EssentialOilController::class, 'test']);
+});

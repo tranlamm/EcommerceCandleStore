@@ -20,10 +20,11 @@ class EssentialOilProductFactory extends Factory
             'tenSanPham' => fake()->name(),
             'muiHuong' => fake()->word(),
             'nhaCungCap' => fake()->numberBetween($min = 1, $max = 50),
-            'theTich' => fake()->numberBetween($min = 1, $max = 100),
+            'theTich' => fake()->numberBetween($min = 1, $max = 100) * 10,
             'moTa' => fake()->text($maxNbChars = 100),
-            'giaNhap' => fake()->randomNumber($nbDigits = 8, $strict = true),
-            'giaBan' => fake()->randomNumber($nbDigits = 8, $strict = true)
+            'giaNhap' => fake()->numberBetween($min = 1, $max = 10000) * 1000,
+            'giaBan' => fake()->numberBetween($min = 1, $max = 10000) * 1000,
+            'image_path' => "productDefault.png"
         ];
     }
 }

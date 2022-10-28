@@ -1,52 +1,88 @@
+// Scroll Bar
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+body {
+    overflow-x: hidden;
+}
+
 // Nav Bar
+.content-wrapper {
+    height: 100vh;
+    margin-top: 60px;
+}
+
 ._navbar {
-    height: 60px;
-    background: radial-gradient(circle at 0.8% 1.8%, rgb(255, 104, 107) 0%, rgb(255, 187, 103) 90.1%);
+    $navbar_height: 60px;
+    height: $navbar_height;
+    background: linear-gradient(-135deg, #c850c0, #4158d0);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 
     ._navbar-wrapper {
         height: 100%;
 
         ._navbar-logo {
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+            position: relative;
 
-        ._navbar-text {
-            color: white;
-            font-size: 24px;
-            font-weight: 600;
-        }
+            ._navbar-brand {
+                line-height: $navbar_height;
+                text-align: center;
+                width: 100%;
+                color: #fff;
+                position: absolute;
+                font-size: 24px;
+                margin: 0;
 
-        ._navbar-logout {
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            margin-right: 16px;
+                &:nth-child(1) {
+                    color: transparent;
+                    -webkit-text-stroke: 2px orange;
+                }
+
+                &:nth-child(2) {
+                    color: orange;
+                    animation: animate 4s ease-in-out infinite;
+                }
+
+                @keyframes animate {
+                    0%,
+                    100% {
+                        clip-path: polygon(0% 45%, 16% 44%, 33% 50%, 54% 60%, 70% 61%, 84% 59%, 100% 52%, 100% 100%, 0% 100%);
+                    }
+
+                    50% {
+                        clip-path: polygon(0% 60%, 15% 65%, 34% 66%, 51% 62%, 67% 50%, 84% 45%, 100% 46%, 100% 100%, 0% 100%);
+                    }
+                }
+            }
         }
     }
 } 
 
-.content-wrapper {
-    height: 100vh;
-    margin-top: 60px;
-}
-
 // Side Bar
 #sidebar {
+    position: fixed;
+    min-width: 16.77777%;
     z-index: 10;
     height: 100%;
-    overflow-y: auto;
+    overflow-y: overlay;
     background: linear-gradient(60deg, #29323c 0%, #485563 100%);
 
     .nav_title {
         color: rgb(177, 150, 150);
-        margin: 16px;
+        margin: 16px 14px;
         font-size: 14px;
         font-weight: 700;
     }
@@ -56,7 +92,7 @@
         color: rgb(214, 210, 210);
         font-size: 14px;
         font-weight: 500;
-        padding: 16px 32px;
+        padding: 18px 30px;
 
         &:hover {
             background: #455A64;
@@ -65,9 +101,42 @@
         }
 
         i {
-            margin-right: 16px;
+            margin-right: 12px;
+            font-size: 14px;
         }
     }
+}
+
+// Page
+.page-wrapper {
+    background-color: rgb(245 245 245);
+    padding: 24px;
+    
+    .page__content-wrapper{
+        background-color: white;
+        padding: 32px;
+        border-radius: 18px;
+        margin-bottom: 24px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+
+    .page-title {
+        display: block;
+        font-size: 28px;
+        font-weight: 600;
+        text-align: center;
+        color: rgb(123, 100, 100);
+        margin-bottom: 32px;
+    }
+}
+
+.form-search-input {
+    margin-right: 12px;
+    width: 400px;
+}
+
+.form-search-select {
+    width: 160px;
 }
 
 .product__image-wrapper {

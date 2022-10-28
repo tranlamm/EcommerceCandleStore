@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('candle_products', function (Blueprint $table) {
             $table->id();
             $table->string('tenSanPham')->unique();
-            $table->string('muiHuong');
-            $table->string('mauSac');
+            $table->string('muiHuong')->nullable();
+            $table->string('mauSac')->nullable();
             $table->unsignedTinyInteger('soBac');
             $table->unsignedBigInteger('nhaCungCap');
             $table->foreign('nhaCungCap')->references('id')->on('manufacturers')->onUpdate('cascade')->onDelete('cascade');

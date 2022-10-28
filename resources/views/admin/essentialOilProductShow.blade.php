@@ -3,7 +3,11 @@
 @section('content')
 
 <div class="mt-4">
-  <h1 class="text-center mt-4 mb-4"><strong>Thông tin sản phẩm "Tinh dầu"</strong></h1>
+  <h2 class="text-center mt-4 mb-4"><strong>Danh mục sản phẩm tinh dầu</strong></h2>
+  @if (session()->has('message'))
+  <h1>{{ session()->get('message') }}</h1>
+  {{ session()->forget('message'); }}
+@endif
   <div class="container mb-3">
     <div class="row">
       <div class="col col-8 d-flex">
@@ -27,6 +31,7 @@
       <thead>
         <tr>
           <th scope="col">ID</th>
+          <th scope="col">Hình ảnh</th>
           <th scope="col">Tên sản phẩm</th>
           <th scope="col">Nhà sản xuất</th>
           <th scope="col">Giá Nhập</th>
@@ -42,8 +47,13 @@
           @foreach ($essentialOils as $essentialOil)
               <tr>
                   <th scope="row">{{ $essentialOil->id }}</th>
+                  <td>
+                    <div class="product__image-wrapper">
+                      <img class="product__image" src="{{ asset('images/' . $essentialOil->image_path) }}" alt="Ảnh sản phẩm">
+                    </div>
+                  </td>
                   <td>{{ $essentialOil->tenSanPham }}</td>
-                  <td>{{ $essentialOil->manufacturer()->ten }}</td>
+                  <td>{{ $essentialOil->manufacturer()->first()->ten }}</td>
                   <td>{{ $essentialOil->giaNhap }}</td>
                   <td>{{ $essentialOil->giaBan }}</td>
                   <td>{{ $essentialOil->conLai }}</td>

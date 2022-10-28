@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('essential_oil_products', function (Blueprint $table) {
             $table->id();
             $table->string('tenSanPham')->unique();
-            $table->string('muiHuong');
+            $table->string('muiHuong')->nullable();
             $table->unsignedBigInteger('nhaCungCap');
             $table->foreign('nhaCungCap')->references('id')->on('manufacturers')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedSmallInteger('theTich');
+            $table->string('image_path')->nullable()->default('');
             $table->string('moTa')->nullable();
             $table->unsignedBigInteger('giaNhap');
             $table->unsignedBigInteger('giaBan');

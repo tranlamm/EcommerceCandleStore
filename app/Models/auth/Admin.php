@@ -14,10 +14,16 @@ class Admin extends Authenticatable
     protected $fillable = [
         'id', 'username', 'password', 'role'
     ];
+
     public function getRole() {
         return $this->belongsTo(Roles::class, 'role', 'id');
     }
+
     public function getAuthPassword() {
         return $this->password;
+    }
+
+    public function hasRole($role) {
+        return $this->getRole()->first()->role === $role;
     }
 }

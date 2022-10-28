@@ -10,7 +10,7 @@ class EssentialOilProduct extends Model
     use HasFactory;
     protected $table = 'essential_oil_products';
     protected $fillable = [
-        'id', 'tenSanPham', 'muiHuong', 'theTich', 'nhaCungCap', 'moTa', 
+        'id', 'tenSanPham', 'muiHuong', 'theTich', 'nhaCungCap', 'moTa', 'image_path',
         'giaNhap', 'giaBan', 'conLai', 'daBan', 'created_at', 'updated_at'
     ];
 

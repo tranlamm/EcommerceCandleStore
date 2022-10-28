@@ -17,9 +17,17 @@ class ManufacturerController extends Controller
     {
         $search = $request->input('search');
 
-        $manufacturers = Manufacturer::query()
-            ->where('ten', 'LIKE', "%{$search}%")
-            ->paginate(10);
+        if ($request->input('order-name')) {
+            $manufacturers = Manufacturer::query()
+                ->where('ten', 'LIKE', "%{$search}%")
+                ->orderBy($request->input('order-name'), ($request->input('order-type') ? $request->input('order-type') : 'asc'))
+                ->paginate(10);
+        }
+        else {
+            $manufacturers = Manufacturer::query()
+                ->where('ten', 'LIKE', "%{$search}%")
+                ->paginate(10);
+        }
 
         return view('admin.manufacturerShow', ['manufacturers' => $manufacturers]);
     }
@@ -42,13 +50,24 @@ class ManufacturerController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'ten' => 'bail|required',
+            'diaChi' => 'bail|required',
+            'soDienThoai' => array(
+                'bail',
+                'required',
+                'regex:/(84|0[3|5|7|8|9])+([0-9]{8})/u',
+            ),
+            
+        ]);
+
         $manufacturer = Manufacturer::create([
             'ten' => $request->input('ten'),
             'diaChi' => $request->input('diaChi'),
             'soDienThoai' => $request->input('soDienThoai')
         ]);
 
-        return redirect(route('manufacturer.index'));
+        return redirect(route('manufacturer.index'))->with('message', 'Created successfully!');
     }
 
     /**
@@ -83,12 +102,23 @@ class ManufacturerController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'ten' => 'bail|required',
+            'diaChi' => 'bail|required',
+            'soDienThoai' => array(
+                'bail',
+                'required',
+                'regex:/(84|0[3|5|7|8|9])+([0-9]{8})/u',
+            ),
+            
+        ]);
+        
         $manufacturer = Manufacturer::where('id', $id)->update([
             'ten' => $request->input('ten'),
             'diaChi' => $request->input('diaChi'),
             'soDienThoai' => $request->input('soDienThoai')
         ]);
-        return redirect(route('manufacturer.index'));
+        return redirect(route('manufacturer.index'))->with('message', 'Updated successfully!');
     }
 
     /**
@@ -101,6 +131,6 @@ class ManufacturerController extends Controller
     {
         $manufacturer = Manufacturer::find($id);
         $manufacturer->delete();
-        return redirect(route('manufacturer.index'));
+        return redirect(route('manufacturer.index'))->with('message', 'Deleted successfully!');
     }
 }

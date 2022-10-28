@@ -103,10 +103,39 @@
         padding: 0 25px;
         outline: none;
         border: none;
-        margin-top: 32px;
 
         &:hover {
             background: #333;
+        }
+    }
+
+    .form__helper {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 24px;
+
+        .form__input_remember-me {
+            cursor: pointer;
+        }
+    
+        .form__label_remember-me {
+            font-size: 14px;
+            color: #333;
+            margin-left: 4px;
+            cursor: pointer;
+            
+            &:hover {
+                opacity: 0.6;
+            }
+        }
+
+        .form__forget-password {
+            text-decoration: none;
+            color: #333;
+
+            &:hover {
+                opacity: 0.6;
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ class ManufacturerFactory extends Factory
         return [
             'ten' => fake()->name(),
             'diaChi' => fake()->address(),
-            'soDienThoai' => fake()->numerify('##########')
+            'soDienThoai' => fake()->regexify("09\\d{8}")
         ];
     }
 }

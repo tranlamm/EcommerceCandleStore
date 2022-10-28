@@ -18,9 +18,17 @@ class CandleProductController extends Controller
     {
         $search = $request->input('search');
 
-        $candleProducts = CandleProduct::query()
+        if ($request->input('order-name')) {
+            $candleProducts = CandleProduct::query()
+                ->where('tenSanPham', 'LIKE', "%{$search}%")
+                ->orderBy($request->input('order-name'), ($request->input('order-type') ? $request->input('order-type') : 'asc'))
+                ->paginate(10);
+        }
+        else {
+            $candleProducts = CandleProduct::query()
             ->where('tenSanPham', 'LIKE', "%{$search}%")
             ->paginate(10);
+        }
 
         return view('admin.candleProductShow', ['candleProducts' => $candleProducts]);
     }
@@ -45,16 +53,38 @@ class CandleProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'tenSanPham' => 'required',
-            'soBac' => 'required|numeric',
-            'nhaCungCap' => 'required|numeric',
-            'image' => 'mimes:png,jpg,jpeg|max:5048',
-            'trongLuong' => 'required|numeric|between:10,1000',
-            'giaNhap' => 'required|numeric',
-            'giaBan' => 'required|numeric'
+            'tenSanPham' => 'bail|required',
+            'muiHuong' => 'bail|required',
+            'mauSac' => 'bail|required',
+            'soBac' => array(
+                'bail',
+                'required',
+                'regex:/1|3/u',
+            ),
+            'nhaCungCap' => 'bail|required|numeric',
+            'image' => 'bail|mimes:png,jpg,jpeg|max:5048',
+            'trongLuong' => 'bail|required|numeric|between:1,10000',
+            'giaNhap' => array(
+                'bail',
+                'required',
+                'regex:/^\d*(0){3}$/u',
+            ),
+            'giaBan' => array(
+                'bail',
+                'required',
+                'regex:/^\d*(0){3}$/u',
+            ),
         ]);
-        $generatedImageName = 'image' . time() . '_' . $request->file('image')->getClientOriginalName();
-        $request->image->move(public_path('images'), $generatedImageName);
+
+        $generatedImageName;
+        if ($request->image !== NULL) {
+            $generatedImageName = 'image' . time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->image->move(public_path('images'), $generatedImageName);
+        }
+        else {
+            $generatedImageName = "";
+        }
+
         $candle = CandleProduct::create([
             'tenSanPham' => $request->input('tenSanPham'),
             'muiHuong' => $request->input('muiHuong'),
@@ -68,7 +98,7 @@ class CandleProductController extends Controller
             'giaBan' => $request->input('giaBan'),
         ]);
 
-        return redirect(route('candleproduct.index'));
+        return redirect(route('candleproduct.index'))->with('message', 'Created successfully!');
     }
 
     /**
@@ -105,13 +135,27 @@ class CandleProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'tenSanPham' => 'required',
-            'soBac' => 'required|numeric',
-            'nhaCungCap' => 'required|numeric',
-            'image' => 'mimes:png,jpg,jpeg|max:5048',
-            'trongLuong' => 'required|numeric|between:10,1000',
-            'giaNhap' => 'required|numeric',
-            'giaBan' => 'required|numeric'
+            'tenSanPham' => 'bail|required',
+            'muiHuong' => 'bail|required',
+            'mauSac' => 'bail|required',
+            'soBac' => array(
+                'bail',
+                'required',
+                'regex:/1|3/u',
+            ),
+            'nhaCungCap' => 'bail|required|numeric',
+            'image' => 'bail|mimes:png,jpg,jpeg|max:5048',
+            'trongLuong' => 'bail|required|numeric|between:1,10000',
+            'giaNhap' => array(
+                'bail',
+                'required',
+                'regex:/^\d*(0){3}$/u',
+            ),
+            'giaBan' => array(
+                'bail',
+                'required',
+                'regex:/^\d*(0){3}$/u',
+            ),
         ]);
 
         $new_image;
@@ -136,7 +180,7 @@ class CandleProductController extends Controller
             'giaNhap' => $request->input('giaNhap'),
             'giaBan' => $request->input('giaBan'),
         ]);
-        return redirect(route('candleproduct.index'));
+        return redirect(route('candleproduct.index'))->with('message', 'Updated successfully!');
     }
 
     /**

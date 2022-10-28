@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container mt-4">
-    <form action="/admin/essentialoilproduct/{{ $essentialOil->id }}" method="post">
+    <form action="/admin/essentialoilproduct/{{ $essentialOil->id }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
         <div class="form-floating mb-4">
@@ -31,10 +31,18 @@
             </div>
 
             <div class="col col-4">
-                <div class="form-floating mb-3 mt-2">
+                <div class="form-floating mt-2">
                     <input type="text" class="form-control" id="input4" placeholder="name@example.com" name="theTich" value="{{ $essentialOil->theTich }}">
                     <label for="input4" class="form-label">Thể tích</label>
                 </div> 
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col col-12">
+                <label class="form-label d-block">Ảnh sản phẩm</label>
+                <input class="form-control" type="file" name="image">
+                <input type="hidden" name="old_image" value="{{ $essentialOil->image_path }}">
             </div>
         </div>
         
@@ -44,16 +52,14 @@
           </div>
         
         <div class="row">
-            <div class="col col-8">
+            <div class="col col-6">
                 <div class="form-floating mb-4">
                     <input type="text" class="form-control" id="input6" placeholder="name@example.com" name="giaNhap" value="{{ $essentialOil->giaNhap }}"> 
                     <label for="input6" class="form-label">Giá nhập</label>
                 </div> 
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col col-8">
+            <div class="col col-6">
                 <div class="form-floating mb-4">
                     <input type="text" class="form-control" id="input7" placeholder="name@example.com" name="giaBan" value="{{ $essentialOil->giaBan }}">
                     <label for="input7" class="form-label">Giá bán</label>
