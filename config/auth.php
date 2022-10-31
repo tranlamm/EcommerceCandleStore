@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'customusers',   // custom
+        'passwords' => 'admin',   // admin
     ],
 
     /*
@@ -36,10 +36,17 @@ return [
     */
 
     'guards' => [
-        'web' => [
+        // admin
+        'admin' => [
             'driver' => 'session',
-            'provider' => 'customusers', // custom
+            'provider' => 'admin', 
         ],
+
+        // customer
+        'customer' => [
+            'driver' => 'session',
+            'provider' => 'customer',
+        ]
     ],
 
     /*
@@ -65,10 +72,16 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // Custom
-        'customusers' => [
+        // Admin
+        'admin' => [
             'driver' => 'eloquent',
             'model' => App\Models\auth\Admin::class,
+        ],
+
+        // Customer
+        'customer' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\auth\Customer::class,
         ],
     ],
 
@@ -94,9 +107,16 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        // custom
-        'customusers' => [
-            'provider' => 'customusers',
+        // admin
+        'admin' => [
+            'provider' => 'admin',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        // customer
+        'customer' => [
+            'provider' => 'customer',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

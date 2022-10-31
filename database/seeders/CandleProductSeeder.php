@@ -14,6 +14,6 @@ class CandleProductSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\products\CandleProduct::factory(50)->create();
+        \App\Models\products\CandleProduct::factory(100)->create();
     }
 }

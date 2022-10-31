@@ -1,4 +1,4 @@
-@extends('layouts.login.login_admin_layout')
+@extends('layouts.login.login_customer_layout')
 
 @section('content')
 <div class="wrapper">
@@ -12,9 +12,9 @@
                 </div>
 
                 <div class="col col-12 col-md-6 offset-md-2">
-                    <form action="{{ route('login.post') }}" class="login-form" method="POST">
+                    <form action="{{ route('login_customer.post') }}" class="login-form" method="POST">
                         @csrf
-                        <span class="login-form-title">Administrator Login</span>
+                        <span class="login-form-title">Customer Login</span>
 
                         <div class="form__input-wrapper">
                             <input class="form__input" type="text" name="username" placeholder="Username" value="{{ old('username') }}">

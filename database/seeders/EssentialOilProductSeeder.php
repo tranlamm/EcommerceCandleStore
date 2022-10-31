@@ -14,6 +14,6 @@ class EssentialOilProductSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\products\EssentialOilProduct::factory(50)->create();
+        \App\Models\products\EssentialOilProduct::factory(100)->create();
     }
 }

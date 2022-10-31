@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ManufacturerSeeder extends Seeder
+class ScentedWaxProductSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class ManufacturerSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\products\Manufacturer::factory(10)->create();
+        \App\Models\products\ScentedWaxProduct::factory(100)->create();
     }
 }

@@ -4,10 +4,10 @@ namespace App\Http\Controllers\products;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\products\CandleProduct;
+use App\Models\products\ScentedWaxProduct;
 use App\Models\products\Manufacturer;
 
-class CandleProductController extends Controller
+class ScentedWaxController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,19 +19,19 @@ class CandleProductController extends Controller
         $search = $request->input('search');
 
         if ($request->input('order-name')) {
-            $candleProducts = CandleProduct::query()
+            $scentedWaxProducts = ScentedWaxProduct::query()
                 ->where('tenSanPham', 'LIKE', "%{$search}%")
-                ->orderBy($request->input('order-name'), ($request->input('order-type') ? $request->input('order-type') : 'asc'))
+                ->orderBy($request->input('order-name'), (in_array($request->input('order-type'), ['asc', 'desc'], true) ? $request->input('order-type') : 'asc'))
                 ->paginate(10);
         }
         else {
-            $candleProducts = CandleProduct::query()
+            $scentedWaxProducts = ScentedWaxProduct::query()
             ->where('tenSanPham', 'LIKE', "%{$search}%")
             ->orderBy('updated_at', 'desc')
             ->paginate(10);
         }
 
-        return view('admin.candleProductShow', ['candleProducts' => $candleProducts]);
+        return view('admin.scentedWaxProductShow', ['scentedWaxProducts' => $scentedWaxProducts]);
     }
 
     /**
@@ -42,7 +42,7 @@ class CandleProductController extends Controller
     public function create()
     {
         $manufacturers = Manufacturer::all();
-        return view('admin.candleProductCreate', ['manufacturers' => $manufacturers]);
+        return view('admin.scentedWaxProductCreate', ['manufacturers' => $manufacturers]);
     }
 
     /**
@@ -56,12 +56,6 @@ class CandleProductController extends Controller
         $request->validate([
             'tenSanPham' => 'bail|required',
             'muiHuong' => 'bail|required',
-            'mauSac' => 'bail|required',
-            'soBac' => array(
-                'bail',
-                'required',
-                'regex:/1|3/u',
-            ),
             'nhaCungCap' => 'bail|required|numeric',
             'image' => 'bail|mimes:png,jpg,jpeg|max:5048',
             'trongLuong' => 'bail|required|numeric|between:1,10000',
@@ -76,7 +70,7 @@ class CandleProductController extends Controller
                 'regex:/^\d+(0){3}$/u',
             ),
         ]);
-
+        
         $generatedImageName;
         if ($request->image !== NULL) {
             $generatedImageName = 'image' . time() . '_' . $request->file('image')->getClientOriginalName();
@@ -85,12 +79,10 @@ class CandleProductController extends Controller
         else {
             $generatedImageName = "";
         }
-
-        $candle = CandleProduct::create([
+  
+        $essentialOil = ScentedWaxProduct::create([
             'tenSanPham' => $request->input('tenSanPham'),
             'muiHuong' => $request->input('muiHuong'),
-            'mauSac' => $request->input('mauSac'),
-            'soBac' => $request->input('soBac'),
             'nhaCungCap' => $request->input('nhaCungCap'),
             'image_path' => $generatedImageName,
             'trongLuong' => $request->input('trongLuong'),
@@ -99,7 +91,7 @@ class CandleProductController extends Controller
             'giaBan' => $request->input('giaBan'),
         ]);
 
-        return redirect(route('candleproduct.index'))->with('message', 'Created successfully!');
+        return redirect(route('scentedwaxproduct.index'))->with('message', 'Created successfully!');
     }
 
     /**
@@ -110,7 +102,7 @@ class CandleProductController extends Controller
      */
     public function show($id)
     {
-       
+        //
     }
 
     /**
@@ -121,9 +113,9 @@ class CandleProductController extends Controller
      */
     public function edit($id)
     {
-        $candle = CandleProduct::find($id);
+        $scentedWaxProduct = ScentedWaxProduct::find($id);
         $manufacturers = Manufacturer::all();
-        return view('admin.candleProductEdit', ['candle' => $candle, 'manufacturers' => $manufacturers]);
+        return view('admin.scentedWaxProductEdit', ['scentedWaxProduct' => $scentedWaxProduct, 'manufacturers' => $manufacturers]);
     }
 
     /**
@@ -138,24 +130,18 @@ class CandleProductController extends Controller
         $request->validate([
             'tenSanPham' => 'bail|required',
             'muiHuong' => 'bail|required',
-            'mauSac' => 'bail|required',
-            'soBac' => array(
-                'bail',
-                'required',
-                'regex:/1|3/u',
-            ),
             'nhaCungCap' => 'bail|required|numeric',
             'image' => 'bail|mimes:png,jpg,jpeg|max:5048',
             'trongLuong' => 'bail|required|numeric|between:1,10000',
             'giaNhap' => array(
                 'bail',
                 'required',
-                'regex:/^\d*(0){3}$/u',
+                'regex:/^\d+(0){3}$/u',
             ),
             'giaBan' => array(
                 'bail',
                 'required',
-                'regex:/^\d*(0){3}$/u',
+                'regex:/^\d+(0){3}$/u',
             ),
         ]);
 
@@ -168,12 +154,10 @@ class CandleProductController extends Controller
         else {
             $new_image = $request->old_image;
         }
-        
-        $candle = CandleProduct::where('id', $id)->update([
+
+        $essentialOil = ScentedWaxProduct::where('id', $id)->update([
             'tenSanPham' => $request->input('tenSanPham'),
             'muiHuong' => $request->input('muiHuong'),
-            'mauSac' => $request->input('mauSac'),
-            'soBac' => $request->input('soBac'),
             'nhaCungCap' => $request->input('nhaCungCap'),
             'image_path' => $new_image,
             'trongLuong' => $request->input('trongLuong'),
@@ -181,7 +165,8 @@ class CandleProductController extends Controller
             'giaNhap' => $request->input('giaNhap'),
             'giaBan' => $request->input('giaBan'),
         ]);
-        return redirect(route('candleproduct.index'))->with('message', 'Updated successfully!');
+
+        return redirect(route('scentedwaxproduct.index'))->with('message', 'Updated successfully!');
     }
 
     /**
@@ -192,8 +177,8 @@ class CandleProductController extends Controller
      */
     public function destroy($id)
     {
-        $candle = CandleProduct::find($id);
-        $candle->delete();
-        return redirect(route('candleproduct.index'))->with('message', 'Deleted successfully!');
+        $scentedWaxProduct = ScentedWaxProduct::find($id);
+        $scentedWaxProduct->delete();
+        return redirect(route('scentedwaxproduct.index'))->with('message', 'Deleted successfully!');
     }
 }

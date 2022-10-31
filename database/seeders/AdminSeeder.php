@@ -16,7 +16,8 @@ class AdminSeeder extends Seeder
     public function run()
     {
         DB::table('roles')->insert([
-            'role' => 'admin'
+            ['role' => 'admin'],
+            ['role' => 'client']
         ]);
 
         DB::table('admins')->insert([

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Route;
 
-class AccessAdminPermission
+class AccessCustomerPermission
 {
     /**
      * Handle an incoming request.
@@ -18,17 +18,17 @@ class AccessAdminPermission
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('admin')->check()) {
-            if (Auth::guard('admin')->user()->hasRole('admin')) {
+        if (Auth::guard('customer')->check()) {
+            if (Auth::guard('customer')->user()->hasRole('client')) {
                 return $next($request);
             }
             else {
-                Auth::guard('admin')->logout();
-                return redirect(route('login.index'));
+                Auth::guard('customer')->logout();
+                return redirect(route('login_customer.index'));
             }
         }
         else {
-            return redirect(route('login.index'));
+            return redirect(route('login_customer.index'));
         }
     }
 }

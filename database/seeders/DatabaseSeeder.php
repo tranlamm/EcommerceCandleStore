@@ -24,7 +24,9 @@ class DatabaseSeeder extends Seeder
             ManufacturerSeeder::class,
             CandleProductSeeder::class,
             EssentialOilProductSeeder::class,
-            AdminSeeder::class
+            ScentedWaxProductSeeder::class,
+            AdminSeeder::class,
+            CustomerSeeder::class,
         ]);
     }
 }

@@ -43,6 +43,7 @@
             <th scope="col">Nhà cung cấp</th>
             <th scope="col">Địa chỉ</th>
             <th scope="col">Số điện thoại</th>
+            <th scope="col">Sản phẩm</th>
             <th scope="col">Created At</th>
             <th scope="col">Updated At</th>
             <th scope="col" colspan="2">Thao tác</th>
@@ -55,6 +56,9 @@
                     <td>{{ $manufacturer->ten }}</td>
                     <td>{{ $manufacturer->diaChi }}</td>
                     <td>{{ $manufacturer->soDienThoai }}</td>
+                    <td>
+                      <a role="button" href="/admin/manufacturer/{{ $manufacturer->id }}/allproducts" class="btn btn-success btn-sm">View</a>
+                    </td>
                     <td>@date_format($manufacturer->created_at)</td>
                     <td>@date_format($manufacturer->updated_at)</td>
                     <td>

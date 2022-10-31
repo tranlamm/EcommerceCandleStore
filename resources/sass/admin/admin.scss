@@ -136,11 +136,13 @@ body {
 }
 
 .form-search-select {
-    width: 160px;
+    width: 170px;
+    margin-right: 12px;
 }
 
 .product__image-wrapper {
-    height: 100px;
+    height: 120px;
+    width: 120px;
 
     .product__image {
         width: 100%; 

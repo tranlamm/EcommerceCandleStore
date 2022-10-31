@@ -26,6 +26,7 @@ class ManufacturerController extends Controller
         else {
             $manufacturers = Manufacturer::query()
                 ->where('ten', 'LIKE', "%{$search}%")
+                ->orderBy('updated_at', 'desc')
                 ->paginate(10);
         }
 
@@ -132,5 +133,47 @@ class ManufacturerController extends Controller
         $manufacturer = Manufacturer::find($id);
         $manufacturer->delete();
         return redirect(route('manufacturer.index'))->with('message', 'Deleted successfully!');
+    }
+
+    public function allProducts(Request $request, $id)
+    {
+        $search = $request->input('search');
+        $category = $request->input('category');
+
+        $manufacturer = Manufacturer::find($id);
+        $candleProducts = $manufacturer->candleProducts->toArray();
+        $essentialOilProducts = $manufacturer->essentialOilProducts->toArray();
+        $scentedWaxProducts = $manufacturer->scentedWaxProducts->toArray();
+        $allProducts = array_merge($candleProducts, $essentialOilProducts, $scentedWaxProducts);
+
+        $result = [];
+        if ($category) {
+            if (in_array('all', $category)) {
+                $result = $allProducts;
+            }
+            else {
+                if (in_array('candle', $category)) 
+                    $result = array_merge($result, $candleProducts);
+                if (in_array('essentialOil', $category)) 
+                    $result = array_merge($result, $essentialOilProducts);
+                if (in_array('scentedWax', $category)) 
+                    $result = array_merge($result, $scentedWaxProducts);
+            }
+        }
+        else {
+            $result = $allProducts;
+        }
+
+        if ($search) {
+            $searchResult = []; 
+            foreach ($result as $product) {
+                if (str_contains(strtolower($product['tenSanPham']), strtolower($search))) {
+                    array_push($searchResult, $product);
+                }
+            }
+            $result = $searchResult;
+        }
+
+        return view('admin.manufacturerAllProduct', ['allProducts' => $result, 'manufacturer' => $manufacturer, 'old_category' => $category]);
     }
 }

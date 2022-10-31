@@ -5,10 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\products\CandleProductController;
 use App\Http\Controllers\products\EssentialOilController;
+use App\Http\Controllers\products\ScentedWaxController;
 use App\Http\Controllers\products\ManufacturerController;
 // Login
 use App\Http\Controllers\login\AdminLoginController;
 use App\Http\Controllers\login\AuthController;
+use App\Http\Controllers\login\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +28,14 @@ Route::get('/', function () {
 });
 
 // Login
+    // admin
 Route::get('/admin/login', [ AuthController::class, 'getLoginAdmin'])->name('login.index');
 Route::post('/admin/login/post', [ AuthController::class, 'postLoginAdmin'])->name('login.post');
 Route::post('/admin/logout/post', [ AuthController::class, 'postLogoutAdmin'])->name('logout.post');
+    // customer
+Route::get('/customer/login', [ CustomerController::class, 'getLoginCustomer'])->name('login_customer.index');
+Route::post('/customer/login/post', [ CustomerController::class, 'postLoginCustomer'])->name('login_customer.post');
+Route::post('/customer/logout/post', [ CustomerController::class, 'postLogoutCustomer'])->name('logout_customer.post');
 
 // Admin
 Route::group(['middleware' => 'login_admin'], function() {
@@ -38,6 +45,8 @@ Route::group(['middleware' => 'login_admin'], function() {
     // Products management
     Route::resource('/admin/candleproduct', CandleProductController::class);
     Route::resource('/admin/essentialoilproduct', EssentialOilController::class);
+    Route::resource('/admin/scentedwaxproduct', ScentedWaxController::class);
     Route::resource('/admin/manufacturer', ManufacturerController::class);
+    Route::get('/admin/manufacturer/{manufacturer}/allproducts', [ManufacturerController::class, 'allProducts'])->name('manufacturer.allproducts');
     Route::get('/admin/test', [EssentialOilController::class, 'test']);
 });

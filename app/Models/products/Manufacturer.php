@@ -20,5 +20,9 @@ class Manufacturer extends Model
     public function essentialOilProducts() {
         return $this->hasMany(EssentialOilProduct::class, 'nhaCungCap', 'id');
     }
+
+    public function scentedWaxProducts() {
+        return $this->hasMany(ScentedWaxProduct::class, 'nhaCungCap', 'id');
+    }
 }
 

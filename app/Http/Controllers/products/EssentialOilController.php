@@ -19,9 +19,18 @@ class EssentialOilController extends Controller
     {
         $search = $request->input('search');
 
-        $essentialOils = EssentialOilProduct::query()
+        if ($request->input('order-name')) {
+            $essentialOils = EssentialOilProduct::query()
+                ->where('tenSanPham', 'LIKE', "%{$search}%")
+                ->orderBy($request->input('order-name'), (in_array($request->input('order-type'), ['asc', 'desc'], true) ? $request->input('order-type') : 'asc'))
+                ->paginate(10);
+        }
+        else {
+            $essentialOils = EssentialOilProduct::query()
             ->where('tenSanPham', 'LIKE', "%{$search}%")
+            ->orderBy('updated_at', 'desc')
             ->paginate(10);
+        }
 
         return view('admin.essentialOilProductShow', ['essentialOils' => $essentialOils]);
     }
@@ -46,15 +55,32 @@ class EssentialOilController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'tenSanPham' => 'required',
-            'nhaCungCap' => 'required|numeric',
-            'image' => 'mimes:png,jpg,jpeg|max:5048',
-            'theTich' => 'required|numeric|between:10,1000',
-            'giaNhap' => 'required|numeric',
-            'giaBan' => 'required|numeric'
+            'tenSanPham' => 'bail|required',
+            'muiHuong' => 'bail|required',
+            'nhaCungCap' => 'bail|required|numeric',
+            'image' => 'bail|mimes:png,jpg,jpeg|max:5048',
+            'theTich' => 'bail|required|numeric|between:1,10000',
+            'giaNhap' => array(
+                'bail',
+                'required',
+                'regex:/^\d+(0){3}$/u',
+            ),
+            'giaBan' => array(
+                'bail',
+                'required',
+                'regex:/^\d+(0){3}$/u',
+            ),
         ]);
-        $generatedImageName = 'image' . time() . '_' . $request->file('image')->getClientOriginalName();
-        $request->image->move(public_path('images'), $generatedImageName);
+        
+        $generatedImageName;
+        if ($request->image !== NULL) {
+            $generatedImageName = 'image' . time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->image->move(public_path('images'), $generatedImageName);
+        }
+        else {
+            $generatedImageName = "";
+        }
+  
         $essentialOil = EssentialOilProduct::create([
             'tenSanPham' => $request->input('tenSanPham'),
             'muiHuong' => $request->input('muiHuong'),
@@ -66,7 +92,7 @@ class EssentialOilController extends Controller
             'giaBan' => $request->input('giaBan'),
         ]);
 
-        return redirect(route('essentialoilproduct.index'));
+        return redirect(route('essentialoilproduct.index'))->with('message', 'Created successfully!');
     }
 
     /**
@@ -103,12 +129,21 @@ class EssentialOilController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'tenSanPham' => 'required',
-            'nhaCungCap' => 'required|numeric',
-            'image' => 'mimes:png,jpg,jpeg|max:5048',
-            'theTich' => 'required|numeric|between:10,1000',
-            'giaNhap' => 'required|numeric',
-            'giaBan' => 'required|numeric'
+            'tenSanPham' => 'bail|required',
+            'muiHuong' => 'bail|required',
+            'nhaCungCap' => 'bail|required|numeric',
+            'image' => 'bail|mimes:png,jpg,jpeg|max:5048',
+            'theTich' => 'bail|required|numeric|between:1,10000',
+            'giaNhap' => array(
+                'bail',
+                'required',
+                'regex:/^\d+(0){3}$/u',
+            ),
+            'giaBan' => array(
+                'bail',
+                'required',
+                'regex:/^\d+(0){3}$/u',
+            ),
         ]);
 
         $new_image;
@@ -132,7 +167,7 @@ class EssentialOilController extends Controller
             'giaBan' => $request->input('giaBan'),
         ]);
 
-        return redirect(route('essentialoilproduct.index'));
+        return redirect(route('essentialoilproduct.index'))->with('message', 'Updated successfully!');
     }
 
     /**
@@ -145,7 +180,7 @@ class EssentialOilController extends Controller
     {
         $essentialOil = EssentialOilProduct::find($id);
         $essentialOil->delete();
-        return redirect(route('essentialoilproduct.index'));
+        return redirect(route('essentialoilproduct.index'))->with('message', 'Deleted successfully!');
     }
 
     public function test()

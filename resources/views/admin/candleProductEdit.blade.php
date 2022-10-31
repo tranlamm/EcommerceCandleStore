@@ -90,7 +90,7 @@
             </div>
     
             <div class="mb-4">
-                <label for="exampleFormControlTextarea1" class="form-label"><strong>Mô tả</strong></label>
+                <label for="exampleFormControlTextarea1" class="form-label" spellcheck="false"><strong>Mô tả</strong></label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="moTa">{{ $candle->moTa }}</textarea>
               </div>
             

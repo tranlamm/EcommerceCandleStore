@@ -11,7 +11,7 @@
                 <a class="nav-link nav_link ps-5" href="{{ route('candleproduct.index') }}"><i class="fa-solid fa-fire-flame-curved"></i>Nến</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link nav_link ps-5" href=""><i class="fa-solid fa-soap"></i>Sáp thơm</a>
+                <a class="nav-link nav_link ps-5" href="{{ route('scentedwaxproduct.index') }}"><i class="fa-solid fa-soap"></i>Sáp thơm</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link nav_link ps-5" href="{{ route('essentialoilproduct.index') }}"><i class="fa-solid fa-bottle-droplet"></i>Tinh dầu</a>
