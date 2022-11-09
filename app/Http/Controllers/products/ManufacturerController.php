@@ -30,7 +30,7 @@ class ManufacturerController extends Controller
                 ->paginate(10);
         }
 
-        return view('admin.manufacturerShow', ['manufacturers' => $manufacturers]);
+        return view('admin.products.manufacturerShow', ['manufacturers' => $manufacturers]);
     }
 
     /**
@@ -40,7 +40,7 @@ class ManufacturerController extends Controller
      */
     public function create()
     {
-        return view('admin.manufacturerCreate');
+        return view('admin.products.manufacturerCreate');
     }
 
     /**
@@ -91,7 +91,7 @@ class ManufacturerController extends Controller
     public function edit($id)
     {
         $manufacturer = Manufacturer::find($id);
-        return view('admin.manufacturerEdit', ['manufacturer' => $manufacturer]);
+        return view('admin.products.manufacturerEdit', ['manufacturer' => $manufacturer]);
     }
 
     /**
@@ -111,7 +111,6 @@ class ManufacturerController extends Controller
                 'required',
                 'regex:/(84|0[3|5|7|8|9])+([0-9]{8})/u',
             ),
-            
         ]);
         
         $manufacturer = Manufacturer::where('id', $id)->update([
@@ -174,6 +173,6 @@ class ManufacturerController extends Controller
             $result = $searchResult;
         }
 
-        return view('admin.manufacturerAllProduct', ['allProducts' => $result, 'manufacturer' => $manufacturer, 'old_category' => $category]);
+        return view('admin.products.manufacturerAllProduct', ['allProducts' => $result, 'manufacturer' => $manufacturer, 'old_category' => $category]);
     }
 }

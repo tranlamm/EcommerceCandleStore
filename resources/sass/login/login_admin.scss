@@ -27,10 +27,10 @@
 .login-img {
     max-height:100%; 
     max-width:100%;
-    transition: transform 1s ease-in-out;
+    transition: transform 1000ms ease-in-out;
 
     &:hover {
-        transform: scale(1.2) rotate(360deg);
+        transform: scale(1.2);
     }
 }
 

@@ -7,6 +7,10 @@ use App\Http\Controllers\products\CandleProductController;
 use App\Http\Controllers\products\EssentialOilController;
 use App\Http\Controllers\products\ScentedWaxController;
 use App\Http\Controllers\products\ManufacturerController;
+
+use App\Http\Controllers\invoices\ImportInvoiceController;
+use App\Http\Controllers\invoices\ExportInvoiceController;
+
 // Login
 use App\Http\Controllers\login\AdminLoginController;
 use App\Http\Controllers\login\AuthController;
@@ -24,7 +28,7 @@ use App\Http\Controllers\login\CustomerController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('customer.main.customerProductShow');
 });
 
 // Login
@@ -34,7 +38,9 @@ Route::post('/admin/login/post', [ AuthController::class, 'postLoginAdmin'])->na
 Route::post('/admin/logout/post', [ AuthController::class, 'postLogoutAdmin'])->name('logout.post');
     // customer
 Route::get('/customer/login', [ CustomerController::class, 'getLoginCustomer'])->name('login_customer.index');
+Route::get('/customer/register', [ CustomerController::class, 'getRegisterCustomer'])->name('register_customer.index');
 Route::post('/customer/login/post', [ CustomerController::class, 'postLoginCustomer'])->name('login_customer.post');
+Route::post('/customer/register/post', [ CustomerController::class, 'postRegisterCustomer'])->name('register_customer.post');
 Route::post('/customer/logout/post', [ CustomerController::class, 'postLogoutCustomer'])->name('logout_customer.post');
 
 // Admin
@@ -49,4 +55,9 @@ Route::group(['middleware' => 'login_admin'], function() {
     Route::resource('/admin/manufacturer', ManufacturerController::class);
     Route::get('/admin/manufacturer/{manufacturer}/allproducts', [ManufacturerController::class, 'allProducts'])->name('manufacturer.allproducts');
     Route::get('/admin/test', [EssentialOilController::class, 'test']);
+
+    // Invoices management
+    Route::resource('/admin/invoice/importinvoice', ImportInvoiceController::class);
+    Route::get('/admin/invoice/exportinvoice/print/{id}', [ExportInvoiceController::class, 'print'])->name('exportinvoice.print');
+    Route::resource('/admin/invoice/exportinvoice', ExportInvoiceController::class);
 });

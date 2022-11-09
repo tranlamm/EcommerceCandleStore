@@ -4,6 +4,7 @@ namespace App\Http\Controllers\products;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use App\Models\products\CandleProduct;
 use App\Models\products\Manufacturer;
 
@@ -16,22 +17,26 @@ class CandleProductController extends Controller
      */
     public function index(Request $request)
     {
+        $manufacturers = Manufacturer::all();
         $search = $request->input('search');
+        $nhaCungCap = $request->input('nhaCungCap');
 
         if ($request->input('order-name')) {
             $candleProducts = CandleProduct::query()
                 ->where('tenSanPham', 'LIKE', "%{$search}%")
+                ->where('nhaCungCap', 'LIKE', "%{$nhaCungCap}%")
                 ->orderBy($request->input('order-name'), ($request->input('order-type') ? $request->input('order-type') : 'asc'))
                 ->paginate(10);
         }
         else {
             $candleProducts = CandleProduct::query()
-            ->where('tenSanPham', 'LIKE', "%{$search}%")
-            ->orderBy('updated_at', 'desc')
-            ->paginate(10);
+                ->where('tenSanPham', 'LIKE', "%{$search}%")
+                ->where('nhaCungCap', 'LIKE', "%{$nhaCungCap}%")
+                ->orderBy('updated_at', 'desc')
+                ->paginate(10);
         }
 
-        return view('admin.candleProductShow', ['candleProducts' => $candleProducts]);
+        return view('admin.products.candleProductShow', ['candleProducts' => $candleProducts, 'manufacturers' => $manufacturers]);
     }
 
     /**
@@ -42,7 +47,7 @@ class CandleProductController extends Controller
     public function create()
     {
         $manufacturers = Manufacturer::all();
-        return view('admin.candleProductCreate', ['manufacturers' => $manufacturers]);
+        return view('admin.products.candleProductCreate', ['manufacturers' => $manufacturers]);
     }
 
     /**
@@ -63,7 +68,7 @@ class CandleProductController extends Controller
                 'regex:/1|3/u',
             ),
             'nhaCungCap' => 'bail|required|numeric',
-            'image' => 'bail|mimes:png,jpg,jpeg|max:5048',
+            'image' => 'bail|mimes:png,jpg,jpeq,webp,webp|max:5048',
             'trongLuong' => 'bail|required|numeric|between:1,10000',
             'giaNhap' => array(
                 'bail',
@@ -123,7 +128,7 @@ class CandleProductController extends Controller
     {
         $candle = CandleProduct::find($id);
         $manufacturers = Manufacturer::all();
-        return view('admin.candleProductEdit', ['candle' => $candle, 'manufacturers' => $manufacturers]);
+        return view('admin.products.candleProductEdit', ['candle' => $candle, 'manufacturers' => $manufacturers]);
     }
 
     /**
@@ -145,7 +150,7 @@ class CandleProductController extends Controller
                 'regex:/1|3/u',
             ),
             'nhaCungCap' => 'bail|required|numeric',
-            'image' => 'bail|mimes:png,jpg,jpeg|max:5048',
+            'image' => 'bail|mimes:png,jpg,jpeq,webp,webp|max:5048',
             'trongLuong' => 'bail|required|numeric|between:1,10000',
             'giaNhap' => array(
                 'bail',

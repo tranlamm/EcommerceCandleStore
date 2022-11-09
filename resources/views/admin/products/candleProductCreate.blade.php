@@ -93,7 +93,7 @@
             <div class="mb-4">
                 <label for="exampleFormControlTextarea1" class="form-label" spellcheck="false"><strong>Mô tả</strong></label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="moTa">{{ old('moTa') }}</textarea>
-              </div>
+            </div>
             
             <div class="row">
                 <div class="col col-6">

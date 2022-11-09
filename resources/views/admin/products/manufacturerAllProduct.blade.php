@@ -4,7 +4,7 @@
 
 <div class="page-wrapper">
   <a class="btn btn-outline-dark mb-4 btn-sm" href="{{ route('manufacturer.index') }}" role="button"><i class="fa-solid fa-rotate-left"></i></a>
-    <span class="page-title">Danh mục sản phẩm của nhà sản xuất {{ $manufacturer->ten }}</span>
+    <span class="page-title">Danh mục sản phẩm của nhà cung cấp {{ $manufacturer->ten }}</span>
     <div class="page__content-wrapper">
       <div class="me-2">
         <form class="d-flex" id="form__search" method="GET" action="/admin/manufacturer/{{ $manufacturer->id }}/allproducts">

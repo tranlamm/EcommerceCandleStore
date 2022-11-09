@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('password');
             $table->unsignedBigInteger('role');
             $table->foreign('role')->references('id')->on('roles')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('hoVaTen');
-            $table->string('diaChi');
-            $table->string('soDienThoai');
+            $table->string('fullname');
+            $table->string('address');
+            $table->string('phoneNumber');
             $table->string('email')->nullable()->default('');
             $table->timestamps();
         });

@@ -11,6 +11,13 @@
           <form class="d-flex" id="form__search" method="GET" action="{{ route('essentialoilproduct.index') }}">
             <input class="form-control form-search-input" type="text" name="search" placeholder="Search"/>
 
+            <select name="nhaCungCap" class="form-select form-search-select">
+              <option value="">Nhà cung cấp</option>
+              @foreach ($manufacturers as $manufacturer)
+                  <option value="{{ $manufacturer->id }}">{{ $manufacturer->ten }}</option>
+              @endforeach
+            </select>
+
             <input type="hidden" name="order-type" id="order-type">
             <input type="hidden" name="order-name" id="order-name">
             <select id="form_order" class="form-select form-search-select">

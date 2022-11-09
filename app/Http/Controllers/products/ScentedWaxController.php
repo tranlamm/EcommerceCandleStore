@@ -16,22 +16,26 @@ class ScentedWaxController extends Controller
      */
     public function index(Request $request)
     {
+        $manufacturers = Manufacturer::all();
         $search = $request->input('search');
+        $nhaCungCap = $request->input('nhaCungCap');
 
         if ($request->input('order-name')) {
             $scentedWaxProducts = ScentedWaxProduct::query()
                 ->where('tenSanPham', 'LIKE', "%{$search}%")
+                ->where('nhaCungCap', 'LIKE', "%{$nhaCungCap}%")
                 ->orderBy($request->input('order-name'), (in_array($request->input('order-type'), ['asc', 'desc'], true) ? $request->input('order-type') : 'asc'))
                 ->paginate(10);
         }
         else {
             $scentedWaxProducts = ScentedWaxProduct::query()
-            ->where('tenSanPham', 'LIKE', "%{$search}%")
-            ->orderBy('updated_at', 'desc')
-            ->paginate(10);
+                ->where('tenSanPham', 'LIKE', "%{$search}%")
+                ->where('nhaCungCap', 'LIKE', "%{$nhaCungCap}%")
+                ->orderBy('updated_at', 'desc')
+                ->paginate(10);
         }
 
-        return view('admin.scentedWaxProductShow', ['scentedWaxProducts' => $scentedWaxProducts]);
+        return view('admin.products.scentedWaxProductShow', ['scentedWaxProducts' => $scentedWaxProducts, 'manufacturers' => $manufacturers]);
     }
 
     /**
@@ -42,7 +46,7 @@ class ScentedWaxController extends Controller
     public function create()
     {
         $manufacturers = Manufacturer::all();
-        return view('admin.scentedWaxProductCreate', ['manufacturers' => $manufacturers]);
+        return view('admin.products.scentedWaxProductCreate', ['manufacturers' => $manufacturers]);
     }
 
     /**
@@ -57,7 +61,7 @@ class ScentedWaxController extends Controller
             'tenSanPham' => 'bail|required',
             'muiHuong' => 'bail|required',
             'nhaCungCap' => 'bail|required|numeric',
-            'image' => 'bail|mimes:png,jpg,jpeg|max:5048',
+            'image' => 'bail|mimes:png,jpg,jpeq,webp|max:5048',
             'trongLuong' => 'bail|required|numeric|between:1,10000',
             'giaNhap' => array(
                 'bail',
@@ -115,7 +119,7 @@ class ScentedWaxController extends Controller
     {
         $scentedWaxProduct = ScentedWaxProduct::find($id);
         $manufacturers = Manufacturer::all();
-        return view('admin.scentedWaxProductEdit', ['scentedWaxProduct' => $scentedWaxProduct, 'manufacturers' => $manufacturers]);
+        return view('admin.products.scentedWaxProductEdit', ['scentedWaxProduct' => $scentedWaxProduct, 'manufacturers' => $manufacturers]);
     }
 
     /**
@@ -131,7 +135,7 @@ class ScentedWaxController extends Controller
             'tenSanPham' => 'bail|required',
             'muiHuong' => 'bail|required',
             'nhaCungCap' => 'bail|required|numeric',
-            'image' => 'bail|mimes:png,jpg,jpeg|max:5048',
+            'image' => 'bail|mimes:png,jpg,jpeq,webp|max:5048',
             'trongLuong' => 'bail|required|numeric|between:1,10000',
             'giaNhap' => array(
                 'bail',

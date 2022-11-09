@@ -72,13 +72,17 @@ body {
 } 
 
 // Side Bar
-#sidebar {
+.sidebar-wrapper {
     position: fixed;
     min-width: 16.77777%;
     z-index: 10;
     height: 100%;
-    overflow-y: overlay;
     background: linear-gradient(60deg, #29323c 0%, #485563 100%);
+}
+
+.sidebar {
+    height: 90%;
+    overflow-y: overlay;
 
     .nav_title {
         color: rgb(177, 150, 150);
@@ -132,11 +136,11 @@ body {
 
 .form-search-input {
     margin-right: 12px;
-    width: 400px;
+    width: 300px;
 }
 
 .form-search-select {
-    width: 170px;
+    width: 160px;
     margin-right: 12px;
 }
 

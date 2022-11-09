@@ -1,0 +1,41 @@
+.invoice-wrapper {
+    width: 80%;
+    margin: auto;
+    padding: 30px 60px 60px 60px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.invoice-name {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin: 18px 0 32px 0;
+}
+
+.invoice-header {
+    font-size: 12px;
+
+    .invoice-brand {
+        color: rgb(123, 100, 100);
+        font-weight: 600;
+    }
+}
+
+.invoice-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.invoice-content {
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 6px;
+}
+
+.invoice-split {
+    margin: 40px 0;
+    border: 1px solid rgb(200, 200, 200);
+}

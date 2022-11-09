@@ -1,0 +1,135 @@
+@import '../variables';
+
+.content {
+    background-color: white;
+    padding-bottom: 200px;
+
+    .product {
+        display: flex;
+        flex-direction: column;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        margin: 0 24px 50px 0;
+    }
+    
+    .product-wrapper {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        .product-img {
+            width: 100%;
+            height: 300px;
+            padding: 16px;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .product-name {
+                font-size: 18px;
+                font-weight: 600;
+                color: $text-color;
+            }
+
+            .product-type {
+                font-size: 12px;
+                line-height: 0.8;
+                color: rgb(123, 123, 123);
+            }
+
+            .product-price {
+                font-size: 17px;
+                font-weight: 600;
+                color: #c00;
+                margin: 10px 0 08px 0
+            }
+        }
+
+        .product-view {
+            opacity: 0;
+            height: 0;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            @keyframes fadeIn {
+                0% {
+                    opacity: 0;
+                    height: 0;
+                }
+                100% {
+                    opacity: 1;
+                    height: 100%;
+                    transform: translateY(0%);
+                }
+            }
+
+            @keyframes fadeOut {
+                0% {
+                    opacity: 1;
+                    height: 100%;
+                }
+                100% {
+                    opacity: 0;
+                    height: 0;
+                }
+            }
+
+            .product-view-btn {
+                display: none;
+                padding: 12px 30px;
+                background-color: white;
+                color: black;
+                font-size: 16px;
+                font-weight: 600;
+                border-radius: 4px;
+                transition: all 300ms ease-in-out;
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: $primary-color;
+                    color: white;
+                }
+            }
+        }
+
+        &:hover {
+            .product-view {
+                animation: fadeIn 0.8s both 0.2s;
+
+                .product-view-btn {
+                    display: block;
+                }
+            }
+        }
+
+        &:not(:hover) {
+            .product-view {
+                animation: fadeOut 1s both 0s;
+            }
+        }
+    }
+
+    .product-btn {
+        text-align: center;
+        background-color: #333;
+        color: white;
+        padding: 12px 4px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 300ms ease-in-out;
+
+        &:hover {
+            cursor: pointer;
+            background-color: $primary-color;
+        }
+    }
+}

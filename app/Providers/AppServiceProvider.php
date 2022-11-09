@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Blade::directive('currency_format', function ($amount) {
-            return "<?php echo number_format($amount, 0 , ',', '.') . ' vnđ'; ?>";
+            return "<?php echo number_format($amount, 0 , ',', '.') . ' VND'; ?>";
         });
 
         Blade::directive('date_format', function ($date) {

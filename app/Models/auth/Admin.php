@@ -15,6 +15,10 @@ class Admin extends Authenticatable
         'id', 'username', 'password', 'role'
     ];
 
+    protected $hidden = [
+        'password',
+    ];
+
     public function getRole() {
         return $this->belongsTo(Roles::class, 'role', 'id');
     }

@@ -3,14 +3,22 @@
 @section('content')
 
 <div class="page-wrapper">
-  <span class="page-title">Danh mục sản phẩm sáp thơm</span>
+  <span class="page-title">Danh mục sản phẩm nến</span>
+  
   <div class="page__content-wrapper">
     <div class="row">
       <div class="col col-8 d-flex">
         <div class="me-2">
-          <form class="d-flex" id="form__search" method="GET" action="{{ route('scentedwaxproduct.index') }}">
+          <form class="d-flex" id="form__search" method="GET" action="{{ route('candleproduct.index') }}">
             <input class="form-control form-search-input" type="text" name="search" placeholder="Search"/>
 
+            <select name="nhaCungCap" class="form-select form-search-select">
+                <option value="">Nhà cung cấp</option>
+                @foreach ($manufacturers as $manufacturer)
+                    <option value="{{ $manufacturer->id }}">{{ $manufacturer->ten }}</option>
+                @endforeach
+            </select>
+            
             <input type="hidden" name="order-type" id="order-type">
             <input type="hidden" name="order-name" id="order-name">
             <select id="form_order" class="form-select form-search-select">
@@ -31,11 +39,11 @@
 
         <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
 
-        <a role="button" class="btn btn-outline-secondary" href="{{ route('scentedwaxproduct.index') }}">Reset</a>
+        <a role="button" class="btn btn-outline-secondary" href="{{ route('candleproduct.index') }}">Reset</a>
       </div>
 
       <div class="col col-4 d-flex justify-content-end">
-        <a role="button" class="btn btn-outline-primary" href="{{ route('scentedwaxproduct.create') }}">Thêm Mới<i class="fa-solid fa-plus ms-2"></i></a>
+        <a role="button" class="btn btn-outline-primary" href="{{ route('candleproduct.create') }}">Thêm Mới<i class="fa-solid fa-plus ms-2"></i></a>
       </div>
     </div>
   </div>
@@ -61,35 +69,35 @@
           </tr>
         </thead>
         <tbody>
-            @foreach ($scentedWaxProducts as $scentedWaxProduct)
+            @foreach ($candleProducts as $candleProduct)
                 <tr>
-                    <th scope="row">{{ $scentedWaxProduct->id }}</th>
+                    <th scope="row">{{ $candleProduct->id }}</th>
                     <td>
                       <div class="product__image-wrapper">
-                        <img class="product__image" src="{{ asset('images/' . $scentedWaxProduct->image_path) }}" alt="Ảnh sản phẩm">
+                        <img class="product__image" src="{{ asset('images/' . $candleProduct->image_path) }}" alt="Ảnh sản phẩm">
                       </div>
                     </td>
-                    <td>{{ $scentedWaxProduct->tenSanPham }}</td>
-                    <td>{{ $scentedWaxProduct->manufacturer()->first()->ten }}</td>
-                    <td>@currency_format($scentedWaxProduct->giaNhap)</td>
-                    <td>@currency_format($scentedWaxProduct->giaBan)</td>
-                    <td>{{ $scentedWaxProduct->conLai }}</td>
-                    <td>{{ $scentedWaxProduct->daBan }}</td>
-                    <td>@date_format($scentedWaxProduct->created_at)</td>
-                    <td>@date_format($scentedWaxProduct->updated_at)</td>
+                    <td>{{ $candleProduct->tenSanPham }}</td>
+                    <td>{{ $candleProduct->manufacturer()->first()->ten }}</td>
+                    <td>@currency_format($candleProduct->giaNhap)</td>
+                    <td>@currency_format($candleProduct->giaBan)</td>
+                    <td>{{ $candleProduct->conLai }}</td>
+                    <td>{{ $candleProduct->daBan }}</td>
+                    <td>@date_format($candleProduct->created_at)</td>
+                    <td>@date_format($candleProduct->updated_at)</td>
                     <td>
                       <div class="btn-group" role="group" aria-label="Basic example">
-                        <a role="button" href="/admin/scentedwaxproduct/{{ $scentedWaxProduct->id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
-                        <button class="btn btn-outline-danger btn-sm" data-id="{{ $scentedWaxProduct->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                        <a role="button" href="/admin/candleproduct/{{ $candleProduct->id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
+                        <button class="btn btn-outline-danger btn-sm" data-id="{{ $candleProduct->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
                       </div>
                     </td>
                 </tr>
             @endforeach
         </tbody>
       </table>
-    <div class="d-flex justify-content-center">
-      {{ $scentedWaxProducts->links('pagination::bootstrap-4') }}
-    </div>
+      <div class="d-flex justify-content-center">
+        {{ $candleProducts->links('pagination::bootstrap-4') }}
+      </div>
   </div>
 </div>
 <form method="post" id="deleteForm">
@@ -131,7 +139,7 @@
   exampleModal.addEventListener('show.bs.modal', event => {
     const button = event.relatedTarget
     const id = button.getAttribute('data-id')
-    formDelete.action = `/admin/scentedwaxproduct/${id}`;
+    formDelete.action = `/admin/candleproduct/${id}`;
 
     btnDelete.onclick = function () {
       formDelete.submit();

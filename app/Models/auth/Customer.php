@@ -12,7 +12,11 @@ class Customer extends Authenticatable
     use HasFactory;
     protected $table = 'customers';
     protected $fillable = [
-        'id', 'username', 'password', 'role', 'tenKhachHang', 'diaChi', 'soDienThoai', 'email'
+        'id', 'username', 'password', 'role', 'fullname', 'address', 'phoneNumber', 'email'
+    ];
+
+    protected $hidden = [
+        'password',
     ];
 
     public function getRole() {

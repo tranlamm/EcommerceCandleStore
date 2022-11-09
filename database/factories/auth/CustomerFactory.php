@@ -21,9 +21,9 @@ class CustomerFactory extends Factory
             'username' => $username,
             'password' => bcrypt($username),
             'role' => 2,
-            'hoVaTen' => fake()->name(),
-            'diaChi' => fake()->address(),
-            'soDienThoai' => fake()->regexify("09\\d{8}"),
+            'fullname' => fake()->name(),
+            'address' => fake()->address(),
+            'phoneNumber' => fake()->regexify("09\\d{8}"),
             'email' => fake()->email(),
         ];
     }

@@ -17,22 +17,26 @@ class EssentialOilController extends Controller
      */
     public function index(Request $request)
     {
+        $manufacturers = Manufacturer::all();
         $search = $request->input('search');
+        $nhaCungCap = $request->input('nhaCungCap');
 
         if ($request->input('order-name')) {
             $essentialOils = EssentialOilProduct::query()
                 ->where('tenSanPham', 'LIKE', "%{$search}%")
+                ->where('nhaCungCap', 'LIKE', "%{$nhaCungCap}%")
                 ->orderBy($request->input('order-name'), (in_array($request->input('order-type'), ['asc', 'desc'], true) ? $request->input('order-type') : 'asc'))
                 ->paginate(10);
         }
         else {
             $essentialOils = EssentialOilProduct::query()
-            ->where('tenSanPham', 'LIKE', "%{$search}%")
-            ->orderBy('updated_at', 'desc')
-            ->paginate(10);
+                ->where('tenSanPham', 'LIKE', "%{$search}%")
+                ->where('nhaCungCap', 'LIKE', "%{$nhaCungCap}%")
+                ->orderBy('updated_at', 'desc')
+                ->paginate(10);
         }
 
-        return view('admin.essentialOilProductShow', ['essentialOils' => $essentialOils]);
+        return view('admin.products.essentialOilProductShow', ['essentialOils' => $essentialOils, 'manufacturers' => $manufacturers]);
     }
 
     /**
@@ -43,7 +47,7 @@ class EssentialOilController extends Controller
     public function create()
     {
         $manufacturers = Manufacturer::all();
-        return view('admin.essentialOilProductCreate', ['manufacturers' => $manufacturers]);
+        return view('admin.products.essentialOilProductCreate', ['manufacturers' => $manufacturers]);
     }
 
     /**
@@ -58,7 +62,7 @@ class EssentialOilController extends Controller
             'tenSanPham' => 'bail|required',
             'muiHuong' => 'bail|required',
             'nhaCungCap' => 'bail|required|numeric',
-            'image' => 'bail|mimes:png,jpg,jpeg|max:5048',
+            'image' => 'bail|mimes:png,jpg,jpeq,webp|max:5048',
             'theTich' => 'bail|required|numeric|between:1,10000',
             'giaNhap' => array(
                 'bail',
@@ -116,7 +120,7 @@ class EssentialOilController extends Controller
     {
         $essentialOil = EssentialOilProduct::find($id);
         $manufacturers = Manufacturer::all();
-        return view('admin.essentialOilProductEdit', ['essentialOil' => $essentialOil, 'manufacturers' => $manufacturers]);
+        return view('admin.products.essentialOilProductEdit', ['essentialOil' => $essentialOil, 'manufacturers' => $manufacturers]);
     }
 
     /**
@@ -132,7 +136,7 @@ class EssentialOilController extends Controller
             'tenSanPham' => 'bail|required',
             'muiHuong' => 'bail|required',
             'nhaCungCap' => 'bail|required|numeric',
-            'image' => 'bail|mimes:png,jpg,jpeg|max:5048',
+            'image' => 'bail|mimes:png,jpg,jpeq,webp|max:5048',
             'theTich' => 'bail|required|numeric|between:1,10000',
             'giaNhap' => array(
                 'bail',
