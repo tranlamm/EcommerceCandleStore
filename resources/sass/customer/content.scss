@@ -1,14 +1,23 @@
 @import '../variables';
+@import './searchbar.scss';
 
 .content {
     background-color: white;
-    padding-bottom: 200px;
 
     .product {
         display: flex;
         flex-direction: column;
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-        margin: 0 24px 50px 0;
+        border: 1px solid transparent;
+        max-height: 537px;
+        margin-bottom: 50px;
+        transition: all 200ms ease-in-out;
+
+        &:hover {
+            transform: translateY(-6px);
+            border: 1px solid $primary-color;
+            filter: brightness(74%);
+        }
     }
     
     .product-wrapper {
@@ -19,15 +28,21 @@
         .product-img {
             width: 100%;
             height: 300px;
-            padding: 16px;
+            border-bottom: 1px solid rgb(200, 200, 200);
+
+            img {
+                object-fit: cover;
+                object-position: bottom;
+            }
         }
 
         .product-info {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            padding: 12px 18px;
 
             .product-name {
+                margin-top: 4px;
                 font-size: 18px;
                 font-weight: 600;
                 color: $text-color;
@@ -35,85 +50,28 @@
 
             .product-type {
                 font-size: 12px;
-                line-height: 0.8;
                 color: rgb(123, 123, 123);
             }
 
-            .product-price {
-                font-size: 17px;
+            .product-manufacturer {
+                margin-top: 16px;
+                font-size: 14px;
                 font-weight: 600;
-                color: #c00;
-                margin: 10px 0 08px 0
-            }
-        }
-
-        .product-view {
-            opacity: 0;
-            height: 0;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            
-            @keyframes fadeIn {
-                0% {
-                    opacity: 0;
-                    height: 0;
-                }
-                100% {
-                    opacity: 1;
-                    height: 100%;
-                    transform: translateY(0%);
-                }
+                color: $text-color;
             }
 
-            @keyframes fadeOut {
-                0% {
-                    opacity: 1;
-                    height: 100%;
-                }
-                100% {
-                    opacity: 0;
-                    height: 0;
-                }
+            .product-fragrance {
+                margin-top: 4px;
+                font-size: 14px;
+                font-weight: 600;
+                color: $text-color;
             }
 
-            .product-view-btn {
-                display: none;
-                padding: 12px 30px;
-                background-color: white;
-                color: black;
+            .product-price {
+                margin-top: 24px;
                 font-size: 16px;
                 font-weight: 600;
-                border-radius: 4px;
-                transition: all 300ms ease-in-out;
-
-                &:hover {
-                    cursor: pointer;
-                    background-color: $primary-color;
-                    color: white;
-                }
-            }
-        }
-
-        &:hover {
-            .product-view {
-                animation: fadeIn 0.8s both 0.2s;
-
-                .product-view-btn {
-                    display: block;
-                }
-            }
-        }
-
-        &:not(:hover) {
-            .product-view {
-                animation: fadeOut 1s both 0s;
+                color: #c00;
             }
         }
     }
@@ -125,11 +83,22 @@
         padding: 12px 4px;
         font-size: 14px;
         font-weight: 500;
+        text-transform: uppercase;
         transition: background-color 300ms ease-in-out;
 
         &:hover {
             cursor: pointer;
             background-color: $primary-color;
+        }
+    }
+
+    .product-pagination {
+        display: flex;
+        justify-content: center;
+        padding: 12px 0 50px 0;
+
+        ul {
+            margin-left: 18px;
         }
     }
 }

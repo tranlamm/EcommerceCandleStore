@@ -7,7 +7,7 @@
             <div class="login-wrapper row">
                 <div class="col col-4 d-none d-md-block">
                     <div data-tilt="">
-                        <img class="login-img" src="{{ asset('images/login.webp') }}" alt="IMG">
+                        <img class="login-img" src="{{ asset('images/login/login.webp') }}" alt="IMG">
                     </div>
                 </div>
 

@@ -17,25 +17,26 @@
                 @endif
             </div>
             
-            <div class="row">
-                <div class="col col6">
-                    <div class="form-floating mb-4">
+            <div class="row align-items-center mb-4">
+                <div class="col col-6"> 
+                    <label class="form-label"><strong>Loại mùi *</strong></label>
+                    <select class="form-select" aria-label="Default select example" name="loaiMuiHuong">
+                        @foreach ($fragrances as $fragrance)
+                            <option value="{{ $fragrance->id }}" {{ ($candle->loaiMuiHuong === $fragrance->id) ? 'selected' : "" }}>{{ $fragrance->theLoai }}</option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('loaiMuiHuong'))
+                        <span class="text-danger">{{ $errors->first('loaiMuiHuong') }}</span>
+                    @endif
+                </div>
+                <div class="col col-6">
+                    <div class="form-floating">
                         <input type="text" class="form-control" id="input2" placeholder="name@example.com" name="muiHuong" value="{{ $candle->muiHuong }}">
                         <label for="input2" class="form-label"><strong>Mùi hương *</strong></label>
                         @if ($errors->has('muiHuong'))
                             <span class="text-danger">{{ $errors->first('muiHuong') }}</span>
                         @endif
                     </div>
-                </div>
-    
-                <div class="col col6">
-                    <div class="form-floating mb-4">
-                        <input type="text" class="form-control" id="input3" placeholder="name@example.com" name="mauSac" value="{{ $candle->mauSac }}"> 
-                        <label for="input3" class="form-label"><strong>Màu sắc *</strong></label>
-                        @if ($errors->has('mauSac'))
-                            <span class="text-danger">{{ $errors->first('mauSac') }}</span>
-                        @endif
-                    </div> 
                 </div>
             </div>
     
@@ -52,13 +53,15 @@
                 <div class="col col-6 d-flex align-items-center">
                     <label class="form-label me-3 mb-0"><strong>Số Bấc *</strong></label>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="soBac" value="1" id="flexRadioDefault1" {{ ($candle->soBac === 1) ? "checked" : "" }}>
+                        <input class="form-check-input" type="radio" name="soBac" value="1" id="flexRadioDefault1" 
+                        {{ ($candle->loaiSanPham === 'single wick candle') ? "checked" : "" }}>
                         <label class="form-check-label" for="flexRadioDefault1">
                             Single Wick
                         </label>
                         </div>
                         <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="soBac" value="3" id="flexRadioDefault2" {{ ($candle->soBac === 3) ? "checked" : "" }}>
+                        <input class="form-check-input" type="radio" name="soBac" value="3" id="flexRadioDefault2" 
+                        {{ ($candle->loaiSanPham === '3 wick candle') ? "checked" : "" }}>
                         <label class="form-check-label" for="flexRadioDefault2">
                             3 Wick
                         </label>
@@ -115,7 +118,11 @@
                     </div> 
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            
+            <div class="d-flex justify-content-between">
+                <a class="btn btn-success" href="{{ route('manufacturer.create') }}" role="button">Thêm nhà cung cấp</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
         </form>
     </div>
 </div>

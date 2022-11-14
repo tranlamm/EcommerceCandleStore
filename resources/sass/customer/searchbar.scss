@@ -2,8 +2,7 @@
 
 .search-bar {
     background-color: white;
-    padding-top: 50px;
-    padding-bottom: 100px;
+    padding: 50px 0;
 
     .search-bar__header {
         padding-bottom: 18px;
@@ -14,8 +13,9 @@
             display: flex;
             align-items: center;
             font-size: 26px;
-            font-weight: 500;
-            color: $primary-color;
+            font-weight: 700;
+            color: $text-color;
+            text-transform: uppercase;
         }
 
         .search-bar__input-wrapper {
@@ -60,7 +60,6 @@
     .search-bar__filter {
         padding: 18px 24px;
         background-color: #f5f5f5;
-        border-radius: 2px;
         display: flex;
         align-items: center;
 
@@ -93,6 +92,7 @@
             }
         }
     }
+    
     .search-bar__menu {
         width: 100%;
         border: 1px solid rgb(220, 220, 220);
@@ -107,8 +107,46 @@
             transition: all 300ms ease-in-out;
 
             &:hover {
+                cursor: pointer;
                 color: $primary-color;
             }
+        }
+    }
+
+    .has-filtered {
+        background-color: #f5f5f5;
+        display: flex;
+        padding: 8px 24px;
+
+        .has-filtered-item {
+            background-color: white;
+            display: flex;
+            align-items: center;
+            padding: 4px 12px;
+            margin-right: 32px;
+            border-radius: 4px;
+
+            .has-filtered-name {
+                color: $text-color;
+                font-size: 16px;
+                font-weight: 600;
+                margin-right: 8px;
+            }
+
+            .clear-filtered-item {
+                color: #dc3545;
+                font-size: 18px;
+                padding: 0 4px;
+
+                &:hover {
+                    cursor: pointer;
+                    color: #333;
+                }
+            }
+        }
+
+        .has-filtered-item-sort {
+            background-color: $primary-color;
         }
     }
 

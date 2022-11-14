@@ -26,10 +26,10 @@
               <option value="giaNhap desc">Giá nhập giảm dần</option>
               <option value="giaBan asc">Giá bán tăng dần</option>
               <option value="giaBan desc">Giá bán giảm dần</option>
-              <option value="conLai asc">Còn lại nhiều nhất</option>
-              <option value="conLai desc">Còn lại ít nhất</option>
-              <option value="daBan asc">Đã bán nhiều nhất</option>
-              <option value="daBan desc">Đã bán ít nhất</option>
+              <option value="conLai desc">Còn lại nhiều nhất</option>
+              <option value="conLai asc">Còn lại ít nhất</option>
+              <option value="daBan desc">Đã bán nhiều nhất</option>
+              <option value="daBan asc">Đã bán ít nhất</option>
               <option value="updated_at desc">Mới nhất</option>
               <option value="updated_at asc">Cũ nhất</option>
             </select>
@@ -57,6 +57,7 @@
             <th scope="col">ID</th>
             <th scope="col">Hình ảnh</th>
             <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Mặt hàng</th>
             <th scope="col">Nhà sản xuất</th>
             <th scope="col">Giá Nhập</th>
             <th scope="col">Giá Bán</th>
@@ -73,9 +74,10 @@
                     <th scope="row">{{ $essentialOil->id }}</th>
                     <td>
                       <div class="product__image-wrapper">
-                        <img class="product__image" src="{{ asset('images/' . $essentialOil->image_path) }}" alt="Ảnh sản phẩm">
+                        <img class="product__image" src="{{ asset('images/products/' . $essentialOil->image_path) }}" alt="Ảnh sản phẩm">
                       </div>
                     </td>
+                    <td>{{ $essentialOil->loaiSanPham }}</td>
                     <td>{{ $essentialOil->tenSanPham }}</td>
                     <td>{{ $essentialOil->manufacturer()->first()->ten }}</td>
                     <td>@currency_format($essentialOil->giaNhap)</td>

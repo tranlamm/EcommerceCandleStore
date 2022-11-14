@@ -6,11 +6,11 @@
     <a class="btn btn-outline-dark mb-4 btn-sm" href="{{ route('manufacturer.index') }}" role="button"><i class="fa-solid fa-rotate-left"></i></a>
     <div class="page__content-wrapper">
         <span class="page-title">Thêm nhà cung cấp mới</span>
-        <form action="{{ route('manufacturer.store') }}" method="post">
+        <form action="{{ route('manufacturer.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form-floating mb-4">
                 <input type="text" class="form-control" id="input1" placeholder="name@example.com" name="ten" value="{{ old('ten') }}">
-                <label for="input1" class="form-label" >Tên nhà cung cấp *</label>
+                <label for="input1" class="form-label">Tên nhà cung cấp *</label>
                 @if ($errors->has('ten'))
                     <span class="text-danger">{{ $errors->first('ten') }}</span>
                 @endif
@@ -37,8 +37,20 @@
                     </div> 
                 </div>
             </div>
-            
-            <button type="submit" class="btn btn-primary">Submit</button>
+
+            <div class="row justify-content-between">
+                <div class="col col-6">
+                    <label class="form-label d-block"><strong>Ảnh</strong></label>
+                    <input class="form-control" type="file" name="image">
+                    @if ($errors->has('image'))
+                        <span class="text-danger">{{ $errors->first('image') }}</span>
+                    @endif
+                </div>
+
+                <div class="col col-1 d-flex justify-content-end align-items-end">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
         </form>
     </div>
 </div>

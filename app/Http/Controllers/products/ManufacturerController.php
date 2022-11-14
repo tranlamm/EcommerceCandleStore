@@ -59,13 +59,22 @@ class ManufacturerController extends Controller
                 'required',
                 'regex:/(84|0[3|5|7|8|9])+([0-9]{8})/u',
             ),
-            
+            'image' => 'bail|mimes:png,jpg,jpeq,webp|max:5048',
         ]);
+
+        if ($request->image !== NULL) {
+            $generatedImageName = 'image' . time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->image->move(public_path('images/manufacturers'), $generatedImageName);
+        }
+        else {
+            $generatedImageName = "no_image.png";
+        }
 
         $manufacturer = Manufacturer::create([
             'ten' => $request->input('ten'),
             'diaChi' => $request->input('diaChi'),
-            'soDienThoai' => $request->input('soDienThoai')
+            'soDienThoai' => $request->input('soDienThoai'),
+            'image_path' => $generatedImageName,
         ]);
 
         return redirect(route('manufacturer.index'))->with('message', 'Created successfully!');
@@ -111,12 +120,23 @@ class ManufacturerController extends Controller
                 'required',
                 'regex:/(84|0[3|5|7|8|9])+([0-9]{8})/u',
             ),
+            'image' => 'bail|mimes:png,jpg,jpeq,webp|max:5048',
         ]);
+
+        if ($request->image !== NULL) {
+            $generatedImageName = 'image' . time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->image->move(public_path('images/manufacturers'), $generatedImageName);
+            $new_image = $generatedImageName;
+        }
+        else {
+            $new_image = $request->old_image;
+        }
         
         $manufacturer = Manufacturer::where('id', $id)->update([
             'ten' => $request->input('ten'),
             'diaChi' => $request->input('diaChi'),
-            'soDienThoai' => $request->input('soDienThoai')
+            'soDienThoai' => $request->input('soDienThoai'),
+            'image_path' => $new_image,
         ]);
         return redirect(route('manufacturer.index'))->with('message', 'Updated successfully!');
     }
@@ -138,39 +158,37 @@ class ManufacturerController extends Controller
     {
         $search = $request->input('search');
         $category = $request->input('category');
-
         $manufacturer = Manufacturer::find($id);
-        $candleProducts = $manufacturer->candleProducts->toArray();
-        $essentialOilProducts = $manufacturer->essentialOilProducts->toArray();
-        $scentedWaxProducts = $manufacturer->scentedWaxProducts->toArray();
-        $allProducts = array_merge($candleProducts, $essentialOilProducts, $scentedWaxProducts);
 
-        $result = [];
-        if ($category) {
-            if (in_array('all', $category)) {
-                $result = $allProducts;
-            }
-            else {
-                if (in_array('candle', $category)) 
-                    $result = array_merge($result, $candleProducts);
-                if (in_array('essentialOil', $category)) 
-                    $result = array_merge($result, $essentialOilProducts);
-                if (in_array('scentedWax', $category)) 
-                    $result = array_merge($result, $scentedWaxProducts);
-            }
-        }
-        else {
-            $result = $allProducts;
+        switch ($category)
+        {
+            case 'candle':
+                $products = $manufacturer->products()->get()->whereIn('loaiSanPham', ['single wick candle', '3 wick candle'])->toArray();
+                break;
+            case 'essential oil':
+                $products = $manufacturer->products()->get()->where('loaiSanPham', '=', 'essential oil')->toArray();
+                break;
+            case 'scented wax':
+                $products = $manufacturer->products()->get()->where('loaiSanPham', '=', 'scented wax')->toArray();
+                break;    
+            default:
+                $products = $manufacturer->products()->get()->toArray();
+                break;
         }
 
-        if ($search) {
+        if ($search) 
+        {
             $searchResult = []; 
-            foreach ($result as $product) {
+            foreach ($products as $product) {
                 if (str_contains(strtolower($product['tenSanPham']), strtolower($search))) {
                     array_push($searchResult, $product);
                 }
             }
             $result = $searchResult;
+        }
+        else 
+        {
+            $result = $products;
         }
 
         return view('admin.products.manufacturerAllProduct', ['allProducts' => $result, 'manufacturer' => $manufacturer, 'old_category' => $category]);

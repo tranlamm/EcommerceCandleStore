@@ -4,7 +4,7 @@
             <div class="col col-5">
                 <div class="info">
                     <div class="info-img">
-                        <img src="{{ asset('images/logo-brand.png') }}" alt="">
+                        <img src="{{ asset('images/shop/logo-brand.png') }}" alt="">
                     </div>
                     <div class="info-text">
                         Hello my name is Tran Lam. I'm currently a computer 

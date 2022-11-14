@@ -12,30 +12,30 @@
           
           <div class="d-flex align-items-center justify-content-around">
               <div class="form-check me-4">
-                <input class="form-check-input" type="checkbox" value="all" id="flexCheckDefault" name="category[]"
-                {{ $old_category ? (in_array('all', $old_category) ? 'checked' : '') : '' }}>
+                <input class="form-check-input" type="radio" value="all" id="flexCheckDefault" name="category"
+                {{ $old_category === 'all' ? 'checked' : '' }}>
                 <label class="form-check-label" for="flexCheckDefault">
                   All
                 </label>
               </div>
               <div class="form-check me-4">
-                <input class="form-check-input" type="checkbox" value="candle" id="flexCheckDefault1" name="category[]"
-                {{ $old_category ? (in_array('candle', $old_category) ? 'checked' : '') : '' }}>
+                <input class="form-check-input" type="radio" value="candle" id="flexCheckDefault1" name="category"
+                {{ $old_category === 'candle' ? 'checked' : '' }}>
                 <label class="form-check-label" for="flexCheckDefault1">
                   Nến
                 </label>
               </div>
 
               <div class="form-check me-4">
-                <input class="form-check-input" type="checkbox" value="scentedWax" id="flexCheckDefault2" name="category[]"
-                {{ $old_category ? (in_array('scentedWax', $old_category) ? 'checked' : '') : '' }}>
+                <input class="form-check-input" type="radio" value="scented wax" id="flexCheckDefault2" name="category"
+                {{ $old_category === 'scented wax' ? 'checked' : '' }}>
                 <label class="form-check-label" for="flexCheckDefault2">
                   Sáp thơm
                 </label>
               </div>
               <div class="form-check me-4">
-                <input class="form-check-input" type="checkbox" value="essentialOil" id="flexCheckDefault3" name="category[]" 
-                {{ $old_category ? (in_array('essentialOil', $old_category) ? 'checked' : '') : '' }}>
+                <input class="form-check-input" type="radio" value="essential oil" id="flexCheckDefault3" name="category" 
+                {{ $old_category === 'essentail oil' ? 'checked' : '' }}>
                 <label class="form-check-label" for="flexCheckDefault3">
                   Tinh dầu
                 </label>
@@ -53,6 +53,9 @@
             <tr>
               <th scope="col">Tên sản phẩm</th>
               <th scope="col">Hình ảnh</th>
+              <th scope="col">Loại sản phẩm</th>
+              <th scope="col">Mùi hương</th>
+              <th scope="col">Trọng lượng</th>
               <th scope="col">Giá Nhập</th>
               <th scope="col">Giá Bán</th>
               <th scope="col">Còn lại</th>
@@ -65,9 +68,19 @@
                   <th scope="row">{{ $allProduct['tenSanPham'] }}</th>
                   <td>
                     <div class="product__image-wrapper">
-                      <img class="product__image" src="{{ asset('images/' . $allProduct['image_path']) }}" alt="Ảnh sản phẩm">
+                      <img class="product__image" src="{{ asset('images/products/' . $allProduct['image_path']) }}" alt="Ảnh sản phẩm">
                     </div>
                   </td>
+                  <td>{{ $allProduct['loaiSanPham'] }}</td>
+                  <td>{{ $allProduct["muiHuong"] }}</td>
+                  @switch($allProduct['loaiSanPham'])
+                    @case('essential oil')
+                      <td>{{ $allProduct["trongLuong"] }} ml</td>
+                      @break
+                    @default
+                      <td>{{ $allProduct["trongLuong"] }} g</td>
+                      @break
+                  @endswitch
                   <td>@currency_format($allProduct["giaNhap"])</td>
                   <td>@currency_format($allProduct["giaBan"])</td>
                   <td>{{ $allProduct["conLai"] }}</td>

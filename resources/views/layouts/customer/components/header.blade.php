@@ -23,7 +23,7 @@
                         </div>
                         <div class="split"></div>
                         <div class="top-bar__login">
-                            <a href="" class="top-bar__login-link"><i class="fa-solid fa-user me-2"></i>Login</a>
+                            <a href="{{ route('login_customer.index') }}" class="top-bar__login-link"><i class="fa-solid fa-user me-2"></i>Login</a>
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col col-lg-2 col-md-2 col-12">
-                    <div class="logo"><a href="/"><img src="{{ asset('images/logo-brand.png') }}" alt=""></a></div>
+                    <div class="logo"><a href="{{ route('shop.index') }}"><img src="{{ asset('images/shop/logo-brand.png') }}" alt=""></a></div>
                 </div>
                 <div class="col col-lg-8 col-md-7 col-12">
                     <div class="d-flex justify-content-center">
@@ -73,25 +73,25 @@
                                     <div class="cart-list">
                                         <div class="cart-item">
                                             <div class="item-des">
-                                                <div class="item-name">Nen thom</div>
+                                                <div class="item-name">Nến thơm</div>
                                                 <div class="item-price">@currency_format(100)</div>
                                             </div>
                                             <div class="item-img">
-                                                <img src="{{ asset('images/image1667226587_candleProduct1.jpg') }}" alt="Product">
+                                                <img src="{{ asset('images/products/uidev1_product.webp') }}" alt="Product">
                                             </div>
                                         </div>
                                         <div class="cart-item">
                                             <div class="item-des">
-                                                <div class="item-name">Nen thom</div>
+                                                <div class="item-name">Tinh dầu</div>
                                                 <div class="item-price">@currency_format(100)</div>
                                             </div>
                                             <div class="item-img">
-                                                <img src="{{ asset('images/image1667226587_candleProduct1.jpg') }}" alt="Product">
+                                                <img src="{{ asset('images/products/uidev2_product.jpg') }}" alt="Product">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="cart-total">
-                                        <div>Tong</div>
+                                        <div>Total</div>
                                         <div>@currency_format(100)</div>
                                     </div>
                                     <a class="btn btn-dark cart-checkout" href="#" role="button">CHECKOUT</a>

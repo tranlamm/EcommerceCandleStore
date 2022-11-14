@@ -19,7 +19,8 @@ class ManufacturerFactory extends Factory
         return [
             'ten' => fake()->name(),
             'diaChi' => fake()->address(),
-            'soDienThoai' => fake()->regexify("09\\d{8}")
+            'soDienThoai' => fake()->regexify("09\\d{8}"),
+            'image_path' => 'no_image.jpg'
         ];
     }
 }

@@ -11,20 +11,6 @@
                     <form class="d-flex" id="form__search" method="GET" action="{{ route('importinvoice.index') }}">
                         <input class="form-control form-search-input" type="text" name="tenDonHang" placeholder="Nhập tên đơn hàng"/>
 
-                        <select name="loaiHang" class="form-select form-search-select">
-                            <option value="">Loại mặt hàng</option>
-                            <option value="candle">Nến</option>
-                            <option value="scentedWax">Sáp thơm</option>
-                            <option value="essentialOil">Tinh dầu</option>
-                        </select>
-
-                        <select name="nhaCungCap" class="form-select form-search-select">
-                            <option value="">Nhà cung cấp</option>
-                            @foreach ($manufacturers as $manufacturer)
-                                <option value="{{ $manufacturer->id }}">{{ $manufacturer->ten }}</option>
-                            @endforeach
-                        </select>
-                        
                         <input type="hidden" name="order-type" id="order-type">
                         <input type="hidden" name="order-name" id="order-name">
                         <select id="form_order" class="form-select form-search-select">
@@ -56,10 +42,7 @@
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Tên đơn hàng</th>
-                <th scope="col">Mặt hàng</th>
-                <th scope="col">Tên sản phẩm</th>
-                <th scope="col">Nhà cung cấp</th>
-                <th scope="col">Số lượng</th>
+                <th scope="col">Nội dung</th>
                 <th scope="col">Tổng tiền</th>
                 <th scope="col">Ngày nhập hàng</th>
                 <th scope="col" colspan="2">Thao tác</th>
@@ -70,22 +53,7 @@
                     <tr>
                         <th scope="row">{{ $invoice->id }}</th>
                         <td>{{ $invoice->tenDonHang }}</td>
-                        @switch($invoice->loaiHang)
-                            @case('candle')
-                                <td>Nến thơm</td>
-                                @break
-                            @case('scentedWax')
-                                <td>Sáp thơm</td>
-                                @break
-                            @case('essentialOil')
-                                <td>Tinh dầu</td>
-                                @break
-                            @default
-                                <td></td>
-                        @endswitch
-                        <td>{{ $invoice->tenSanPham }}</td>
-                        <td>{{ $invoice->manufacturer()->first()->ten }}</td>
-                        <td>{{ $invoice->soLuong }}</td>
+                        <td>{{ $invoice->noiDung }}</td>
                         <td>@currency_format($invoice->tongTien)</td>
                         <td>@date_format($invoice->created_at)</td>
                         <td>

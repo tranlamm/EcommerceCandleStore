@@ -1,311 +1,42 @@
 @extends('layouts.customer.customer_layout_main')
-
 @section('content')
-
-<div class="content">
+<div class="container mt-2">
+    <img src="{{ asset('images/shop/banner_sale.jpg') }}" alt="sale merry christmas">
+</div>
+@include('layouts.customer.components.searchbar')
+<div class="content-product-wrapper">
     <div class="container">
         <div class="row">
-            <div class="col col-3">
-                <div class="product">
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <img src="{{ asset('images/image1667226587_candleProduct1.jpg') }}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">
-                                Frosted Cranberry
+            @foreach ($products as $product)
+                <div class="col col-3">
+                    <div class="product">
+                        <a href="" class="product-wrapper">
+                            <div class="product-img">
+                                <img src="{{ asset('images/products/' . $product->image_path) }}" alt="Product">
                             </div>
-                            <div class="product-type">
-                                3-Wick Candle
+                            <div class="product-info">
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="product-name">{{ $product->tenSanPham }}</div>
+                                    <div class="product-type">{{ $product->loaiSanPham }}</div>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <div class="product-manufacturer">{{ 'Nhà cung cấp: ' . $product->manufacturer()->first()->ten }}</div>
+                                    <div class="product-fragrance">{{ 'Mùi hương: ' .$product->muiHuong }}</div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="product-price">@currency_format($product->giaBan)</div>
+                                    {{-- <div class="product-review"></div> --}}
+                                </div>
                             </div>
-                            <div class="product-price">
-                                @currency_format('200000')
-                            </div>
-                        </div>
-                        <div class="product-view">
-                            <a href="" class="product-view-btn">VIEW PRODUCT</a>
-                        </div>
+                        </a>
+                        <div class="product-btn">Add to bag</div>
                     </div>
-                    <div class="product-btn">ADD TO BAG</div>
                 </div>
-            </div>
-
-            <div class="col col-3">
-                <div class="product">
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <img src="{{ asset('images/image1667226587_candleProduct1.jpg') }}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">
-                                Frosted Cranberry
-                            </div>
-                            <div class="product-type">
-                                3-Wick Candle
-                            </div>
-                            <div class="product-price">
-                                @currency_format('200000')
-                            </div>
-                        </div>
-                        <div class="product-view">
-                            <a href="" class="product-view-btn">VIEW PRODUCT</a>
-                        </div>
-                    </div>
-                    <div class="product-btn">ADD TO BAG</div>
-                </div>
-            </div>
-
-            <div class="col col-3">
-                <div class="product">
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <img src="{{ asset('images/image1667226587_candleProduct1.jpg') }}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">
-                                Frosted Cranberry
-                            </div>
-                            <div class="product-type">
-                                3-Wick Candle
-                            </div>
-                            <div class="product-price">
-                                @currency_format('200000')
-                            </div>
-                        </div>
-                        <div class="product-view">
-                            <a href="" class="product-view-btn">VIEW PRODUCT</a>
-                        </div>
-                    </div>
-                    <div class="product-btn">ADD TO BAG</div>
-                </div>
-            </div>
-
-            <div class="col col-3">
-                <div class="product">
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <img src="{{ asset('images/image1667226587_candleProduct1.jpg') }}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">
-                                Frosted Cranberry
-                            </div>
-                            <div class="product-type">
-                                3-Wick Candle
-                            </div>
-                            <div class="product-price">
-                                @currency_format('200000')
-                            </div>
-                        </div>
-                        <div class="product-view">
-                            <a href="" class="product-view-btn">VIEW PRODUCT</a>
-                        </div>
-                    </div>
-                    <div class="product-btn">ADD TO BAG</div>
-                </div>
-            </div>
-
-            <div class="col col-3">
-                <div class="product">
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <img src="{{ asset('images/image1667226587_candleProduct1.jpg') }}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">
-                                Frosted Cranberry
-                            </div>
-                            <div class="product-type">
-                                3-Wick Candle
-                            </div>
-                            <div class="product-price">
-                                @currency_format('200000')
-                            </div>
-                        </div>
-                        <div class="product-view">
-                            <a href="" class="product-view-btn">VIEW PRODUCT</a>
-                        </div>
-                    </div>
-                    <div class="product-btn">ADD TO BAG</div>
-                </div>
-            </div>
-
-            <div class="col col-3">
-                <div class="product">
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <img src="{{ asset('images/image1667226587_candleProduct1.jpg') }}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">
-                                Frosted Cranberry
-                            </div>
-                            <div class="product-type">
-                                3-Wick Candle
-                            </div>
-                            <div class="product-price">
-                                @currency_format('200000')
-                            </div>
-                        </div>
-                        <div class="product-view">
-                            <a href="" class="product-view-btn">VIEW PRODUCT</a>
-                        </div>
-                    </div>
-                    <div class="product-btn">ADD TO BAG</div>
-                </div>
-            </div>
-
-            <div class="col col-3">
-                <div class="product">
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <img src="{{ asset('images/image1667226587_candleProduct1.jpg') }}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">
-                                Frosted Cranberry
-                            </div>
-                            <div class="product-type">
-                                3-Wick Candle
-                            </div>
-                            <div class="product-price">
-                                @currency_format('200000')
-                            </div>
-                        </div>
-                        <div class="product-view">
-                            <a href="" class="product-view-btn">VIEW PRODUCT</a>
-                        </div>
-                    </div>
-                    <div class="product-btn">ADD TO BAG</div>
-                </div>
-            </div>
-
-            <div class="col col-3">
-                <div class="product">
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <img src="{{ asset('images/image1667226587_candleProduct1.jpg') }}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">
-                                Frosted Cranberry
-                            </div>
-                            <div class="product-type">
-                                3-Wick Candle
-                            </div>
-                            <div class="product-price">
-                                @currency_format('200000')
-                            </div>
-                        </div>
-                        <div class="product-view">
-                            <a href="" class="product-view-btn">VIEW PRODUCT</a>
-                        </div>
-                    </div>
-                    <div class="product-btn">ADD TO BAG</div>
-                </div>
-            </div>
-
-            <div class="col col-3">
-                <div class="product">
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <img src="{{ asset('images/image1667226587_candleProduct1.jpg') }}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">
-                                Frosted Cranberry
-                            </div>
-                            <div class="product-type">
-                                3-Wick Candle
-                            </div>
-                            <div class="product-price">
-                                @currency_format('200000')
-                            </div>
-                        </div>
-                        <div class="product-view">
-                            <a href="" class="product-view-btn">VIEW PRODUCT</a>
-                        </div>
-                    </div>
-                    <div class="product-btn">ADD TO BAG</div>
-                </div>
-            </div>
-
-            <div class="col col-3">
-                <div class="product">
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <img src="{{ asset('images/image1667226587_candleProduct1.jpg') }}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">
-                                Frosted Cranberry
-                            </div>
-                            <div class="product-type">
-                                3-Wick Candle
-                            </div>
-                            <div class="product-price">
-                                @currency_format('200000')
-                            </div>
-                        </div>
-                        <div class="product-view">
-                            <a href="" class="product-view-btn">VIEW PRODUCT</a>
-                        </div>
-                    </div>
-                    <div class="product-btn">ADD TO BAG</div>
-                </div>
-            </div>
-
-            <div class="col col-3">
-                <div class="product">
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <img src="{{ asset('images/image1667226587_candleProduct1.jpg') }}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">
-                                Frosted Cranberry
-                            </div>
-                            <div class="product-type">
-                                3-Wick Candle
-                            </div>
-                            <div class="product-price">
-                                @currency_format('200000')
-                            </div>
-                        </div>
-                        <div class="product-view">
-                            <a href="" class="product-view-btn">VIEW PRODUCT</a>
-                        </div>
-                    </div>
-                    <div class="product-btn">ADD TO BAG</div>
-                </div>
-            </div>
-
-            <div class="col col-3">
-                <div class="product">
-                    <div class="product-wrapper">
-                        <div class="product-img">
-                            <img src="{{ asset('images/image1667226587_candleProduct1.jpg') }}" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">
-                                Frosted Cranberry
-                            </div>
-                            <div class="product-type">
-                                3-Wick Candle
-                            </div>
-                            <div class="product-price">
-                                @currency_format('200000')
-                            </div>
-                        </div>
-                        <div class="product-view">
-                            <a href="" class="product-view-btn">VIEW PRODUCT</a>
-                        </div>
-                    </div>
-                    <div class="product-btn">ADD TO BAG</div>
-                </div>
-            </div>
+            @endforeach
+        </div>
+        <div class="product-pagination">
+            {{ $products->links('pagination::bootstrap-5') }}
         </div>
     </div>
 </div>
-
 @endsection

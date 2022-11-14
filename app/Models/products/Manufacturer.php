@@ -10,19 +10,12 @@ class Manufacturer extends Model
     use HasFactory;
     protected $table = 'manufacturers';
     protected $fillable = [
-        'id', 'ten', 'diaChi', 'soDienThoai', 'created_at', 'updated_at'
+        'id', 'ten', 'diaChi', 'soDienThoai', 'image_path', 'created_at', 'updated_at'
     ];
 
-    public function candleProducts() {
-        return $this->hasMany(CandleProduct::class, 'nhaCungCap', 'id');
-    }
-
-    public function essentialOilProducts() {
-        return $this->hasMany(EssentialOilProduct::class, 'nhaCungCap', 'id');
-    }
-
-    public function scentedWaxProducts() {
-        return $this->hasMany(ScentedWaxProduct::class, 'nhaCungCap', 'id');
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'nhaCungCap', 'id');
     }
 }
 

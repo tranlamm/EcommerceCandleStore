@@ -19,16 +19,13 @@
 
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/customer/header.js',
-        'resources/sass/customer/customer.scss', 'resources/sass/customer/carousel.scss', 'resources/sass/customer/searchbar.scss',
-        'resources/sass/customer/content.scss',])
+        'resources/sass/customer/customer.scss', 'resources/sass/customer/shop_view.scss', 'resources/sass/customer/content.scss',])
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </head>
 
     <body>
        @include('layouts.customer.components.header')
-       @include('layouts.customer.components.carousel')
-       <div>
-            @include('layouts.customer.components.searchbar')
+       <div class="content">
             @yield('content')
        </div>
        @include('layouts.customer.components.footer')

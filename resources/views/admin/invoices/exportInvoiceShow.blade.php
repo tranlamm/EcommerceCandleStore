@@ -11,14 +11,7 @@
                     <form class="d-flex" id="form__search" method="GET" action="{{ route('exportinvoice.index') }}">
                         <input class="form-control form-search-input" type="text" name="tenDonHang" placeholder="Nhập tên đơn hàng"/>
 
-                        <select name="loaiHang" class="form-select form-search-select">
-                            <option value="">Loại mặt hàng</option>
-                            <option value="candle">Nến</option>
-                            <option value="scentedWax">Sáp thơm</option>
-                            <option value="essentialOil">Tinh dầu</option>
-                        </select>
-
-                        <select name="hinhThuc" class="form-select form-search-select">
+                        <select name="hinhThucMua" class="form-select form-search-select">
                             <option value="">Hình thức mua</option>
                             <option value="offline">Trực tiếp tại cửa hàng</option>
                             <option value="online">Online trên website</option>
@@ -61,15 +54,14 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Tên đơn hàng</th>
-                    <th scope="col">Tên khách hàng</th>
                     <th scope="col">Hình thức mua</th>
-                    <th scope="col">Mặt hàng</th>
-                    <th scope="col">Tên sản phẩm</th>
-                    <th scope="col">Số lượng</th>
+                    <th scope="col">Tên khách hàng</th>
+                    <th scope="col">Số điện thoại</th>
+                    <th scope="col">Địa chỉ</th>
                     <th scope="col">Tổng tiền</th>
                     <th scope="col">Ngày xuất hàng</th>
                     <th scope="col">Trạng thái</th>
-                    <th scope="col" colspan="2">Thao tác</th>
+                    <th scope="col" colspan="3">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -77,8 +69,7 @@
                     <tr>
                         <th scope="row">{{ $invoice->id }}</th>
                         <td>{{ $invoice->tenDonHang }}</td>
-                        <td>{{ $invoice->tenKhachHang }}</td>
-                        @switch($invoice->hinhThuc)
+                        @switch($invoice->hinhThucMua)
                             @case('offline')
                                 <td>Trực tiếp tại cửa hàng</td>
                                 @break
@@ -88,21 +79,9 @@
                             @default
                                 <td></td>
                         @endswitch
-                        @switch($invoice->loaiHang)
-                            @case('candle')
-                                <td>Nến thơm</td>
-                                @break
-                            @case('scentedWax')
-                                <td>Sáp thơm</td>
-                                @break
-                            @case('essentialOil')
-                                <td>Tinh dầu</td>
-                                @break
-                            @default
-                                <td></td>
-                        @endswitch
-                        <td>{{ $invoice->tenSanPham }}</td>
-                        <td>{{ $invoice->soLuong }}</td>
+                        <td>{{ $invoice->tenKhachHang }}</td>
+                        <td>{{ $invoice->soDienThoai }}</td>
+                        <td>{{ $invoice->diaChi }}</td>
                         <td>@currency_format($invoice->tongTien)</td>
                         <td>@date_format($invoice->created_at)</td>
                         @switch($invoice->trangThai)
@@ -119,6 +98,9 @@
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a role="button" href="{{ route('exportinvoice.show', "$invoice->id") }}" class="btn btn-outline-success btn-sm">Chi tiết</a>
                                 <button class="btn btn-outline-danger btn-sm" data-id="{{ $invoice->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Xóa</button>
+                                @if ($invoice->trangThai == 'pending')
+                                    <a role="button" href="" class="btn btn-outline-dark btn-sm">Checkout</a>
+                                @endif
                             </div>
                         </td>
                     </tr>

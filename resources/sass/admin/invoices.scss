@@ -1,3 +1,79 @@
+@media print {
+    body {
+        * {
+            display: none !important;
+        }
+    }
+
+    .content-wrapper {
+        margin: 0;
+        display: block !important;
+
+        * {
+            display: none !important;
+        }
+
+        & > .col-10 {
+            display: block !important;
+            background-color: white;
+            width: 100%;
+        }
+    }
+
+    .page-wrapper {
+        display: block !important;
+        padding: 0;
+    
+        .page__content-wrapper {
+            padding: 0 !important;
+            border-radius: 0 !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+            display: block !important;            
+    
+            .invoice-wrapper {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                display: block !important;
+
+                * {
+                    display: block !important;
+                }
+
+                .d-flex {
+                    display: flex !important;
+                }
+
+                span {
+                    display: inline-block !important;
+                }
+
+                table {
+                    display: table !important;
+                    thead {
+                        display: table-header-group !important;
+                    }
+                    tbody {
+                        display: table-row-group !important;
+                    }
+                    tr {
+                        display: table-row !important;
+                    }
+                    th {
+                        display: table-cell !important;
+                    }
+                    td {
+                        display: table-cell !important;
+                    }
+                }
+            }
+        }
+    }
+}
+    
+
 .invoice-wrapper {
     width: 80%;
     margin: auto;
@@ -38,4 +114,18 @@
 .invoice-split {
     margin: 40px 0;
     border: 1px solid rgb(200, 200, 200);
+}
+
+.form-import-invoice {
+    margin-bottom: 18px;
+
+    .form-wrapper {
+        padding: 12px 0 40px 0;
+        border-bottom: 1px solid rgb(200, 200, 200);
+
+        .form-input-price {
+            display: none;
+            margin-top: 18px;
+        }
+    }
 }

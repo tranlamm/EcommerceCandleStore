@@ -27,7 +27,7 @@
       </div>
 
       <div class="col col-4 d-flex justify-content-end">
-        <a role="button" class="btn btn-primary" href="{{ route('manufacturer.create') }}">Thêm Mới</a>
+        <a role="button" class="btn btn-outline-primary" href="{{ route('manufacturer.create') }}">Thêm Mới<i class="fa-solid fa-plus ms-2"></i></a>
       </div>
     </div>
   </div>
@@ -40,6 +40,7 @@
         <thead>
           <tr>
             <th scope="col">ID</th>
+            <th scope="col">Logo thương hiệu</th>
             <th scope="col">Nhà cung cấp</th>
             <th scope="col">Địa chỉ</th>
             <th scope="col">Số điện thoại</th>
@@ -53,6 +54,11 @@
             @foreach ($manufacturers as $manufacturer)
                 <tr>
                     <th scope="row">{{ $manufacturer->id }}</th>
+                    <td>
+                      <div class="product__image-wrapper">
+                        <img class="product__image" src="{{ asset('images/manufacturers/' . $manufacturer->image_path) }}" alt="Brand Logo">
+                      </div>
+                    </td>
                     <td>{{ $manufacturer->ten }}</td>
                     <td>{{ $manufacturer->diaChi }}</td>
                     <td>{{ $manufacturer->soDienThoai }}</td>

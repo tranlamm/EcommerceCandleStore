@@ -17,9 +17,20 @@
                 @endif
             </div>
             
-            <div class="row">
-                <div class="col col12">
-                    <div class="form-floating mb-4">
+            <div class="row align-items-center mb-4">
+                <div class="col col-6"> 
+                    <label class="form-label"><strong>Loại mùi *</strong></label>
+                    <select class="form-select" aria-label="Default select example" name="loaiMuiHuong">
+                        @foreach ($fragrances as $fragrance)
+                            <option value="{{ $fragrance->id }}" {{ ($essentialOil->loaiMuiHuong === $fragrance->id) ? "selected" : "" }}>{{ $fragrance->theLoai }}</option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('loaiMuiHuong'))
+                        <span class="text-danger">{{ $errors->first('loaiMuiHuong') }}</span>
+                    @endif
+                </div>
+                <div class="col col-6">
+                    <div class="form-floating">
                         <input type="text" class="form-control" id="input2" placeholder="name@example.com" name="muiHuong" value="{{ $essentialOil->muiHuong }}">
                         <label for="input2" class="form-label"><strong>Mùi hương *</strong></label>
                         @if ($errors->has('muiHuong'))
@@ -44,7 +55,7 @@
 
                 <div class="col col-4">
                     <div class="form-floating mt-2">
-                        <input type="text" class="form-control" id="input4" placeholder="name@example.com" name="theTich" value="{{ $essentialOil->theTich }}">
+                        <input type="text" class="form-control" id="input4" placeholder="name@example.com" name="theTich" value="{{ $essentialOil->trongLuong }}">
                         <label for="input4" class="form-label"><strong>Thể tích  *</strong></label>
                         @if ($errors->has('theTich'))
                             <span class="text-danger">{{ $errors->first('theTich') }}</span>
@@ -91,7 +102,10 @@
                 </div>
             </div>
             
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="d-flex justify-content-between">
+                <a class="btn btn-success" href="{{ route('manufacturer.create') }}" role="button">Thêm nhà cung cấp</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
         </form>
     </div>
 </div>

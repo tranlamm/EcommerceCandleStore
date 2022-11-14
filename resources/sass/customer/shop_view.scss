@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+@import '../variables';
+@import './carousel.scss';
+
+.banner {
+    background-color: #f6f6f6;
+    padding-top: 18px;
+    padding-bottom: 18px;
+
+    .banner-wrapper {
+        position: relative;
+        
+        .banner-category-info {
+            position: absolute;
+            top: 10%;
+            left: 8%;
+
+            .banner-name {
+                font-size: 24px;
+                font-weight: 800;
+            }
+
+            .banner-btn {
+                display: inline-block;
+                margin-top: 12px;
+                font-size: 16px;
+                font-weight: 500;
+                color: $text-color;
+                border-bottom: 2px solid $primary-color;
+                transition: all 200ms linear;
+
+                &:hover {
+                    color: $primary-color;
+                    border-bottom: 2px solid black;
+                }
+            }
+        }
+
+        .banner-category {
+            background-color: white;
+            object-position: 90%;
+            height: $banner-category-height;
+            transition: all 400ms linear;
+
+            &:hover {
+                filter: brightness(74%);
+            }
+        }
+
+        .banner-main {
+            object-fit: cover;
+            object-position: left bottom;
+            transition: all 200ms linear;
+        }
+
+        .banner-main-info {
+            position: absolute;
+            bottom: 4%;
+            left: 6%;
+
+            .banner-main-name {
+                font-family: 'Dancing Script', cursive;
+                font-size: 32px;
+                font-weight: 600;
+            }
+
+            .banner-main-title {
+                width: 350px;
+                font-family: 'Dancing Script', cursive;
+                font-size: 20px;
+            }
+
+            .banner-main-btn {
+                display: inline-block;
+                margin-top: 12px;
+                font-size: 16px;
+                font-weight: 500;
+                color: $text-color;
+                background-color: $primary-color;
+                padding: 8px 24px;
+                transition: all 200ms linear;
+
+                &:hover {
+                    color: $primary-color;
+                    background-color: #333;
+                }
+            }
+        }
+    }
+}
+
+.banner-sale {
+    margin-top: 100px;
+    margin-bottom: 8px;
+}
+
+.shopping {
+    .shopping-wrapper {
+        img {
+            object-fit: cover;
+        }
+    }
+
+    .shopping-info-wrapper {
+        background-color: #e4d0bc;
+
+        .shopping-info {
+            padding: 10% 15%; 
+
+            .shopping-name {
+                font-family: 'Dancing Script', cursive;
+                font-size: 34px;
+                font-weight: 600;
+            }
+
+            .shopping-label {
+                font-family: 'Dancing Script', cursive;
+                font-size: 28px;
+                margin-top: 18px;
+            }
+
+            .shopping-des {
+                font-size: 18px;
+                width: 60%;
+                margin-top: 8px;
+            }
+
+            .shopping-btn {
+                display: block;
+                background-color: white;
+                color: black;
+                font-size: 18px;
+                font-weight: 500;
+                text-align: center;
+                padding: 12px 18px;
+                margin-top: 18px;
+                border-radius: 4px;
+                transition: all 300ms ease-in-out;
+
+                &:hover {
+                    color: white;
+                    background-color: $primary-color;
+                }
+            }
+        }
+    }
+}
+
+.category {
+    margin-top: 50px;
+
+    .category-wrapper {
+        background-color: $primary-color;
+        padding: 50px;
+        
+        .category-label {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            transition: all 300ms linear;
+
+            .category-img {
+                width: 150px;
+                height: 150px;
+            }
+    
+            .category-name {
+                font-size: 19px;
+                font-weight: 600;
+                color: $text-color;
+                margin: 12px 0;
+            }
+
+            &:hover {
+                filter: brightness(70%);
+
+                .category-name {
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+}
+
+.newsletter {
+    margin-top: 50px;
+    text-align: center;
+
+    .newsletter-label {
+        font-size: 22px;
+        font-weight: 600;
+        color: $text-color;
+        margin-bottom: 5px;
+    }
+
+    .newsletter-des {
+        color: #777;
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+
+    .newsletter-btn {
+        width: 160px;
+        padding: 12px 0;
+        background-color: $primary-color;
+        color: white;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 300ms linear;
+        
+        &:hover {
+            color: $primary-color;
+            background-color: #333;
+        }
+    }
+}
+
+.service {
+    margin-top: 50px;
+
+    .category-banner {
+        display: flex;
+        height: 350px;
+
+        .category-banner-wrapper {
+            width: 50%;
+            display: flex;
+            position: relative;
+           
+            img {
+                object-fit: cover;
+            }
+
+            .view-banner {
+                position: absolute;
+                bottom: 40%;
+                left: 10%;
+                background-color: $primary-color;
+                color: $text-color;
+                border-radius: 4px;
+                padding: 12px 30px;
+                font-size: 16px;
+                font-weight: 600;
+                transition: all 300ms linear;
+
+                &:hover {
+                    color: $primary-color;
+                    background-color: #333;
+                }
+            }
+        }
+    }
+
+    .service-wrapper {
+        background-color: #F6F7FB;
+        padding: 40px 0;
+   
+        .service-item {
+            display: flex;
+            align-items: center;
+    
+            .service-icon {
+                font-size: 28px;
+                margin-right: 12px;
+                color: $text-color;
+            }
+    
+            .service-name {
+                font-weight: 600;
+                color: $text-color;
+            }
+    
+            .service-des {
+                font-size: 12px;
+                color: #898989;
+            }
+        }
+    }
+}

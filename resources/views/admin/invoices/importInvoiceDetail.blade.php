@@ -14,33 +14,20 @@
                 </div>
             </div>
 
-            <div class="invoice-name">Đơn nhập hàng</div>
+            <div class="invoice-name">Biên lai nhập hàng</div>
 
             <div>
-                <div class="invoice-title">
-                    <span>Nhà cung cấp: </span>
-                    <span class="invoice-content">{{ $importInvoice->manufacturer()->first()->ten }}</span>
-                </div>
-                <div class="invoice-title">
-                    <span>Địa chỉ: </span>
-                    <span class="invoice-content">{{ $importInvoice->manufacturer()->first()->diaChi }}</span>
-                </div>
-                <div class="invoice-title">
-                    <span>Số điện thoại: </span>
-                    <span class="invoice-content">{{ $importInvoice->manufacturer()->first()->soDienThoai }}</span>
-                </div>
-            </div>
-
-            <div class="invoice-split"></div>
-
-            <div class="mb-4">
                 <div class="invoice-title">
                     <span>Tên đơn hàng: </span>
                     <span class="invoice-content">{{ $importInvoice->tenDonHang }}</span>
                 </div>
                 <div class="invoice-title">
                     <span>Nội dung: </span>
-                    <span class="invoice-content">{{ $importInvoice->tenDonHang }}</span>
+                    <span class="invoice-content">{{ $importInvoice->noiDung }}</span>
+                </div>
+                <div class="invoice-title">
+                    <span>Tổng tiền: </span>
+                    <span class="invoice-content">@currency_format($importInvoice->tongTien)</span>
                 </div>
                 <div class="invoice-title">
                     <span>Ngày nhập: </span>
@@ -48,57 +35,37 @@
                 </div>
             </div>
 
+            <div class="invoice-split"></div>
+
             <div class="mb-4">
                 <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col">Mặt hàng</th>
-                        <th scope="col">Tên sản phẩm</th>
                         <th scope="col">Ảnh sản phẩm</th>
-                        <th scope="col">Mùi hương</th>
-                        <th scope="col">Trọng lượng</th>
+                        <th scope="col">Tên sản phẩm</th>
+                        <th scope="col">Mặt hàng</th>
+                        <th scope="col">Nhà cung cấp</th>
                         <th scope="col">Số lượng</th>
                         <th scope="col">Đơn giá</th>
                         <th scope="col">Tổng tiền</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        @switch($importInvoice->loaiHang)
-                            @case('candle')
-                                <td>Nến thơm</td>
-                                @break
-                            @case('scentedWax')
-                                <td>Sáp thơm</td>
-                                @break
-                            @case('essentialOil')
-                                <td>Tinh dầu</td>
-                                @break
-                            @default
-                                <td></td>
-                        @endswitch
-                        <td>{{ $importInvoice->tenSanPham }}</td>
-                        <td>
-                            <div class="product__image-wrapper">
-                              <img class="product__image" src="{{ asset('images/' . $product->image_path) }}" alt="Ảnh sản phẩm">
-                            </div>
-                        </td>
-                        <td>{{ $product->muiHuong }}</td>
-                        @switch($importInvoice->loaiHang)
-                            @case('candle')
-                            @case('scentedWax')
-                                <td>{{ $product->trongLuong }} g</td>
-                                @break
-                            @case('essentialOil')
-                                <td>{{ $product->theTich }} ml</td>
-                                @break
-                            @default
-                                <td></td>
-                        @endswitch
-                        <td>{{ $importInvoice->soLuong }}</td>
-                        <td>@currency_format($importInvoice->donGia)</td>
-                        <td>@currency_format($importInvoice->tongTien)</td>
-                      </tr>
+                        @foreach ($importInvoice->products as $product)
+                        <tr>
+                            <td>
+                                <div class="product__image-wrapper">
+                                  <img class="product__image" src="{{ asset('images/products/' . $product->image_path) }}" alt="Ảnh sản phẩm">
+                                </div>
+                            </td>
+                            <td>{{ $product->tenSanPham }}</td>
+                            <td>{{ $product->loaiSanPham }}</td>
+                            <td>{{ $product->manufacturer()->first()->ten }}</td>
+                            <td>{{ $product->pivot->soLuong }}</td>
+                            <td>@currency_format($product->pivot->donGia)</td>
+                            <td>@currency_format($product->pivot->tongTien)</td>
+                          </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

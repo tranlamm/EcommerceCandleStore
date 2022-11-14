@@ -5,7 +5,8 @@ namespace App\Http\Controllers\products;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\products\CandleProduct;
+use App\Models\products\Product;
+use App\Models\products\Fragrance;
 use App\Models\products\Manufacturer;
 
 class CandleProductController extends Controller
@@ -21,15 +22,17 @@ class CandleProductController extends Controller
         $search = $request->input('search');
         $nhaCungCap = $request->input('nhaCungCap');
 
-        if ($request->input('order-name')) {
-            $candleProducts = CandleProduct::query()
+        if ($request->input('order-name') && $request->input('order-type')) {
+            $candleProducts = Product::query()
+                ->whereIn('loaiSanPham', ['single wick candle', '3 wick candle'])
                 ->where('tenSanPham', 'LIKE', "%{$search}%")
                 ->where('nhaCungCap', 'LIKE', "%{$nhaCungCap}%")
-                ->orderBy($request->input('order-name'), ($request->input('order-type') ? $request->input('order-type') : 'asc'))
+                ->orderBy($request->input('order-name'), (in_array($request->input('order-type'), ['asc', 'desc'], true) ? $request->input('order-type') : 'asc'))
                 ->paginate(10);
         }
         else {
-            $candleProducts = CandleProduct::query()
+            $candleProducts = Product::query()
+                ->whereIn('loaiSanPham', ['single wick candle', '3 wick candle'])
                 ->where('tenSanPham', 'LIKE', "%{$search}%")
                 ->where('nhaCungCap', 'LIKE', "%{$nhaCungCap}%")
                 ->orderBy('updated_at', 'desc')
@@ -47,7 +50,8 @@ class CandleProductController extends Controller
     public function create()
     {
         $manufacturers = Manufacturer::all();
-        return view('admin.products.candleProductCreate', ['manufacturers' => $manufacturers]);
+        $fragrances = Fragrance::all();
+        return view('admin.products.candleProductCreate', ['manufacturers' => $manufacturers, 'fragrances' => $fragrances]);
     }
 
     /**
@@ -61,14 +65,14 @@ class CandleProductController extends Controller
         $request->validate([
             'tenSanPham' => 'bail|required',
             'muiHuong' => 'bail|required',
-            'mauSac' => 'bail|required',
             'soBac' => array(
                 'bail',
                 'required',
                 'regex:/1|3/u',
             ),
+            'loaiMuiHuong' => 'bail|required|numeric',
             'nhaCungCap' => 'bail|required|numeric',
-            'image' => 'bail|mimes:png,jpg,jpeq,webp,webp|max:5048',
+            'image' => 'bail|mimes:png,jpg,jpeq,webp|max:5048',
             'trongLuong' => 'bail|required|numeric|between:1,10000',
             'giaNhap' => array(
                 'bail',
@@ -82,24 +86,28 @@ class CandleProductController extends Controller
             ),
         ]);
 
-        $generatedImageName;
+        if ($request->input('soBac') == 1)
+            $loaiSanPham = 'single wick candle';
+        else 
+            $loaiSanPham = '3 wick candle';
+
         if ($request->image !== NULL) {
             $generatedImageName = 'image' . time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->image->move(public_path('images'), $generatedImageName);
+            $request->image->move(public_path('images/products'), $generatedImageName);
         }
         else {
-            $generatedImageName = "";
+            $generatedImageName = "no_image.png";
         }
 
-        $candle = CandleProduct::create([
+        $candle = Product::create([
+            'loaiSanPham' => $loaiSanPham,
             'tenSanPham' => $request->input('tenSanPham'),
             'muiHuong' => $request->input('muiHuong'),
-            'mauSac' => $request->input('mauSac'),
-            'soBac' => $request->input('soBac'),
+            'loaiMuiHuong' => $request->input('loaiMuiHuong'),
             'nhaCungCap' => $request->input('nhaCungCap'),
-            'image_path' => $generatedImageName,
             'trongLuong' => $request->input('trongLuong'),
             'moTa' => $request->input('moTa'),
+            'image_path' => $generatedImageName,
             'giaNhap' => $request->input('giaNhap'),
             'giaBan' => $request->input('giaBan'),
         ]);
@@ -126,9 +134,10 @@ class CandleProductController extends Controller
      */
     public function edit($id)
     {
-        $candle = CandleProduct::find($id);
+        $candle = Product::find($id);
         $manufacturers = Manufacturer::all();
-        return view('admin.products.candleProductEdit', ['candle' => $candle, 'manufacturers' => $manufacturers]);
+        $fragrances = Fragrance::all();
+        return view('admin.products.candleProductEdit', ['candle' => $candle, 'manufacturers' => $manufacturers, 'fragrances' => $fragrances]);
     }
 
     /**
@@ -143,46 +152,50 @@ class CandleProductController extends Controller
         $request->validate([
             'tenSanPham' => 'bail|required',
             'muiHuong' => 'bail|required',
-            'mauSac' => 'bail|required',
             'soBac' => array(
                 'bail',
                 'required',
                 'regex:/1|3/u',
             ),
+            'loaiMuiHuong' => 'bail|required|numeric',
             'nhaCungCap' => 'bail|required|numeric',
-            'image' => 'bail|mimes:png,jpg,jpeq,webp,webp|max:5048',
+            'image' => 'bail|mimes:png,jpg,jpeq,webp|max:5048',
             'trongLuong' => 'bail|required|numeric|between:1,10000',
             'giaNhap' => array(
                 'bail',
                 'required',
-                'regex:/^\d*(0){3}$/u',
+                'regex:/^\d+(0){3}$/u',
             ),
             'giaBan' => array(
                 'bail',
                 'required',
-                'regex:/^\d*(0){3}$/u',
+                'regex:/^\d+(0){3}$/u',
             ),
         ]);
 
-        $new_image;
+        if ($request->input('soBac') == 1)
+            $loaiSanPham = 'single wick candle';
+        else 
+            $loaiSanPham = '3 wick candle';
+
         if ($request->image !== NULL) {
             $generatedImageName = 'image' . time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->image->move(public_path('images'), $generatedImageName);
+            $request->image->move(public_path('images/products'), $generatedImageName);
             $new_image = $generatedImageName;
         }
         else {
             $new_image = $request->old_image;
         }
         
-        $candle = CandleProduct::where('id', $id)->update([
+        $candle = Product::where('id', $id)->update([
+            'loaiSanPham' => $loaiSanPham,
             'tenSanPham' => $request->input('tenSanPham'),
             'muiHuong' => $request->input('muiHuong'),
-            'mauSac' => $request->input('mauSac'),
-            'soBac' => $request->input('soBac'),
+            'loaiMuiHuong' => $request->input('loaiMuiHuong'),
             'nhaCungCap' => $request->input('nhaCungCap'),
-            'image_path' => $new_image,
             'trongLuong' => $request->input('trongLuong'),
             'moTa' => $request->input('moTa'),
+            'image_path' => $new_image,
             'giaNhap' => $request->input('giaNhap'),
             'giaBan' => $request->input('giaBan'),
         ]);
@@ -197,7 +210,7 @@ class CandleProductController extends Controller
      */
     public function destroy($id)
     {
-        $candle = CandleProduct::find($id);
+        $candle = Product::find($id);
         $candle->delete();
         return redirect(route('candleproduct.index'))->with('message', 'Deleted successfully!');
     }
