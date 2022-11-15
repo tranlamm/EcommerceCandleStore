@@ -30,6 +30,7 @@
                 transition: all 200ms linear;
 
                 &:hover {
+                    cursor: pointer;
                     color: $primary-color;
                     border-bottom: 2px solid black;
                 }
@@ -181,6 +182,7 @@
             }
 
             &:hover {
+                cursor: pointer;
                 filter: brightness(70%);
 
                 .category-name {

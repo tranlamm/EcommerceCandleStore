@@ -133,12 +133,8 @@
                 color: $text-color;
             }
 
-            .header__nav {
-                color: $text-color;
-
-                .header__nav-item:hover {
-                    color: white;
-                }
+            .header__nav-item {
+                color: $text-color !important;
             }
 
             @keyframes fadeInDown {
@@ -204,22 +200,22 @@
         .header__nav {
             height: 100%;
             display: flex;
-            color: white;
 
             .header__nav-item {
+                color: white;
                 min-width: 80px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 font-size: 16px;
                 font-weight: 500;
-                transition: background-color 500ms ease-in-out;
                 padding: 0 16px;
                 margin-right: 12px;
+                transition: background-color 300ms ease-in-out;
 
                 &:hover {
-                    cursor: pointer;
                     background-color: $primary-color;
+                    color: white !important;
                 }
             }
         }

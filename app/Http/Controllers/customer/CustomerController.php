@@ -13,7 +13,17 @@ class CustomerController extends Controller
 {
     public function shopIndex()
     {
-        return view('customer.main.customerMainView');
+        $bestseller = Product::query()
+            ->orderBy('daBan', 'desc')
+            ->limit(10)
+            ->get();
+        // $toprated = Product::query()
+        //     ->orderBy('danhGia', 'desc')
+        //     ->limit(10)
+        //     ->get();
+        return view('customer.main.customerMainView', [
+            'bestseller' => $bestseller,
+        ]);
     }
 
     public function productShow(Request $request)
@@ -32,21 +42,21 @@ class CustomerController extends Controller
             
         if ($request->input('order-name')) {
             $products = Product::query()
-            ->where('tenSanPham', 'LIKE', "%{$search}%")
-            ->where('loaiSanPham', 'LIKE', "%{$type}%")
-            ->where('nhaCungCap', 'LIKE', "%{$manufacturer}%")
-            ->where('loaiMuiHuong', 'LIKE', "%{$fragrance}%")
-            ->orderBy($request->input('order-name'), 
+                ->where('tenSanPham', 'LIKE', "%{$search}%")
+                ->where('loaiSanPham', 'LIKE', "%{$type}%")
+                ->where('nhaCungCap', 'LIKE', "%{$manufacturer}%")
+                ->where('loaiMuiHuong', 'LIKE', "%{$fragrance}%")
+                ->orderBy($request->input('order-name'), 
             (in_array($request->input('order-type'), ['asc', 'desc'], true) ? $request->input('order-type') : 'asc'))
             ->paginate(20);
         }
         else {
             $products = Product::query()
-            ->where('tenSanPham', 'LIKE', "%{$search}%")
-            ->where('loaiSanPham', 'LIKE', "%{$type}%")
-            ->where('nhaCungCap', 'LIKE', "%{$manufacturer}%")
-            ->where('loaiMuiHuong', 'LIKE', "%{$fragrance}%")
-            ->paginate(20);
+                ->where('tenSanPham', 'LIKE', "%{$search}%")
+                ->where('loaiSanPham', 'LIKE', "%{$type}%")
+                ->where('nhaCungCap', 'LIKE', "%{$manufacturer}%")
+                ->where('loaiMuiHuong', 'LIKE', "%{$fragrance}%")
+                ->paginate(20);
         }
         
         $fragrances = Fragrance::all();

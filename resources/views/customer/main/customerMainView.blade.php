@@ -18,14 +18,14 @@
                     <img class="banner-category" src="{{ asset('images/products/uidev6_product.jpg') }}" alt="banner img">
                     <div class="banner-category-info">
                         <div class="banner-name">Single Wick Candle</div>
-                        <a href="" class="banner-btn">SHOP NOW</a>
+                        <div class="banner-btn search-type" data-type="single wick candle">SHOP NOW</div>
                     </div>
                 </div>
                 <div class="col col-6 banner-wrapper">
                     <img class="banner-category" src="{{ asset('images/products/uidev2_product.jpg') }}" alt="banner img">
                     <div class="banner-category-info">
                         <div class="banner-name">3 Wick Candle</div>
-                        <a href="" class="banner-btn">SHOP NOW</a>
+                        <div class="banner-btn search-type" data-type="3 wick candle">SHOP NOW</div>
                     </div>
                 </div>
             </div>
@@ -34,14 +34,14 @@
                     <img class="banner-category" src="{{ asset('images/products/uidev1_product.webp') }}" alt="banner img">
                     <div class="banner-category-info">
                         <div class="banner-name">Essential Oil</div>
-                        <a href="" class="banner-btn">SHOP NOW</a>
+                        <div class="banner-btn search-type" data-type="essential oil">SHOP NOW</div>
                     </div>
                 </div>
                 <div class="col col-6 banner-wrapper" >
                     <img class="banner-category" src="{{ asset('images/products/uidev5_product.jpg') }}" alt="banner img">
                     <div class="banner-category-info">
                         <div class="banner-name">Scented Wax</div>
-                        <a href="" class="banner-btn">SHOP NOW</a>
+                        <div class="banner-btn search-type" data-type="scented wax">SHOP NOW</div>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                         <div class="shopping-name">CANDLE SHOP WONDERLAND</div>
                         <div class="shopping-label">Experience the Wonder</div>
                         <div class="shopping-des">Experience the holiday magic of a Candle Shop with fragrances that embrace a perfect day.</div>
-                        <a href="" class="shopping-btn">Search Now<i class="fa-solid fa-magnifying-glass ms-2"></i></a>
+                        <a href="{{ route('product.index') }}" class="shopping-btn">Search Now<i class="fa-solid fa-magnifying-glass ms-2"></i></a>
                     </div>
                 </div>
             </div>
@@ -94,36 +94,36 @@
         <div class="container">
             <div class="row">
                 <div class="col col-3">
-                    <a href="" class="category-item">
+                    <div class="category-item search-type" data-type="single wick candle">
                         <div class="category-img">
                             <img src="{{ asset('images/products/uidev6_product.jpg') }}" alt="Product img">
                         </div>
                         <div class="category-name">Single Wick Candle</div>
-                    </a>
+                    </div>
                 </div>
                 <div class="col col-3">
-                    <a href="" class="category-item">
+                    <div class="category-item search-type" data-type="3 wick candle">
                         <div class="category-img">
                             <img src="{{ asset('images/products/uidev2_product.jpg') }}" alt="Product img">
                         </div>
                         <div class="category-name">3 Wick Candle</div>
-                    </a>
+                    </div>
                 </div>
                 <div class="col col-3">
-                    <a href="" class="category-item">
+                    <div class="category-item search-type" data-type="essential oil">
                         <div class="category-img">
                             <img src="{{ asset('images/products/uidev1_product.webp') }}" alt="Product img">
                         </div>
                         <div class="category-name">Essential Oil</div>
-                    </a>
+                    </div>
                 </div>
                 <div class="col col-3">
-                    <a href="" class="category-item">
+                    <div class="category-item search-type" data-type="scented wax">
                         <div class="category-img">
                             <img src="{{ asset('images/products/uidev5_product.jpg') }}" alt="Product img">
                         </div>
                         <div class="category-name">Scented Wax</div>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -205,5 +205,9 @@
 <div class="banner-image-bottom">
     <img src="{{ asset('images/shop/banner_image5.webp') }}" alt="Christmas Event">
 </div>
+
+<form action="{{ route('product.index') }}">
+    <input type="hidden" name="type">
+</form>
 
 @endsection

@@ -39,20 +39,20 @@
                 </div>
                 <div class="col col-lg-8 col-md-7 col-12">
                     <div class="d-flex justify-content-center">
-                        <form class="search_bar" action="">
+                        <div class="search_bar">
                             <div class="dropdown search_bar-select">
                                 <button class="dropdown-toggle search_bar-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 All Category
                                 </button>
                                 <ul class="dropdown-menu">
-                                  <li class="dropdown-item search_bar-item" data-type="candle">Nến thơm</li>
-                                  <li class="dropdown-item search_bar-item" data-type="scentedWax">Sáp thơm</li>
-                                  <li class="dropdown-item search_bar-item" data-type="essentialOil">Tinh dầu</li>
+                                  <li class="dropdown-item search_bar-item search-type" data-type="candle">Nến thơm</li>
+                                  <li class="dropdown-item search_bar-item search-type" data-type="scented wax">Sáp thơm</li>
+                                  <li class="dropdown-item search_bar-item search-type" data-type="essential oil">Tinh dầu</li>
                                 </ul>
                             </div>
-                            <input class="search_bar-input" type="text" placeholder="Search" spellcheck="false">
-                            <button class="search_bar-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        </form>
+                            <input class="search_bar-input" type="text" placeholder="Search" spellcheck="false" id="search-name-text">
+                            <button id="search-btn" class="search_bar-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
                     </div>
                 </div>
                 <div class="col col-lg-2 col-md-3 col-12">
@@ -113,29 +113,39 @@
                             <i class="fa-solid fa-bars me-2"></i>CATEGORIES
                         </div>
                         <div class="header__category-list dropdown-menu">
-                          <li><a class="dropdown-item header__category-item" href="#"><i class="fa-brands fa-bitcoin me-2"></i>Best seller</a></li>
-                          <li><a class="dropdown-item header__category-item" href="#"><i class="fa-solid fa-truck-fast me-2"></i>New arrivals</a></li>
-                          <li><a class="dropdown-item header__category-item" href="#"><i class="fa-solid fa-thumbs-up me-2"></i>Top rated</a></li>
-                          <li><a class="dropdown-item header__category-item" href="#"><i class="fa-solid fa-fire-flame-curved me-2"></i>Nến thơm</a></li>
-                          <li><a class="dropdown-item header__category-item" href="#"><i class="fa-solid fa-soap me-2"></i>Sáp thơm</a></li>
-                          <li><a class="dropdown-item header__category-item" href="#"><i class="fa-solid fa-bottle-droplet me-2"></i>Tinh dầu</a></li>
+                          <li><div class="dropdown-item header__category-item search-category" data-order-name="daBan" data-order-type="desc"><i class="fa-brands fa-bitcoin me-2"></i>Best seller</div></li>
+                          <li><div class="dropdown-item header__category-item search-category" data-order-name="updated_at" data-order-type="desc"><i class="fa-solid fa-truck-fast me-2"></i>New arrivals</div></li>
+                          {{-- <li><div class="dropdown-item header__category-item search-category" data-order-name="danhGia" data-order-type=""><i class="fa-solid fa-thumbs-up me-2"></i>Top rated</div></li> --}}
+                          <li><div class="dropdown-item header__category-item search-type" data-type="candle"><i class="fa-solid fa-fire-flame-curved me-2"></i>Nến thơm</div></li>
+                          <li><div class="dropdown-item header__category-item search-type" data-type="scented wax"><i class="fa-solid fa-soap me-2"></i>Sáp thơm</div></li>
+                          <li><div class="dropdown-item header__category-item search-type" data-type="essential oil"><i class="fa-solid fa-bottle-droplet me-2"></i>Tinh dầu</div></li>
                         </div>
                     </div>
                 </div>
 
                 <div class="col col-9">
                     <div class="header__nav">
-                        <div class="header__nav-item">Home</div>
-                        <div class="header__nav-item">Product</div>
-                        <div class="header__nav-item">Service</div>
-                        <div class="header__nav-item">Shop</div>
-                        <div class="header__nav-item">Pages</div>
-                        <div class="header__nav-item">Blog</div>
-                        <div class="header__nav-item">Contact us</div>
+                        <a href="{{ route('shop.index') }}" class="header__nav-item">Home</a>
+                        <a href="{{ route('product.index') }}" class="header__nav-item">Product</a>
+                        <a href="" class="header__nav-item">Service</a>
+                        <a href="" class="header__nav-item">Shop</a>
+                        <a href="" class="header__nav-item">Pages</a>
+                        <a href="" class="header__nav-item">Blog</a>
+                        <a href="" class="header__nav-item">Contact us</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+{{-- Hidden form for search --}}
+<form class="search_bar" action="{{ route('product.index') }}" method="GET" id="search-form">
+    @csrf
+    <input type="hidden" id="search-name-input" name="search">
+    <input type="hidden" id="search-type-input" name="type">
+    <input type="hidden" id="search-order-name" name="order-name">
+    <input type="hidden" id="search-order-type" name="order-type">
+    <input type="hidden" id="search-order-fullname" name="order-fullname">
+</form>
 </header>
 

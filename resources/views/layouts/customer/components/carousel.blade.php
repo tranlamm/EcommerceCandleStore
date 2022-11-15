@@ -10,78 +10,16 @@
             </div>
             <div class="col col-10">
                 <div id="bestseller-carousel" class="owl-carousel">
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev1_product.webp') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            FOREST RAIN 
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev2_product.jpg') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            ORANGE JUICE
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev3_product.webp') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            HOLIDAY SNOW
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev4_product.webp') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            COTTON CANDY
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev5_product.jpg') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            GINGER BEARD
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev1_product.webp') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            SUGARED SWEETS
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev3_product.webp') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            FROSTED COCONUT
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev4_product.webp') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            FRESH BALSAM
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev1_product.webp') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            FLANNEL
-                        </div>
-                    </div>
+                    @foreach ($bestseller as $product)
+                        <a href="" class="product-item">
+                            <div class="product-img">
+                                <img src="{{ asset('images/products/' . $product->image_path) }}" alt="Product">
+                            </div>
+                            <div class="product-name">
+                                {{ $product->tenSanPham }}
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
             </div>
             <div class="col col-1 carousel-btn-wrapper justify-content-end">
@@ -101,78 +39,16 @@
             </div>
             <div class="col col-10">
                 <div id="toprated-carousel" class="owl-carousel">
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev1_product.webp') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            FOREST RAIN 
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev2_product.jpg') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            ORANGE JUICE
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev3_product.webp') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            HOLIDAY SNOW
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev4_product.webp') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            COTTON CANDY
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev5_product.jpg') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            GINGER BEARD
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev1_product.webp') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            SUGARED SWEETS
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev3_product.webp') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            FROSTED COCONUT
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev4_product.webp') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            FRESH BALSAM
-                        </div>
-                    </div>
-                    <div class="product-item">
-                        <div class="product-img">
-                            <img src="{{ asset('images/products/uidev1_product.webp') }}" alt="">
-                        </div>
-                        <div class="product-name">
-                            FLANNEL
-                        </div>
-                    </div>
+                    {{-- @foreach ($toprated as $product)
+                        <a href="" class="product-item">
+                            <div class="product-img">
+                                <img src="{{ asset('images/products/' . $product->image_path) }}" alt="Product">
+                            </div>
+                            <div class="product-name">
+                                {{ $product->tenSanPham }}
+                            </div>
+                        </a>
+                    @endforeach --}}
                 </div>
             </div>
             <div class="col col-1 carousel-btn-wrapper justify-content-end">

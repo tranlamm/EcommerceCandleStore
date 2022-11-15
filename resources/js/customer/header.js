@@ -57,3 +57,22 @@ $('#toprated-carousel-next-btn').click(function()
 {
     $('#toprated-carousel').trigger('next.owl.carousel');
 })
+
+// Search
+$('.search-type').click(function()
+{
+    $('#search-type-input').val($(this).attr('data-type'));
+    $('#search-form').submit();
+})
+$('#search-btn').click(function()
+{
+    $('#search-name-input').val($('#search-name-text').val());
+    $('#search-form').submit();
+})
+$('.search-category').click(function()
+{
+    $('#search-order-name').val($(this).attr('data-order-name'));
+    $('#search-order-type').val($(this).attr('data-order-type'));
+    $('#search-order-fullname').val($(this).text());
+    $('#search-form').submit();
+})
