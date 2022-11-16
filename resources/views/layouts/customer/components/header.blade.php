@@ -50,7 +50,7 @@
                                   <li class="dropdown-item search_bar-item search-type" data-type="essential oil">Tinh dầu</li>
                                 </ul>
                             </div>
-                            <input class="search_bar-input" type="text" placeholder="Search" spellcheck="false" id="search-name-text">
+                            <input class="search_bar-input" type="text" placeholder="Search" spellcheck="false" id="header__search-name-text">
                             <button id="search-btn" class="search_bar-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </div>
@@ -139,13 +139,13 @@
     </div>
 
 {{-- Hidden form for search --}}
-<form class="search_bar" action="{{ route('product.index') }}" method="GET" id="search-form">
+<form class="search_bar" action="{{ route('product.index') }}" method="GET" id="header__search-form">
     @csrf
-    <input type="hidden" id="search-name-input" name="search">
-    <input type="hidden" id="search-type-input" name="type">
-    <input type="hidden" id="search-order-name" name="order-name">
-    <input type="hidden" id="search-order-type" name="order-type">
-    <input type="hidden" id="search-order-fullname" name="order-fullname">
+    <input type="hidden" id="header__search-name-input" name="search">
+    <input type="hidden" id="header__search-type-input" name="type">
+    <input type="hidden" id="header__search-order-name" name="order-name">
+    <input type="hidden" id="header__search-order-type" name="order-type">
+    <input type="hidden" id="header__search-order-fullname" name="order-fullname">
 </form>
 </header>
 

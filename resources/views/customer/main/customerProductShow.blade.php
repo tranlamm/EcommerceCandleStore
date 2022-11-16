@@ -10,7 +10,7 @@
             @foreach ($products as $product)
                 <div class="col col-3">
                     <div class="product">
-                        <a href="" class="product-wrapper">
+                        <a href="{{ route('product.detail', ['id' => $product->id]) }}" class="product-wrapper">
                             <div class="product-img">
                                 <img src="{{ asset('images/products/' . $product->image_path) }}" alt="Product">
                             </div>
@@ -30,6 +30,15 @@
                             </div>
                         </a>
                         <div class="product-btn">Add to bag</div>
+                        @if ($product->conLai <= 0)
+                            <div class="product-tag product-tag__empty">HẾT HÀNG<i class="fa-solid fa-sack-xmark ms-2"></i></div> 
+                        {{-- @elseif ($product->danhGia > 4.5)
+                            <div class="product-tag product-tag__love">YÊU THÍCH<i class="fa-solid fa-heart ms-2"></i></div> --}}
+                        @elseif ($product->daBan < 100)
+                            <div class="product-tag product-tag__hot">BÁN CHẠY<i class="fa-solid fa-fire ms-2"></i></div>
+                        @elseif ($product->giaBan < 1000000)
+                            <div class="product-tag product-tag__good-price">GIÁ TỐT<i class="fa-solid fa-coins ms-2"></i></div>
+                        @endif
                     </div>
                 </div>
             @endforeach

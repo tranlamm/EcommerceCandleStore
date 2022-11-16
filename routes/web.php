@@ -61,3 +61,4 @@ Route::group(['middleware' => 'login_admin'], function() {
 // Customer
 Route::get('/', [CustomerController::class, 'shopIndex'])->name('shop.index');
 Route::get('/customer/product', [CustomerController::class, 'productShow'])->name('product.index');
+Route::get('/customer/product/{id}/detail', [CustomerController::class, 'productDetail'])->name('product.detail');

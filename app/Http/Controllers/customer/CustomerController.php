@@ -70,4 +70,12 @@ class CustomerController extends Controller
             'muiHuong' => $muiHuong,
         ]);
     }
+
+    public function productDetail(Request $request, $id)
+    {
+        $product = Product::find($id);
+        return view('customer.main.customerProductDetail', [
+            'product' => $product,
+        ]);
+    }
 }
