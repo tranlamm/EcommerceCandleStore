@@ -18,14 +18,14 @@
                     <img class="banner-category" src="{{ asset('images/products/uidev6_product.jpg') }}" alt="banner img">
                     <div class="banner-category-info">
                         <div class="banner-name">Single Wick Candle</div>
-                        <div class="banner-btn search-type" data-type="single wick candle">SHOP NOW</div>
+                        <div class="banner-btn header__search-type" data-type="single wick candle">SHOP NOW</div>
                     </div>
                 </div>
                 <div class="col col-6 banner-wrapper">
                     <img class="banner-category" src="{{ asset('images/products/uidev2_product.jpg') }}" alt="banner img">
                     <div class="banner-category-info">
                         <div class="banner-name">3 Wick Candle</div>
-                        <div class="banner-btn search-type" data-type="3 wick candle">SHOP NOW</div>
+                        <div class="banner-btn header__search-type" data-type="3 wick candle">SHOP NOW</div>
                     </div>
                 </div>
             </div>
@@ -34,14 +34,14 @@
                     <img class="banner-category" src="{{ asset('images/products/uidev1_product.webp') }}" alt="banner img">
                     <div class="banner-category-info">
                         <div class="banner-name">Essential Oil</div>
-                        <div class="banner-btn search-type" data-type="essential oil">SHOP NOW</div>
+                        <div class="banner-btn header__search-type" data-type="essential oil">SHOP NOW</div>
                     </div>
                 </div>
                 <div class="col col-6 banner-wrapper" >
                     <img class="banner-category" src="{{ asset('images/products/uidev5_product.jpg') }}" alt="banner img">
                     <div class="banner-category-info">
                         <div class="banner-name">Scented Wax</div>
-                        <div class="banner-btn search-type" data-type="scented wax">SHOP NOW</div>
+                        <div class="banner-btn header__search-type" data-type="scented wax">SHOP NOW</div>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
         <div class="container">
             <div class="row">
                 <div class="col col-3">
-                    <div class="category-item search-type" data-type="single wick candle">
+                    <div class="category-item header__search-type" data-type="single wick candle">
                         <div class="category-img">
                             <img src="{{ asset('images/products/uidev6_product.jpg') }}" alt="Product img">
                         </div>
@@ -102,7 +102,7 @@
                     </div>
                 </div>
                 <div class="col col-3">
-                    <div class="category-item search-type" data-type="3 wick candle">
+                    <div class="category-item header__search-type" data-type="3 wick candle">
                         <div class="category-img">
                             <img src="{{ asset('images/products/uidev2_product.jpg') }}" alt="Product img">
                         </div>
@@ -110,7 +110,7 @@
                     </div>
                 </div>
                 <div class="col col-3">
-                    <div class="category-item search-type" data-type="essential oil">
+                    <div class="category-item header__search-type" data-type="essential oil">
                         <div class="category-img">
                             <img src="{{ asset('images/products/uidev1_product.webp') }}" alt="Product img">
                         </div>
@@ -118,7 +118,7 @@
                     </div>
                 </div>
                 <div class="col col-3">
-                    <div class="category-item search-type" data-type="scented wax">
+                    <div class="category-item header__search-type" data-type="scented wax">
                         <div class="category-img">
                             <img src="{{ asset('images/products/uidev5_product.jpg') }}" alt="Product img">
                         </div>

@@ -11,7 +11,7 @@
             <div class="col col-10">
                 <div id="bestseller-carousel" class="owl-carousel">
                     @foreach ($bestseller as $product)
-                        <a href="" class="product-item">
+                        <a href="{{ route('product.detail', ['id' => $product->id]) }}" class="product-item">
                             <div class="product-img">
                                 <img src="{{ asset('images/products/' . $product->image_path) }}" alt="Product">
                             </div>

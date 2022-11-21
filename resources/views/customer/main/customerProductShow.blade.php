@@ -29,14 +29,14 @@
                                 </div>
                             </div>
                         </a>
-                        <div class="product-btn">Add to bag</div>
+                        <div class="product-btn add-cart-btn" data-id="{{ $product->id }}">Add to cart</div>
                         @if ($product->conLai <= 0)
                             <div class="product-tag product-tag__empty">HẾT HÀNG<i class="fa-solid fa-sack-xmark ms-2"></i></div> 
                         {{-- @elseif ($product->danhGia > 4.5)
                             <div class="product-tag product-tag__love">YÊU THÍCH<i class="fa-solid fa-heart ms-2"></i></div> --}}
-                        @elseif ($product->daBan < 100)
+                        @elseif ($product->daBan > 100)
                             <div class="product-tag product-tag__hot">BÁN CHẠY<i class="fa-solid fa-fire ms-2"></i></div>
-                        @elseif ($product->giaBan < 1000000)
+                        @else
                             <div class="product-tag product-tag__good-price">GIÁ TỐT<i class="fa-solid fa-coins ms-2"></i></div>
                         @endif
                     </div>
@@ -48,4 +48,63 @@
         </div>
     </div>
 </div>
+
+{{-- Toast add success to cart --}}
+<div class="add-toast add-toast-success">
+    <div class="d-flex justify-content-between align-items-center">
+        <a href="{{ route('cart.index') }}" class="view-cart-btn">View cart</a>
+        <div class="add-toast-btn"><i class="fa-solid fa-xmark"></i></div>
+    </div>
+    <div class="add-toast-text">Đã thêm sản phẩm vào giỏ hàng</div>
+</div>
+
+<div class="add-toast add-toast-fail">
+    <div class="add-toast-text">Sản phẩm hiện đang hết hàng</div>
+    <div class="add-toast-btn"><i class="fa-solid fa-xmark"></i></div>
+</div>
+{{-- End toast --}}
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $('.add-cart-btn').click(function()
+        {
+            const id = $(this).attr('data-id');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'post',
+                url: `/customer/product/${id}/addcart`,
+                data: {
+                    'id' : id,
+                    'quantity' : 1,
+                },
+                success: function(data)
+                {
+                    $('.add-toast').removeClass('add-toast-active');
+                    if ($.isEmptyObject(data.errors)) {
+                        setTimeout(() => {
+                            $('.add-toast-success').addClass('add-toast-active');
+                        }, 100);
+                    }
+                    else {
+                        const resp = data.errors;
+                        if (resp == 'Not enough')
+                        setTimeout(() => {
+                            $('.add-toast-fail').addClass('add-toast-active');
+                        }, 100);
+                    }
+                },
+            });
+        });
+        $('.add-toast-btn').click(function()
+        {
+            $('.add-toast').removeClass('add-toast-active');
+        })
+    })
+</script>
 @endsection

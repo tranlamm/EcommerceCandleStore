@@ -45,9 +45,9 @@
                                 All Category
                                 </button>
                                 <ul class="dropdown-menu">
-                                  <li class="dropdown-item search_bar-item search-type" data-type="candle">Nến thơm</li>
-                                  <li class="dropdown-item search_bar-item search-type" data-type="scented wax">Sáp thơm</li>
-                                  <li class="dropdown-item search_bar-item search-type" data-type="essential oil">Tinh dầu</li>
+                                  <li class="dropdown-item search_bar-item header__search-type" data-type="candle">Nến thơm</li>
+                                  <li class="dropdown-item search_bar-item header__search-type" data-type="scented wax">Sáp thơm</li>
+                                  <li class="dropdown-item search_bar-item header__search-type" data-type="essential oil">Tinh dầu</li>
                                 </ul>
                             </div>
                             <input class="search_bar-input" type="text" placeholder="Search" spellcheck="false" id="header__search-name-text">
@@ -65,36 +65,42 @@
                                     <i class="fa-solid fa-cart-shopping"></i>
                                 </div>
                                 <div class="dropdown-menu cart-wrapper">
-                                    <div class="cart-header">
-                                        <div>2 ITEMS</div>
-                                        <a class="view-cart">VIEW CART</a>
-                                    </div>
-                                    <div class="cart-split"></div>
-                                    <div class="cart-list">
-                                        <div class="cart-item">
-                                            <div class="item-des">
-                                                <div class="item-name">Nến thơm</div>
-                                                <div class="item-price">@currency_format(100)</div>
-                                            </div>
-                                            <div class="item-img">
-                                                <img src="{{ asset('images/products/uidev1_product.webp') }}" alt="Product">
-                                            </div>
+                                    @if (session()->has('cart'))
+                                        <div class="cart-header">
+                                            <div>{{ count(session()->get('cart')) . ' ITEMS' }}</div>
+                                            <a href="{{ route('cart.index') }}" class="view-cart">VIEW CART</a>
                                         </div>
-                                        <div class="cart-item">
-                                            <div class="item-des">
-                                                <div class="item-name">Tinh dầu</div>
-                                                <div class="item-price">@currency_format(100)</div>
-                                            </div>
-                                            <div class="item-img">
-                                                <img src="{{ asset('images/products/uidev2_product.jpg') }}" alt="Product">
-                                            </div>
+                                        <div class="cart-split"></div>
+                                        <div class="cart-list">
+                                            @php
+                                                $total = 0;
+                                            @endphp
+                                            @foreach (session()->get('cart') as $cartItem)
+                                                @php
+                                                    $product = App\Models\products\Product::find($cartItem['id']);
+                                                    $total += $product->giaBan * $cartItem['quantity'];
+                                                @endphp
+                                                <div class="cart-item">
+                                                    <div class="item-des">
+                                                        <div class="item-name">{{ $product->tenSanPham }}</div>
+                                                        <div class="item-price">@currency_format($product->giaBan)</div>
+                                                        <div class="item-price">Quantity: {{ $cartItem['quantity'] }}</div>
+                                                    </div>
+                                                    <div class="item-img">
+                                                        <img src="{{ asset('images/products/' . $product->image_path) }}" alt="Product">
+                                                    </div>
+                                                </div>
+                                            @endforeach
                                         </div>
-                                    </div>
-                                    <div class="cart-total">
-                                        <div>Total</div>
-                                        <div>@currency_format(100)</div>
-                                    </div>
-                                    <a class="btn btn-dark cart-checkout" href="#" role="button">CHECKOUT</a>
+                                        <div class="cart-total">
+                                            <div>Total</div>
+                                            <div>@currency_format($total)</div>
+                                        </div>
+                                        <a class="btn btn-dark cart-checkout" href="{{ Request::url() }}" role="button">RELOAD</a>
+                                    @else
+                                        <img src="{{ asset('images/shop/empty-cart2.jfif') }}" alt="empty cart">
+                                        <a class="btn btn-dark cart-checkout" href="{{ Request::url() }}" role="button">RELOAD</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -116,9 +122,9 @@
                           <li><div class="dropdown-item header__category-item search-category" data-order-name="daBan" data-order-type="desc"><i class="fa-brands fa-bitcoin me-2"></i>Best seller</div></li>
                           <li><div class="dropdown-item header__category-item search-category" data-order-name="updated_at" data-order-type="desc"><i class="fa-solid fa-truck-fast me-2"></i>New arrivals</div></li>
                           {{-- <li><div class="dropdown-item header__category-item search-category" data-order-name="danhGia" data-order-type=""><i class="fa-solid fa-thumbs-up me-2"></i>Top rated</div></li> --}}
-                          <li><div class="dropdown-item header__category-item search-type" data-type="candle"><i class="fa-solid fa-fire-flame-curved me-2"></i>Nến thơm</div></li>
-                          <li><div class="dropdown-item header__category-item search-type" data-type="scented wax"><i class="fa-solid fa-soap me-2"></i>Sáp thơm</div></li>
-                          <li><div class="dropdown-item header__category-item search-type" data-type="essential oil"><i class="fa-solid fa-bottle-droplet me-2"></i>Tinh dầu</div></li>
+                          <li><div class="dropdown-item header__category-item header__search-type" data-type="candle"><i class="fa-solid fa-fire-flame-curved me-2"></i>Nến thơm</div></li>
+                          <li><div class="dropdown-item header__category-item header__search-type" data-type="scented wax"><i class="fa-solid fa-soap me-2"></i>Sáp thơm</div></li>
+                          <li><div class="dropdown-item header__category-item header__search-type" data-type="essential oil"><i class="fa-solid fa-bottle-droplet me-2"></i>Tinh dầu</div></li>
                         </div>
                     </div>
                 </div>

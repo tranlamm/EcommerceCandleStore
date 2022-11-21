@@ -1,42 +1,169 @@
+@import '../variables'; 
+
 .product-detail {
-    padding: 100px 0;
+    background-color: #f5f5f5;
+    padding: 50px 0;
+}
+
+.product-detail__wrapper {
+    background-color: #ffffff;
+    padding: 16px;
+    padding-bottom: 40px;
+
+    .product-detail__img {
+        border: 1px solid black;
+    }
 
     .product-info {
-        padding: 50px 100px;
+        padding: 0 32px;
 
-        .product-name {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 18px;
+        .product-name__wrapper {
+            display: flex;
+            align-items: center;
+
+            .product-detail__tag {
+                color: white;
+                font-size: 11px;
+                font-weight: 500;
+                border-radius: 3px;
+                padding: 4px 6px;
+                margin-right: 18px;
+
+                &.product-detail__tag--good-price {
+                    background-color: green;
+                }
+        
+                &.product-detail__tag--hot {
+                    background-color: red;
+                }
+        
+                &.product-detail__tag--love {
+                    background-color: $primary-color;
+                }
+        
+                &.product-detail__tag--empty {
+                    background-color: gray;
+                }
+            }
+
+            .product-name {
+                font-size: 26px;
+                font-weight: 600;
+            }
         }
 
-        .product-price {
-            font-size: 24px;
-            font-weight: 600;
-            color: #dc3545;
-            margin-bottom: 10px;
+        .product-price__wrapper {
+            margin: 24px 0;
+            background-color: #f5f5f5;
+            padding: 12px 24px;
+
+            .product-price {
+                font-size: 24px;
+                font-weight: 600;
+                color: #dc3545;
+            }
+
+            .product-price-label {
+                color:  #777777;
+            }
         }
 
         .product-text {
             font-size: 18px;
-            color: #777777;
-            margin-bottom: 6px;
+            color: $text-color;
+            margin-bottom: 4px;
 
             .product-span {
-                width: 160px;
+                font-weight: 500;
+                color: black;
+                min-width: 160px;
                 display: inline-block;
             }
         }
 
         .product-des {
-            padding-top: 20px;
-            border-top: 1px dotted #eeeeee;
-            border-bottom: 1px dotted #eeeeee;
-            margin-top: 20px;
-            padding-bottom: 26px;
-            margin-bottom: 0;
             font-size: 18px;
-            color: #555;
+            color: $text-color;
+            margin-top: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    .product-buy {
+        padding: 0 32px;
+        margin-top: 32px;
+
+        .product-quantity {
+            display: flex;
+            align-items: center;
+
+            .quantity-label {
+                font-size: 18px;
+                font-weight: 500;
+                margin-right: 32px;
+            }
+
+            .quantity-input {
+                width: 100px;
+            }
+            
+            .quantity-left {
+                font-size: 12px;
+                margin-left: 18px;
+                color: #777777;
+            }
+        }
+
+        .product-buy-btn {
+            display: inline-block;
+            font-size: 19px;
+            font-weight: 500;
+            padding: 8px 24px;
+            margin-top: 32px;
+            border: 1px solid $text-color;
+            background-color: $primary-color;
+            color: $text-color;
+            transition: all 300ms linear;
+
+            &:hover {
+                cursor: pointer;
+                background-color: $text-color;
+                color: $primary-color;
+            }
+        }
+    }
+}
+
+.manufacturer-detail__wrapper {
+    background-color: #ffffff;
+    padding: 16px;
+    margin-top: 18px;
+    display: flex;
+    align-items: flex-start;
+
+    .manufacturer-logo__wrapper {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        margin-right: 50px;
+    }
+
+    .manufacturer-info {
+        display: flex;
+        flex-direction: column;
+
+        .manufacturer-span {
+            font-size: 18px;
+            font-weight: 500;
+            color: black;
+            min-width: 140px;
+            display: inline-block;
+        }
+
+        .manufacturer-text {
+            font-size: 16px;
+            color: $text-color;
         }
     }
 }

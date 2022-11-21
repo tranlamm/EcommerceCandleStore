@@ -289,3 +289,67 @@
         }
     }
 }
+
+.add-toast {
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    z-index: 1000;
+    display: none;
+    color: white;
+    padding: 6px 18px 12px 32px;
+    font-size: 20px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 4px;
+    animation: appear 500ms both 0s;
+
+    .add-toast-text {
+        margin-right: 18px;
+    }
+
+    .add-toast-btn {
+        padding: 4px;
+
+        &:hover {
+            cursor: pointer;
+            color: #333;
+        }
+    }
+
+    &.add-toast-success {
+        flex-direction: column;
+        background-color: green;
+    }
+
+    &.add-toast-fail {
+        align-items: center;
+        padding: 12px 32px;
+        background-color: #dc3545;
+    }
+
+    &.add-toast-active {
+        display: flex;
+    }
+
+    @keyframes appear {
+        from {
+            opacity: 0;
+            transform: translateX(calc(100% + 18px));
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .view-cart-btn {
+        font-size: 16px;
+        font-weight: 500;
+        color: $primary-color;
+
+        &:hover {
+            cursor: pointer;
+            color: $text-color;
+        }
+    }
+}

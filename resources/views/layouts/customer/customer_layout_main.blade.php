@@ -20,7 +20,7 @@
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/customer/header.js',
         'resources/sass/customer/customer.scss', 'resources/sass/customer/shop_view.scss', 'resources/sass/customer/content.scss',
-        'resources/sass/customer/product_detail.scss',])
+        'resources/sass/customer/product_detail.scss', 'resources/sass/customer/cart.scss',])
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </head>
 

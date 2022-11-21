@@ -62,3 +62,10 @@ Route::group(['middleware' => 'login_admin'], function() {
 Route::get('/', [CustomerController::class, 'shopIndex'])->name('shop.index');
 Route::get('/customer/product', [CustomerController::class, 'productShow'])->name('product.index');
 Route::get('/customer/product/{id}/detail', [CustomerController::class, 'productDetail'])->name('product.detail');
+
+    // Cart
+    Route::get('/customer/cart', [CustomerController::class, 'cartShow'])->name('cart.index');
+    Route::post('/customer/deletecartitem', [CustomerController::class, 'deleteItemCart'])->name('product.deletecartitem');
+    Route::post('/customer/deleteallcart', [CustomerController::class, 'deleteAllCart'])->name('product.deleteallcart');
+    Route::post('/customer/product/{id}/addcart', [CustomerController::class, 'addProductToCart'])->name('product.addcart');
+    Route::post('/customer/order', [CustomerController::class, 'order'])->name('product.order');

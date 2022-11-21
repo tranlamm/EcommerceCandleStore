@@ -1,7 +1,7 @@
 const navbar = $('#header__navbar');
 $(window).scroll(function()
 {
-    if($(this).scrollTop() >= 300)
+    if($(this).scrollTop() >= 258)
     {
         navbar.addClass('navbar--active');
     }
@@ -59,7 +59,7 @@ $('#toprated-carousel-next-btn').click(function()
 })
 
 // Search
-$('.search-type').click(function()
+$('.header__search-type').click(function()
 {
     $('#header__search-type-input').val($(this).attr('data-type'));
     $('#header__search-form').submit();
