@@ -43,7 +43,10 @@
                     <a class="nav-link nav_link ps-5" href="{{ route('exportinvoice.create') }}"><i class="fa-solid fa-file"></i>Tạo đơn hàng</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav_link ps-5" href="{{ route('exportinvoice.index') }}"><i class="fa-solid fa-database"></i>Danh sách đơn xuất</a>
+                    <a class="nav-link nav_link ps-5" href="{{ route('onlineinvoice.index') }}"><i class="fa-solid fa-database"></i>Danh sách mua online</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav_link ps-5" href="{{ route('exportinvoice.index') }}"><i class="fa-solid fa-database"></i>Danh sách mua trực tiếp</a>
                 </li>
             </div>
             <li class="nav-item nav_title">

@@ -18,7 +18,7 @@ class CustomerLoginController extends Controller
 
     public function postLoginCustomer(Request $request)
     {
-        Session::flush();
+        Auth::guard('customer')->logout();
         $request->validate([
             'username' => 'required',
             'password' => 'required'

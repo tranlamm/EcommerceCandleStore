@@ -10,6 +10,7 @@ use App\Http\Controllers\products\ManufacturerController;
 
 use App\Http\Controllers\invoices\ImportInvoiceController;
 use App\Http\Controllers\invoices\ExportInvoiceController;
+use App\Http\Controllers\invoices\OnlineInvoiceController;
 
 // Login
 use App\Http\Controllers\login\AdminLoginController;
@@ -55,6 +56,9 @@ Route::group(['middleware' => 'login_admin'], function() {
     // Invoices management
     Route::resource('/admin/invoice/importinvoice', ImportInvoiceController::class);
     Route::resource('/admin/invoice/exportinvoice', ExportInvoiceController::class);
+    Route::resource('/admin/invoice/onlineinvoice', OnlineInvoiceController::class);
+    Route::get('/admin/invoice/onlineinvoice/finish/{id}', [OnlineInvoiceController::class, 'finish'])->name('onlineinvoice.finish');
+    Route::get('/admin/invoice/onlineinvoice/cancel/{id}', [OnlineInvoiceController::class, 'cancel'])->name('onlineinvoice.cancel');
 });
 
 // Customer

@@ -136,7 +136,7 @@
         <div class="newsletter-des">Subscribe to our newsletter and get 10% off your first purchase</div>
     </div>
     <div class="row justify-content-center">
-        <a href="" class="newsletter-btn">SUBSCRIBE</a>
+        <a href="{{ route('login_customer.index') }}" class="newsletter-btn">SUBSCRIBE</a>
     </div>
 </div>
 

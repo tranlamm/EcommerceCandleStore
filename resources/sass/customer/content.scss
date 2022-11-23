@@ -47,6 +47,12 @@
                 font-size: 18px;
                 font-weight: 600;
                 color: $text-color;
+                text-overflow: ellipsis;
+                word-break: break-all;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
             }
 
             .product-type {
@@ -58,12 +64,24 @@
                 margin-top: 6px;
                 font-size: 14px;
                 color: $text-color;
+                text-overflow: ellipsis;
+                word-break: break-all;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
             }
 
             .product-fragrance {
                 margin-top: 4px;
                 font-size: 14px;
                 color: $text-color;
+                text-overflow: ellipsis;
+                word-break: break-all;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
             }
 
             .product-price {

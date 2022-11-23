@@ -2,14 +2,19 @@
 
 @section('content')
 <div class="page-wrapper">
-    <span class="page-title">Danh sách đơn mua trực tiếp tại cửa hàng</span>
+    <span class="page-title">Danh sách đơn mua online trên website</span>
 
     <div class="page__content-wrapper">
         <div class="row">
             <div class="col col-8 d-flex">
                 <div class="me-2">
-                    <form class="d-flex" id="form__search" method="GET" action="{{ route('exportinvoice.index') }}">
-                        <input class="form-control form-search-input" type="text" name="tenDonHang" placeholder="Nhập tên đơn hàng"/>
+                    <form class="d-flex" id="form__search" method="GET" action="{{ route('onlineinvoice.index') }}">
+
+                        <select name="trangThai" class="form-select form-search-select">
+                            <option value="">Trạng thái</option>
+                            <option value="finished">Hoàn thành</option>
+                            <option value="pending">Đang xử lý</option>
+                        </select>
 
                         <input type="hidden" name="order-type" id="order-type">
                         <input type="hidden" name="order-name" id="order-name">
@@ -24,11 +29,7 @@
                 </div>
 
                 <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
-                <a role="button" class="btn btn-outline-secondary" href="{{ route('exportinvoice.index') }}">Reset</a>
-            </div>
-
-            <div class="col col-4 d-flex justify-content-end">
-                <a role="button" class="btn btn-outline-primary" href="{{ route('exportinvoice.create') }}">Xuất hàng<i class="fa-solid fa-coins ms-2"></i></a>
+                <a role="button" class="btn btn-outline-secondary" href="{{ route('onlineinvoice.index') }}">Reset</a>
             </div>
         </div>
     </div>
@@ -41,29 +42,37 @@
             <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Tên đơn hàng</th>
+                    <th scope="col">Username</th>
                     <th scope="col">Tên khách hàng</th>
                     <th scope="col">Số điện thoại</th>
                     <th scope="col">Địa chỉ</th>
                     <th scope="col">Tổng tiền</th>
                     <th scope="col">Ngày xuất hàng</th>
-                    <th scope="col" colspan="3">Thao tác</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($exportInvoices as $invoice)
+                @foreach ($onlineInvoices as $invoice)
                     <tr>
                         <th scope="row">{{ $invoice->id }}</th>
-                        <td>{{ $invoice->tenDonHang }}</td>
-                        <td>{{ $invoice->tenKhachHang }}</td>
-                        <td>{{ $invoice->soDienThoai }}</td>
-                        <td>{{ $invoice->diaChi }}</td>
+                        <td>{{ $invoice->account()->first()->username }}</td>
+                        <td>{{ $invoice->account()->first()->fullname }}</td>
+                        <td>{{ $invoice->account()->first()->phoneNumber }}</td>
+                        <td>{{ $invoice->account()->first()->address }}</td>
                         <td>@currency_format($invoice->tongTien)</td>
                         <td>@date_format($invoice->created_at)</td>
+                        <td>{{ $invoice->trangThai }}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a role="button" href="{{ route('exportinvoice.show', "$invoice->id") }}" class="btn btn-outline-success btn-sm">Chi tiết</a>
+                                <a role="button" href="{{ route('onlineinvoice.show', "$invoice->id") }}" class="btn btn-outline-success btn-sm">Chi tiết</a>
+                                @if ($invoice->trangThai == 'finished')
                                 <button class="btn btn-outline-danger btn-sm" data-id="{{ $invoice->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Xóa</button>
+                                @endif
+                                @if ($invoice->trangThai == 'pending')
+                                <a role="button" href="{{ route('onlineinvoice.finish', "$invoice->id") }}" class="btn btn-outline-primary btn-sm">Finish</a>
+                                <a role="button" href="{{ route('onlineinvoice.cancel', "$invoice->id") }}" class="btn btn-outline-dark btn-sm">Cancel</a>
+                                @endif
                             </div>
                         </td>
                     </tr>
@@ -71,7 +80,7 @@
             </tbody>
         </table>
         <div class="d-flex justify-content-center">
-            {{ $exportInvoices->links('pagination::bootstrap-4') }}
+            {{ $onlineInvoices->links('pagination::bootstrap-4') }}
         </div>
     </div>
 </div>
@@ -118,7 +127,7 @@
     exampleModal.addEventListener('show.bs.modal', event => {
       const button = event.relatedTarget
       const id = button.getAttribute('data-id')
-      formDelete.action = `/admin/invoice/exportinvoice/${id}`
+      formDelete.action = `/admin/invoice/onlineinvoice/${id}`
   
       btnDelete.onclick = function () {
         formDelete.submit();

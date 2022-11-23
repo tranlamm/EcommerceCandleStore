@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('import_invoice_id');
             $table->unsignedBigInteger('product_id');
-            $table->foreign('import_invoice_id')->references('id')->on('import_invoices')->onUpdate('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade');
+            $table->foreign('import_invoice_id')->references('id')->on('import_invoices')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedInteger('soLuong');
             $table->unsignedBigInteger('donGia');
             $table->unsignedBigInteger('tongTien');

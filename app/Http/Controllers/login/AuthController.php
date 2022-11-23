@@ -16,7 +16,7 @@ class AuthController extends Controller
 
     public function postLoginAdmin(Request $request)
     {
-        Session::flush();
+        Auth::guard('admin')->logout();
         $request->validate([
             'username' => 'required',
             'password' => 'required'

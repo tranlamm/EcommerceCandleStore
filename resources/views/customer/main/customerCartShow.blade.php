@@ -21,8 +21,11 @@
                     </div>
                     <div class="cart-empty" id="cart-empty">Xóa sản phẩm</div>
                 </div>
+                @if ($errors->has('wrong_product_id'))
+                    <h3 class="text-danger">{{ $errors->first('wrong_product_id') }}</h3>
+                @endif
 
-                <form action="{{ route('product.checkout') }}" method="POST">
+                <form action="{{ route('product.checkout') }}" method="POST" id="checkout-form">
                     @csrf
                     <div class="cart-list">
                         @foreach ($products as $product)
@@ -61,7 +64,7 @@
                             <span class="me-2">Tổng thanh toán:</span>
                             <span id="cart-total" data-value="{{ $total }}">@currency_format( $total )</span>
                         </div>
-                        <button type="submit" class="cart-checkout-btn">Đặt hàng</button>
+                        <button type="button" id="modal-btn" data-bs-toggle="modal" data-bs-target="#checkoutModal" class="cart-checkout-btn">Đặt hàng</button>
                     </div>
                 </form>
             </div>
@@ -73,6 +76,33 @@
                 <a href="{{ route('product.index') }}" class="product-show-btn">Buy Product</a>
             </div>
         @endif
+    </div>
+</div>
+
+{{-- Modal Checkout --}}
+<div class="modal fade modal-checkout" id="checkoutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header-title">Thông tin đơn hàng</div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body-text"><span class="modal-body-label">Tên khách hàng</span>: {{ Auth::guard('customer')->user()->fullname }}</div>
+                <div class="modal-body-text"><span class="modal-body-label">Địa chỉ</span>: {{ Auth::guard('customer')->user()->address }}</div>
+                <div class="modal-body-text"><span class="modal-body-label">Số điện thoại</span>: {{ Auth::guard('customer')->user()->phoneNumber }}</div>
+                <div class="modal-body-text"><span class="modal-body-label">Email</span>: {{ Auth::guard('customer')->user()->email }}</div>
+            
+                <div class="modal-body-detail">
+                    <a href="" class="modal-btn">Thay đổi thông tin cá nhân</a>
+                    <div class="modal-body-total">Tổng thanh toán: <span class="ms-2" id="modal-total-js"></span></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="modal-btn modal-btn-sm modal-btn-cancel" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="checkout-form" class="modal-btn modal-btn-sm">Save changes</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -199,6 +229,11 @@
         $('#cart-total').attr('data-value', newTotal);
         $('#cart-total').text(newTotal.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}));
         $(this).attr('old-quantity', newQuantity);
+    })
+
+    $('#modal-btn').click(function()
+    {
+        $('#modal-total-js').text($('#cart-total').text());
     })
 </script>
 @endsection

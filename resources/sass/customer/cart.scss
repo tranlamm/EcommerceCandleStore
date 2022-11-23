@@ -189,3 +189,69 @@
         }
     }
 }
+
+.modal-checkout {
+    .modal-header-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #dc3545;
+        text-transform: uppercase;
+    }
+
+    .modal-body-text {
+        font-size: 18px;
+        margin-bottom: 8px;
+        line-height: 1.6;
+        color: $text-color;
+
+        .modal-body-label {
+            display: inline-block;
+            min-width: 180px;
+            font-weight: 500;
+            color: black;
+        }
+    }
+
+    .modal-body-detail {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 32px;
+
+        .modal-body-total {
+            font-size: 18px;
+            font-weight: 600;
+            color: #dc3545;
+        }
+    }
+
+    .modal-btn {
+        font-size: 18px;
+        font-weight: 500;
+        background-color: $primary-color;
+        color: white;
+        padding: 8px 32px;
+        transition: all 200ms linear;
+        border: none;
+
+        &:hover {
+            cursor: pointer;
+            background-color: #333;
+            color: $primary-color;
+        }
+
+        &.modal-btn-sm {
+            font-weight: 400;
+            padding: 4px 18px;
+        }
+
+        &.modal-btn-cancel {
+            background-color: #999999;
+
+            &:hover {
+                background-color: #333;
+                color: white;
+            }
+        }
+    }
+}

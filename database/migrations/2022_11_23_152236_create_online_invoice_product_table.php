@@ -13,15 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('export_invoice_product', function (Blueprint $table) {
+        Schema::create('online_invoice_product', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('export_invoice_id');
+            $table->unsignedBigInteger('online_invoice_id');
             $table->unsignedBigInteger('product_id');
-            $table->foreign('export_invoice_id')->references('id')->on('export_invoices')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('online_invoice_id')->references('id')->on('online_invoices')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedInteger('soLuong');
-            $table->unsignedBigInteger('donGia');
-            $table->unsignedBigInteger('tongTien');
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('export_invoice_product');
+        Schema::dropIfExists('online_invoice_product');
     }
 };

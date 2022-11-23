@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Models\invoices\OnlineInvoice;
+
 class Customer extends Authenticatable
 {
     use HasFactory;
@@ -29,5 +31,10 @@ class Customer extends Authenticatable
 
     public function hasRole($role) {
         return $this->getRole()->first()->role === $role;
+    }
+
+    public function onlineInvoice()
+    {
+        return $this->hasMany(OnlineInvoice::class, 'account_id', 'id');
     }
 }
