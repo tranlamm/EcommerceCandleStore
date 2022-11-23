@@ -10,3 +10,9 @@
 .text-red {
     color: #dc3545;
 }
+
+@media (min-width: 1400px) {
+    .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 1140px;
+    }
+}

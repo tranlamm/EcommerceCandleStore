@@ -183,8 +183,25 @@ class CustomerController extends Controller
         return response()->json(['success' => 'Success']);
     }
 
-    public function order(Request $request)
+    public function checkout(Request $request)
     {
-        dd($request->all());
+        $request->validate([
+            'id' => 'bail|required',
+            'quantity' => 'bail|required',
+        ]);
+
+        $ids = $request->input('id');
+        $quantities = $request->input('quantity');
+        $length = count($ids);
+        for ($i = 0; $i < $length; ++$i)
+        {
+            if ($quantities[$i] < 1)
+                return back()->withErrors([$ids[$i] => 'Vui lòng nhập số lượng sản phẩm']);
+            $product = Product::find($ids[$i]);
+            if ($product->conLai < $quantities[$i])
+                return back()->withErrors([$ids[$i] => 'Số lượng sản phẩm trong kho không đủ']);
+        }
+
+        return back()->with('success', 'Đặt hàng thành công');
     }
 }

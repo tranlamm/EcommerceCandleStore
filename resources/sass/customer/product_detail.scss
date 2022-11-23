@@ -132,6 +132,14 @@
                 color: $primary-color;
             }
         }
+        
+        .error-quantity {
+            font-size: 14px;
+            font-weight: 600;
+            color: #dc3545;
+            margin-top: 6px;
+            display: none;
+        }
     }
 }
 

@@ -29,16 +29,15 @@ use App\Http\Controllers\customer\CustomerController;
 */
 
 // Login
-    // admin
+    // Admin
 Route::get('/admin/login', [ AuthController::class, 'getLoginAdmin'])->name('login.index');
 Route::post('/admin/login/post', [ AuthController::class, 'postLoginAdmin'])->name('login.post');
 Route::post('/admin/logout/post', [ AuthController::class, 'postLogoutAdmin'])->name('logout.post');
-    // customer
+    // Customer
 Route::get('/customer/login', [ CustomerLoginController::class, 'getLoginCustomer'])->name('login_customer.index');
-// Route::get('/customer/register', [ CustomerLoginController::class, 'getRegisterCustomer'])->name('register_customer.index');
-// Route::post('/customer/login/post', [ CustomerLoginController::class, 'postLoginCustomer'])->name('login_customer.post');
-// Route::post('/customer/register/post', [ CustomerLoginController::class, 'postRegisterCustomer'])->name('register_customer.post');
-// Route::post('/customer/logout/post', [ CustomerLoginController::class, 'postLogoutCustomer'])->name('logout_customer.post');
+Route::post('/customer/login/post', [ CustomerLoginController::class, 'postLoginCustomer'])->name('login_customer.post');
+Route::post('/customer/register/post', [ CustomerLoginController::class, 'postRegisterCustomer'])->name('register_customer.post');
+Route::post('/customer/logout/post', [ CustomerLoginController::class, 'postLogoutCustomer'])->name('logout_customer.post');
 
 // Admin
 Route::group(['middleware' => 'login_admin'], function() {
@@ -63,9 +62,11 @@ Route::get('/', [CustomerController::class, 'shopIndex'])->name('shop.index');
 Route::get('/customer/product', [CustomerController::class, 'productShow'])->name('product.index');
 Route::get('/customer/product/{id}/detail', [CustomerController::class, 'productDetail'])->name('product.detail');
 
-    // Cart
+// Cart
+Route::group(['middleware' => 'login_customer'], function() {
     Route::get('/customer/cart', [CustomerController::class, 'cartShow'])->name('cart.index');
     Route::post('/customer/deletecartitem', [CustomerController::class, 'deleteItemCart'])->name('product.deletecartitem');
     Route::post('/customer/deleteallcart', [CustomerController::class, 'deleteAllCart'])->name('product.deleteallcart');
     Route::post('/customer/product/{id}/addcart', [CustomerController::class, 'addProductToCart'])->name('product.addcart');
-    Route::post('/customer/order', [CustomerController::class, 'order'])->name('product.order');
+    Route::post('/customer/checkout', [CustomerController::class, 'checkout'])->name('product.checkout');
+});

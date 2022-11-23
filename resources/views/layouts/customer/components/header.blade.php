@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col col-6">
-                    <div class="d-flex justify-content-start">
+                    <div class="d-flex justify-content-start align-items-center">
                         <div>
                             <i class="fa-solid fa-phone me-2"></i>(+84) 0813345087
                         </div>
@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="col col-6">
-                    <div class="d-flex justify-content-end">
+                    <div class="d-flex justify-content-end align-items-center">
                         <div class="top-bar__social">
                             <a href="" class="top-bar__social-link"><i class="fa-brands fa-facebook"></i></a>
                             <a href="" class="top-bar__social-link"><i class="fa-brands fa-linkedin"></i></a>
@@ -23,7 +23,21 @@
                         </div>
                         <div class="split"></div>
                         <div class="top-bar__login">
-                            <a href="{{ route('login_customer.index') }}" class="top-bar__login-link"><i class="fa-solid fa-user me-2"></i>Login</a>
+                            @if (Auth::guard('customer')->check())
+                                <div class="dropdown">
+                                    <div class="logged_header" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user"></i></div>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <a href="" class="dropdown-item">Tài khoản của tôi</a>
+                                        <a href="" class="dropdown-item">Đơn hàng</a>
+                                        <form action="{{ route('logout_customer.post') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">Đăng xuất</button>
+                                        </form>
+                                    </ul>
+                                </div>
+                            @else
+                                <a href="{{ route('login_customer.index') }}" class="top-bar__login-link"><i class="fa-solid fa-user me-2"></i>Login</a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -56,9 +70,22 @@
                     </div>
                 </div>
                 <div class="col col-lg-2 col-md-3 col-12">
+                    @if (Auth::guard('customer')->check())
                     <div class="right_bar">
                         <div class="right_bar-item"><i class="fa-regular fa-heart"></i></div>
-                        <div class="right_bar-item"><i class="fa-solid fa-circle-user"></i></div>
+                        <div class="right_bar-item">
+                            <div class="dropdown-center">
+                                <div data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user"></i></div>
+                                <ul class="dropdown-menu">
+                                    <a href="" class="dropdown-item">Tài khoản của tôi</a>
+                                    <a href="" class="dropdown-item">Đơn hàng</a>
+                                    <form action="{{ route('logout_customer.post') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">Đăng xuất</button>
+                                    </form>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="right_bar-item">
                             <div class="dropdown dropdown-menu-end">
                                 <div class="dropdown-toggle cart-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -105,6 +132,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

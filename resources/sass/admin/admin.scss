@@ -147,12 +147,12 @@ body {
 .product__image-wrapper {
     height: 120px;
     width: 120px;
+    border: 1px solid rgb(99, 99, 99);
 
     .product__image {
         width: 100%; 
         height: 100%; 
         object-fit: contain;
-        border: 1px solid rgb(99, 99, 99);
     }
 }
 

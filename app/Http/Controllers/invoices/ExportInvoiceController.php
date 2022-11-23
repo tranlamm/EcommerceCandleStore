@@ -18,22 +18,16 @@ class ExportInvoiceController extends Controller
     public function index(Request $request)
     {
         $tenDonHang = $request->input('tenDonHang');
-        $hinhThucMua = $request->input('hinhThucMua');
-        $trangThai = $request->input('trangThai');
 
         if ($request->input('order-name')) {
             $exportInvoices = ExportInvoice::query()
                 ->where('tenDonHang', 'LIKE', "%{$tenDonHang}%")
-                ->where('hinhThucMua', 'LIKE', "%{$hinhThucMua}%")
-                ->where('trangThai', 'LIKE', "%{$trangThai}%")
                 ->orderBy($request->input('order-name'), (in_array($request->input('order-type'), ['asc', 'desc'], true) ? $request->input('order-type') : 'asc'))
                 ->paginate(10);
         }
         else {
             $exportInvoices = ExportInvoice::query()
                 ->where('tenDonHang', 'LIKE', "%{$tenDonHang}%")
-                ->where('hinhThucMua', 'LIKE', "%{$hinhThucMua}%")
-                ->where('trangThai', 'LIKE', "%{$trangThai}%")
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
@@ -67,11 +61,9 @@ class ExportInvoiceController extends Controller
         $exportInvoice = ExportInvoice::create([
             'tenDonHang' => $request->input('tenDonHang'),
             'noiDung' => $request->input('noiDung'),
-            'hinhThucMua' => 'offline',
             'tenKhachHang' => $request->input('tenKhachHang'),
             'soDienThoai' => $request->input('soDienThoai'),
             'diaChi' => $request->input('diaChi'),
-            'trangThai' => 'completed',
             'tongTien' => array_sum($request->input('tongTien')),
         ]);
 

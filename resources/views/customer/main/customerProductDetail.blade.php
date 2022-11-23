@@ -51,6 +51,7 @@
                             <input type="number" min="1" max="{{ $product->conLai }}" class="quantity-input" id="quantity">
                             <div class="quantity-left">{{ $product->conLai }} sản phẩm có sẵn</div>
                         </div>
+                        <div class="error-quantity" id="error-message">Vui lòng nhập số lượng sản phẩm</div>
                         <div class="product-buy-btn" id="add-to-cart">Thêm vào giỏ hàng</div>
                     </div>
                 </div>
@@ -70,27 +71,68 @@
     </div>
 </div>
 
+{{-- Toast add success to cart --}}
+<div class="add-toast add-toast-success">
+    <div class="d-flex justify-content-between align-items-center">
+        <a href="{{ route('cart.index') }}" class="view-cart-btn">View cart</a>
+        <div class="add-toast-btn"><i class="fa-solid fa-xmark"></i></div>
+    </div>
+    <div class="add-toast-text">Đã thêm sản phẩm vào giỏ hàng</div>
+</div>
 
+<div class="add-toast add-toast-fail">
+    <div class="add-toast-text">Số lượng sản phẩm trong kho không đủ</div>
+    <div class="add-toast-btn"><i class="fa-solid fa-xmark"></i></div>
+</div>
+{{-- End toast --}}
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <script type="text/javascript">
     $(document).ready(function()
     {
         $('#add-to-cart').click(function()
         {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'post',
-                url:  '{{ route('product.addcart', ['id' => $product->id]) }}',
-                data: {
-                    'quantity' : $('#quantity').val(),
-                },
-                success:function()
-                {
-                }
-            });
+            @if (Auth::guard('customer')->check())
+                const id = {{ $product->id }};
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'post',
+                    url: `/customer/product/${id}/addcart`,
+                    data: {
+                        'id' : id,
+                        'quantity' : $('#quantity').val(),
+                    },
+                    success: function(data)
+                    {
+                        $('.add-toast').removeClass('add-toast-active');
+                        $('#error-message').hide();
+                        if ($.isEmptyObject(data.errors)) {
+                            setTimeout(() => {
+                                $('.add-toast-success').addClass('add-toast-active');
+                            }, 100);
+                        }
+                        else {
+                            const resp = data.errors;
+                            if (resp == 'Not enough')
+                                setTimeout(() => {
+                                    $('.add-toast-fail').addClass('add-toast-active');
+                                }, 100);
+                            else if (resp == 'Failed')
+                                $('#error-message').show();
+                        }
+                    },
+                });
+            @else
+                window.location = '{{ route('login_customer.index') }}';
+            @endif
+        })
+        $('.add-toast-btn').click(function()
+        {
+            $('.add-toast').removeClass('add-toast-active');
         })
     })
 </script>

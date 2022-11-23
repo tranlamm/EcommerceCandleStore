@@ -59,7 +59,7 @@
 </div>
 
 <div class="add-toast add-toast-fail">
-    <div class="add-toast-text">Sản phẩm hiện đang hết hàng</div>
+    <div class="add-toast-text">Số lượng sản phẩm trong kho không đủ</div>
     <div class="add-toast-btn"><i class="fa-solid fa-xmark"></i></div>
 </div>
 {{-- End toast --}}
@@ -69,37 +69,41 @@
     $(document).ready(function()
     {
         $('.add-cart-btn').click(function()
-        {
-            const id = $(this).attr('data-id');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'post',
-                url: `/customer/product/${id}/addcart`,
-                data: {
-                    'id' : id,
-                    'quantity' : 1,
-                },
-                success: function(data)
-                {
-                    $('.add-toast').removeClass('add-toast-active');
-                    if ($.isEmptyObject(data.errors)) {
-                        setTimeout(() => {
-                            $('.add-toast-success').addClass('add-toast-active');
-                        }, 100);
+        {   
+            @if (Auth::guard('customer')->check())
+                const id = $(this).attr('data-id');
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
-                    else {
-                        const resp = data.errors;
-                        if (resp == 'Not enough')
-                        setTimeout(() => {
-                            $('.add-toast-fail').addClass('add-toast-active');
-                        }, 100);
-                    }
-                },
-            });
+                });
+                $.ajax({
+                    type: 'post',
+                    url: `/customer/product/${id}/addcart`,
+                    data: {
+                        'id' : id,
+                        'quantity' : 1,
+                    },
+                    success: function(data)
+                    {
+                        $('.add-toast').removeClass('add-toast-active');
+                        if ($.isEmptyObject(data.errors)) {
+                            setTimeout(() => {
+                                $('.add-toast-success').addClass('add-toast-active');
+                            }, 100);
+                        }
+                        else {
+                            const resp = data.errors;
+                            if (resp == 'Not enough')
+                            setTimeout(() => {
+                                $('.add-toast-fail').addClass('add-toast-active');
+                            }, 100);
+                        }
+                    },
+                });
+            @else
+                window.location = '{{ route('login_customer.index') }}';
+            @endif
         });
         $('.add-toast-btn').click(function()
         {

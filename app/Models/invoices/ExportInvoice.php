@@ -12,8 +12,7 @@ class ExportInvoice extends Model
     use HasFactory;
     protected $table = 'export_invoices';
     protected $fillable = [
-        'id', 'tenDonHang', 'noiDung', 'hinhThucMua', 'username', 'tenKhachHang', 'soDienThoai', 'diaChi', 
-        'tongTien', 'trangThai', 'created_at',
+        'id', 'tenDonHang', 'noiDung', 'tenKhachHang', 'soDienThoai', 'diaChi', 'tongTien', 'created_at',
     ];
 
     public function products()

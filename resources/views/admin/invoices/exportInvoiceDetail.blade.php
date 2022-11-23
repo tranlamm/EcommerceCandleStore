@@ -28,16 +28,7 @@
                 <div class="invoice-title">
                     <span>Hình thức mua: </span>
                     <span class="invoice-content">
-                        @switch($exportInvoice->hinhThucMua)
-                            @case('offline')
-                                Trực tiếp tại cửa hàng
-                                @break
-                            @case('online')
-                                Đặt hàng qua website
-                                @break
-                            @default
-                                
-                        @endswitch
+                        Trực tiếp tại cửa hàng
                     </span>
                 </div>
                 <div class="invoice-title">
