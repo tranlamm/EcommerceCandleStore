@@ -7,6 +7,7 @@
 
 .product-detail__wrapper {
     background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 16px;
     padding-bottom: 40px;
 
@@ -147,6 +148,7 @@
     background-color: #ffffff;
     padding: 16px;
     margin-top: 18px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: flex-start;
 
@@ -172,6 +174,179 @@
         .manufacturer-text {
             font-size: 16px;
             color: $text-color;
+        }
+    }
+}
+
+.review__wrapper {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+
+    .review__header {
+        background-color: #f1f6f7;
+        padding: 18px 32px;
+        font-size: 18px;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+
+    .review__main {
+        padding-top: 32px;
+    }
+
+    .review-point__wrapper {
+        padding: 0 32px;
+
+        .point-wrapper {
+            background-color: #f1f6f7;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 18px 100px;
+            border-radius: 2px;
+
+            .point-label {
+                font-size: 24px;
+                font-weight: 600;
+                line-height: 1.2;
+            }
+
+            .point-content {
+                font-size: 38px;
+                font-weight: 600;
+                color: #dc3545;
+            }
+
+            .point-star {
+                font-size: 16px;
+            }
+
+            .point-quantity {
+                font-size: 14px;
+                color: #777777;
+            }
+        }
+
+        .comment-list {
+            display: flex;
+            flex-direction: column;
+            margin: 32px 0;
+
+            .comment-label {
+                font-size: 32px;
+                font-weight: 900;
+                font-family: 'Dancing Script', cursive;
+                margin-bottom: 12px;
+            }
+
+            .comment-item {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding-bottom: 32px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                margin-bottom: 12px;
+
+                .comment-name {
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+
+                .comment-date {
+                    font-size: 12px;
+                    line-height: 1.2;
+                    color: #777777;
+                }
+
+                .comment-star {
+                    font-size: 14px;
+                    margin-bottom: 4px;
+                }
+
+                .comment-content {
+                    font-size: 16px;
+                    color: #666666;
+                    margin-top: 2px;
+                }
+
+                .comment-delete {
+                    font-size: 16px;
+                    padding: 2px 12px;
+                    border-radius: 4px;
+                    border: none;
+                    background-color: #dc3545;
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .review-post-wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 0 32px;
+
+        .review-post-label {
+            font-size: 24px;
+            font-weight: 900;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .star-post-wrapper {
+            display: flex;
+            align-items: center;
+
+            .star-post-text {
+                font-size: 16px;
+                margin-right: 12px;
+            }
+
+            .star-post {
+                display: flex;
+                font-size: 16px;
+                margin-right: 50px;
+
+                .star-post-icon {
+                    margin-right: 2px;
+                    color: rgba(0, 0, 0, 0.25);
+                    transition: color 200ms linear;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                    &.star-post-icon--active {
+                        color: $primary-color;
+                    }
+                }
+            }
+        }
+
+        .comment-post-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+
+            .comment-input {
+                width: 100%;
+                padding: 8px 12px;
+                font-size: 16px;
+                margin-bottom: 24px;
+            }
+        }
+
+        .post-btn {
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 500;
+            background-color: green;
+            color: white;
+            padding: 10px 32px;
+            border-radius: 24px;
+            transition: background-color 200ms linear;
+            &:hover {
+                cursor: pointer;
+                background-color: darkolivegreen;
+            }
         }
     }
 }

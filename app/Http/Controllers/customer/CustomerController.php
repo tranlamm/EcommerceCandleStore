@@ -9,24 +9,28 @@ use App\Models\products\Product;
 use App\Models\products\Fragrance;
 use App\Models\products\Manufacturer;
 use App\Models\invoices\OnlineInvoice;
+use App\Models\auth\Customer;
 
 use Validator;
 use Auth;
+use DB;
 
 class CustomerController extends Controller
 {
+// Shop
     public function shopIndex()
     {
         $bestseller = Product::query()
             ->orderBy('daBan', 'desc')
             ->limit(10)
             ->get();
-        // $toprated = Product::query()
-        //     ->orderBy('danhGia', 'desc')
-        //     ->limit(10)
-        //     ->get();
+        $toprated = Product::query()
+            ->orderBy('diemDanhGia', 'desc')
+            ->limit(10)
+            ->get();
         return view('customer.main.customerMainView', [
             'bestseller' => $bestseller,
+            'toprated' => $toprated,
         ]);
     }
 
@@ -78,11 +82,13 @@ class CustomerController extends Controller
     public function productDetail(Request $request, $id)
     {
         $product = Product::find($id);
+        
         return view('customer.main.customerProductDetail', [
             'product' => $product,
         ]);
     }
 
+// Cart
     public function cartShow(Request $request)
     {
         $products = array();
@@ -229,6 +235,87 @@ class CustomerController extends Controller
             ]]);
         };
 
-        return back()->with('success', 'Đặt hàng thành công');
+        return back()->with('success', 'Đặt hàng thành công. Cảm ơn quý khách đã ủng hộ!');
+    }
+
+// Invoice
+    public function invoiceShow(Request $request, $id)
+    {
+        $customer = Customer::find($id);
+
+        return view('customer.main.customerInvoiceShow', [
+            'invoices_finished' => $customer->onlineInvoice->where('trangThai', '=', 'finished'),
+            'invoices_pending' => $customer->onlineInvoice->where('trangThai', '=', 'pending'),
+        ]);
+    }
+
+// Review
+    public function postReview(Request $request, $customer_id, $product_id)
+    {
+        // Validate
+        $validator = Validator::make($request->all(), [
+            'point' => 'required|numeric|min:0|max:5',
+        ]);
+
+        if ($validator->fails())
+            return response()->json(['errors' => 'Failed review']);
+        // End Validate
+
+        $customer = Customer::find($customer_id);
+        if (!$customer) return response()->json(['errors' => 'Failed review']);
+        $product = Product::find($product_id);
+        if (!$product) return response()->json(['errors' => 'Failed review']);
+        $point = $request->input('point');
+
+        if ($customer->productReview()->where('product_id', '=', $product_id)->exists())
+        {
+            $customer->productReview()->updateExistingPivot($product_id, [
+                'point' => $point,
+            ]);
+        }
+        else 
+        {   
+            $customer->productReview()->attach([$product_id => [
+                'point' => $point,
+            ]]);
+        }
+
+        return response()->json(['success' => 'Success']);
+    }
+
+    public function postComment(Request $request, $customer_id, $product_id)
+    {
+        // Validate
+        $validator = Validator::make($request->all(), [
+            'comment' => 'required',
+        ]);
+
+        if ($validator->fails())
+            return response()->json(['errors' => 'Failed review']);
+        // End Validate
+
+        $customer = Customer::find($customer_id);
+        if (!$customer) return response()->json(['errors' => 'Failed review']);
+        $product = Product::find($product_id);
+        if (!$product) return response()->json(['errors' => 'Failed review']);
+        $comment = $request->input('comment');
+
+        $customer->productComment()->attach([$product_id => [
+            'comment' => $comment,
+        ]]);
+
+        return back();
+    }
+
+    public function deleteComment(Request $request, $customer_id, $product_id)
+    {
+        $request->validate([
+            'comment_id' => 'bail|required',
+        ]);
+
+        $customer = Customer::find($customer_id);
+        if (!$customer) return;
+        DB::table('customer_product_comment')->delete($request->input('comment_id'));
+        return back();
     }
 }

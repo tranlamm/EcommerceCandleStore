@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 use App\Models\invoices\OnlineInvoice;
+use App\Models\products\Product;
 
 class Customer extends Authenticatable
 {
@@ -36,5 +37,19 @@ class Customer extends Authenticatable
     public function onlineInvoice()
     {
         return $this->hasMany(OnlineInvoice::class, 'account_id', 'id');
+    }
+
+    public function productReview()
+    {
+        return $this->belongsToMany(Product::class, 'customer_product_review', 'account_id', 'product_id')
+                    ->withPivot('point')
+                    ->withTimestamps();
+    }
+
+    public function productComment()
+    {
+        return $this->belongsToMany(Product::class, 'customer_product_comment', 'account_id', 'product_id')
+                    ->withPivot('comment', 'id')
+                    ->withTimestamps();
     }
 }

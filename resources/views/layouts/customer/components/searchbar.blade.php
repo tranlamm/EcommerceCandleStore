@@ -91,7 +91,7 @@
                                 <input type="hidden" name="order-fullname" id="order-fullname" value="{{ old('order-fullname') }}">
                                 <ul class="dropdown-menu search-bar__menu" aria-labelledby="dropdownMenuButton1">
                                     <li><div class="dropdown-item search-bar__menu-item sort-item" data-order-name="daBan" data-order-type="desc">Best Seller</div></li>
-                                    {{-- <li><div class="dropdown-item search-bar__menu-item sort-item" data-order-name="danhGia" data-order-type="desc">Top Rated</div></li> --}}
+                                    <li><div class="dropdown-item search-bar__menu-item sort-item" data-order-name="diemDanhGia" data-order-type="desc">Top Rated</div></li>
                                     <li><div class="dropdown-item search-bar__menu-item sort-item" data-order-name="updated_at" data-order-type="desc">New Arrial</div></li>
                                     <li><div class="dropdown-item search-bar__menu-item sort-item" data-order-name="giaBan" data-order-type="asc">Giá tăng dần</div></li>
                                     <li><div class="dropdown-item search-bar__menu-item sort-item" data-order-name="giaBan" data-order-type="desc">Giá giảm dần</div></li>

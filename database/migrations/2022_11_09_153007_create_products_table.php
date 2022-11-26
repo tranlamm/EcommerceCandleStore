@@ -29,6 +29,8 @@ return new class extends Migration
             $table->unsignedBigInteger('giaBan');
             $table->unsignedInteger('daBan')->default(0);
             $table->unsignedInteger('conLai')->default(0);
+            $table->unsignedInteger('luotDanhGia')->default(0);
+            $table->unsignedDecimal('diemDanhGia')->default(0.0);
             $table->timestamps();
         });
     }

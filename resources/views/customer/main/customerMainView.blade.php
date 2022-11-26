@@ -210,4 +210,17 @@
     <input type="hidden" name="type">
 </form>
 
+<script>
+    const navbar = $('#header__navbar');
+    $(window).scroll(function()
+    {
+        if($(this).scrollTop() >= 300)
+        {
+            navbar.addClass('navbar--active');
+        }
+        else {
+            navbar.removeClass('navbar--active');
+        }
+    })
+</script>
 @endsection

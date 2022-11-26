@@ -39,8 +39,8 @@
             </div>
             <div class="col col-10">
                 <div id="toprated-carousel" class="owl-carousel">
-                    {{-- @foreach ($toprated as $product)
-                        <a href="" class="product-item">
+                    @foreach ($toprated as $product)
+                        <a href="{{ route('product.detail', ['id' => $product->id]) }}" class="product-item">
                             <div class="product-img">
                                 <img src="{{ asset('images/products/' . $product->image_path) }}" alt="Product">
                             </div>
@@ -48,7 +48,7 @@
                                 {{ $product->tenSanPham }}
                             </div>
                         </a>
-                    @endforeach --}}
+                    @endforeach
                 </div>
             </div>
             <div class="col col-1 carousel-btn-wrapper justify-content-end">

@@ -12,6 +12,7 @@ use App\Http\Controllers\invoices\ImportInvoiceController;
 use App\Http\Controllers\invoices\ExportInvoiceController;
 use App\Http\Controllers\invoices\OnlineInvoiceController;
 
+use App\Http\Controllers\accounts\CustomerAccountController;
 // Login
 use App\Http\Controllers\login\AdminLoginController;
 use App\Http\Controllers\login\AuthController;
@@ -51,7 +52,6 @@ Route::group(['middleware' => 'login_admin'], function() {
     Route::resource('/admin/scentedwaxproduct', ScentedWaxController::class);
     Route::resource('/admin/manufacturer', ManufacturerController::class);
     Route::get('/admin/manufacturer/{manufacturer}/allproducts', [ManufacturerController::class, 'allProducts'])->name('manufacturer.allproducts');
-    Route::get('/admin/test', [EssentialOilController::class, 'test']);
 
     // Invoices management
     Route::resource('/admin/invoice/importinvoice', ImportInvoiceController::class);
@@ -59,6 +59,9 @@ Route::group(['middleware' => 'login_admin'], function() {
     Route::resource('/admin/invoice/onlineinvoice', OnlineInvoiceController::class);
     Route::get('/admin/invoice/onlineinvoice/finish/{id}', [OnlineInvoiceController::class, 'finish'])->name('onlineinvoice.finish');
     Route::get('/admin/invoice/onlineinvoice/cancel/{id}', [OnlineInvoiceController::class, 'cancel'])->name('onlineinvoice.cancel');
+
+    // Account management
+    Route::resource('/admin/customeraccount', CustomerAccountController::class);
 });
 
 // Customer
@@ -66,11 +69,25 @@ Route::get('/', [CustomerController::class, 'shopIndex'])->name('shop.index');
 Route::get('/customer/product', [CustomerController::class, 'productShow'])->name('product.index');
 Route::get('/customer/product/{id}/detail', [CustomerController::class, 'productDetail'])->name('product.detail');
 
-// Cart
+// Customer Middleware
 Route::group(['middleware' => 'login_customer'], function() {
+    // Cart
     Route::get('/customer/cart', [CustomerController::class, 'cartShow'])->name('cart.index');
     Route::post('/customer/deletecartitem', [CustomerController::class, 'deleteItemCart'])->name('product.deletecartitem');
     Route::post('/customer/deleteallcart', [CustomerController::class, 'deleteAllCart'])->name('product.deleteallcart');
     Route::post('/customer/product/{id}/addcart', [CustomerController::class, 'addProductToCart'])->name('product.addcart');
     Route::post('/customer/checkout', [CustomerController::class, 'checkout'])->name('product.checkout');
+
+    // Account
+    Route::get('/customer/account/{id}', [ CustomerLoginController::class, 'showAccountInfo'])->name('account.index');
+    Route::post('/customer/changeinfo/{id}', [ CustomerLoginController::class, 'changeAccountInfo'])->name('info.change');
+    Route::post('/customer/changepassword/{id}', [ CustomerLoginController::class, 'changePassword'])->name('password.change');
+
+    // Invoice
+    Route::get('/customer/invoice/{id}', [ CustomerController::class, 'invoiceShow'])->name('invoice.index');
+
+    // Review
+    Route::post('/customer/review/{customer_id}/{product_id}', [ CustomerController::class, 'postReview'])->name('review.post');
+    Route::post('/customer/comment/{customer_id}/{product_id}', [ CustomerController::class, 'postComment'])->name('comment.post');
+    Route::delete('/customer/comment/{customer_id}/{product_id}/delete', [ CustomerController::class, 'deleteComment'])->name('comment.delete');
 });

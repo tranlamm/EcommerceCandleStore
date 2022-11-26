@@ -1,15 +1,3 @@
-const navbar = $('#header__navbar');
-$(window).scroll(function()
-{
-    if($(this).scrollTop() >= 258)
-    {
-        navbar.addClass('navbar--active');
-    }
-    else {
-        navbar.removeClass('navbar--active');
-    }
-})
-
 // Search
 $('.header__search-type').click(function()
 {

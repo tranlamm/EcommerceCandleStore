@@ -78,7 +78,7 @@
                     <a class="nav-link nav_link ps-5" href=""><i class="fa-solid fa-headset"></i>Admins</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav_link ps-5" href=""><i class="fa-solid fa-person"></i>Customers</a>
+                    <a class="nav-link nav_link ps-5" href="{{ route('customeraccount.index') }}"><i class="fa-solid fa-person"></i>Customers</a>
                 </li>
             </div>
         </ul>

@@ -11,7 +11,7 @@
         font-size: 13px;
         
         .split {
-            border: 1px solid rgb(220, 220, 220);
+            border-left: 2px solid rgb(220, 220, 220);
             margin: 0 18px;
             height: 20px;
         }
@@ -137,7 +137,7 @@
             right: 0;
             left: 0;
             background-color: white;
-            animation: fadeInDown 1s both 0.2s;
+            animation: fadeInDown 1s both 0.1s;
 
             .header__category-dropdown {
                 color: $text-color;

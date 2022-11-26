@@ -27,8 +27,8 @@
                                 <div class="dropdown">
                                     <div class="logged_header" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user"></i></div>
                                     <ul class="dropdown-menu dropdown-menu-end">
-                                        <a href="" class="dropdown-item">Tài khoản của tôi</a>
-                                        <a href="" class="dropdown-item">Đơn hàng</a>
+                                        <a href="{{ route('account.index', ['id' => Auth::guard('customer')->user()->id]) }}" class="dropdown-item">Tài khoản của tôi</a>
+                                        <a href="{{ route('invoice.index', ['id' => Auth::guard('customer')->user()->id]) }}" class="dropdown-item">Đơn hàng</a>
                                         <form action="{{ route('logout_customer.post') }}" method="POST">
                                             @csrf
                                             <button type="submit" class="dropdown-item">Đăng xuất</button>
@@ -77,8 +77,8 @@
                             <div class="dropdown-center">
                                 <div data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user"></i></div>
                                 <ul class="dropdown-menu">
-                                    <a href="" class="dropdown-item">Tài khoản của tôi</a>
-                                    <a href="" class="dropdown-item">Đơn hàng</a>
+                                    <a href="{{ route('account.index', ['id' => Auth::guard('customer')->user()->id]) }}" class="dropdown-item">Tài khoản của tôi</a>
+                                    <a href="{{ route('invoice.index', ['id' => Auth::guard('customer')->user()->id]) }}" class="dropdown-item">Đơn hàng</a>
                                     <form action="{{ route('logout_customer.post') }}" method="POST">
                                         @csrf
                                         <button type="submit" class="dropdown-item">Đăng xuất</button>
@@ -123,11 +123,10 @@
                                             <div>Total</div>
                                             <div>@currency_format($total)</div>
                                         </div>
-                                        <a class="btn btn-dark cart-checkout" href="{{ Request::url() }}" role="button">RELOAD</a>
                                     @else
                                         <img src="{{ asset('images/shop/empty-cart2.jfif') }}" alt="empty cart">
-                                        <a class="btn btn-dark cart-checkout" href="{{ Request::url() }}" role="button">RELOAD</a>
                                     @endif
+                                    <a class="btn btn-dark cart-checkout" href="{{ Request::url() }}" role="button">RELOAD</a>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +148,7 @@
                         <div class="header__category-list dropdown-menu">
                           <li><div class="dropdown-item header__category-item search-category" data-order-name="daBan" data-order-type="desc"><i class="fa-brands fa-bitcoin me-2"></i>Best seller</div></li>
                           <li><div class="dropdown-item header__category-item search-category" data-order-name="updated_at" data-order-type="desc"><i class="fa-solid fa-truck-fast me-2"></i>New arrivals</div></li>
-                          {{-- <li><div class="dropdown-item header__category-item search-category" data-order-name="danhGia" data-order-type=""><i class="fa-solid fa-thumbs-up me-2"></i>Top rated</div></li> --}}
+                          <li><div class="dropdown-item header__category-item search-category" data-order-name="diemDanhGia" data-order-type="desc"><i class="fa-solid fa-thumbs-up me-2"></i>Top rated</div></li>
                           <li><div class="dropdown-item header__category-item header__search-type" data-type="candle"><i class="fa-solid fa-fire-flame-curved me-2"></i>Nến thơm</div></li>
                           <li><div class="dropdown-item header__category-item header__search-type" data-type="scented wax"><i class="fa-solid fa-soap me-2"></i>Sáp thơm</div></li>
                           <li><div class="dropdown-item header__category-item header__search-type" data-type="essential oil"><i class="fa-solid fa-bottle-droplet me-2"></i>Tinh dầu</div></li>
@@ -161,11 +160,13 @@
                     <div class="header__nav">
                         <a href="{{ route('shop.index') }}" class="header__nav-item">Home</a>
                         <a href="{{ route('product.index') }}" class="header__nav-item">Product</a>
-                        <a href="" class="header__nav-item">Service</a>
-                        <a href="" class="header__nav-item">Shop</a>
-                        <a href="" class="header__nav-item">Pages</a>
-                        <a href="" class="header__nav-item">Blog</a>
-                        <a href="" class="header__nav-item">Contact us</a>
+                        @if (Auth::guard('customer')->check())
+                        <a href="{{ route('cart.index') }}" class="header__nav-item">Shopping Cart</a>
+                        <a href="{{ route('account.index', ['id' => Auth::guard('customer')->user()->id]) }}" class="header__nav-item">My Account</a>
+                        <a href="{{ route('invoice.index', ['id' => Auth::guard('customer')->user()->id]) }}" class="header__nav-item">My Invoices</a>
+                        @else
+                        <a href="{{ route('login_customer.index') }}" class="header__nav-item">Login</a>
+                        @endif
                     </div>
                 </div>
             </div>

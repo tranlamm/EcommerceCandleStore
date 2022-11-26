@@ -58,6 +58,12 @@
             .product-type {
                 font-size: 12px;
                 color: rgb(123, 123, 123);
+                text-overflow: ellipsis;
+                word-break: break-all;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
             }
 
             .product-manufacturer {
@@ -85,10 +91,19 @@
             }
 
             .product-price {
-                margin-top: 12px;
                 font-size: 16px;
                 font-weight: 600;
                 color: #c00;
+                text-overflow: ellipsis;
+                word-break: break-all;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
+            }
+
+            .product-review {
+                font-size: 14px;
             }
         }
     }
@@ -171,3 +186,7 @@
         }
     }
 }
+
+
+
+

@@ -67,11 +67,15 @@
         }
 
         .product-name {
-            font-size: 16x;
             font-weight: 900;
-            padding: 8px 12px;
             margin: 8px 0 18px 0;
             transition: all 200ms ease-in-out;
+            text-overflow: ellipsis;
+            word-break: break-all;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
         }
 
         &:hover {

@@ -4,10 +4,13 @@ namespace App\Http\Controllers\login;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
-use Session;
+
 use App\Models\auth\Customer;
 use App\Models\auth\Roles;
+
+use Auth;
+use Session;
+use Hash;
 
 class CustomerLoginController extends Controller
 {
@@ -67,5 +70,56 @@ class CustomerLoginController extends Controller
         ]);
 
         return back()->with('message', 'Sign up successfully !');
+    }
+
+    public function showAccountInfo(Request $request, $id)
+    {
+        $customer = Customer::find($id);
+
+        return view('customer.main.customerAccountInfo', [
+            'customer' => $customer,
+        ]);
+    }
+
+    public function changeAccountInfo(Request $request, $id)
+    {
+        $request->validate([
+            'fullname' => 'bail|required',
+            'email' => 'bail|email',
+            'address' => 'bail|required',
+            'phoneNumber' => array(
+                'bail',
+                'required',
+                'regex:/(84|0[3|5|7|8|9])+([0-9]{8})/u',
+            ),
+        ]);
+
+        Customer::where('id', $id)->update([
+            'fullname' => $request->input('fullname'),
+            'phoneNumber' => $request->input('phoneNumber'),
+            'email' => $request->input('email'),
+            'address' => $request->input('address'),
+        ]);
+
+        return back()->with('message', 'Change information successfully !');
+    }
+
+    public function changePassword(Request $request, $id)
+    {
+        $request->validate([
+            'old_password' => 'bail|required|min:8',
+            'password' => 'bail|required|confirmed|min:8',
+        ]);
+        
+        $customer = Customer::find($id);
+        if (!Hash::check($request->input('old_password'), $customer->password))
+            return back()->withErrors(['old_password' => 'Wrong password!']);
+
+        $customer->update([
+            'password' => bcrypt($request->input('password')),
+        ]);
+
+        Auth::guard('customer')->logout();
+        return redirect(route('login_customer.index'))->with('message', 'Change password successfully !');
     }
 }
