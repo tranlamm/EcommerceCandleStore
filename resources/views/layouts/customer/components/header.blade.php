@@ -27,8 +27,8 @@
                                 <div class="dropdown">
                                     <div class="logged_header" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user"></i></div>
                                     <ul class="dropdown-menu dropdown-menu-end">
-                                        <a href="{{ route('account.index', ['id' => Auth::guard('customer')->user()->id]) }}" class="dropdown-item">Tài khoản của tôi</a>
-                                        <a href="{{ route('invoice.index', ['id' => Auth::guard('customer')->user()->id]) }}" class="dropdown-item">Đơn hàng</a>
+                                        <a href="{{ route('account.index') }}" class="dropdown-item">Tài khoản của tôi</a>
+                                        <a href="{{ route('invoice.index') }}" class="dropdown-item">Đơn hàng</a>
                                         <form action="{{ route('logout_customer.post') }}" method="POST">
                                             @csrf
                                             <button type="submit" class="dropdown-item">Đăng xuất</button>
@@ -77,8 +77,8 @@
                             <div class="dropdown-center">
                                 <div data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user"></i></div>
                                 <ul class="dropdown-menu">
-                                    <a href="{{ route('account.index', ['id' => Auth::guard('customer')->user()->id]) }}" class="dropdown-item">Tài khoản của tôi</a>
-                                    <a href="{{ route('invoice.index', ['id' => Auth::guard('customer')->user()->id]) }}" class="dropdown-item">Đơn hàng</a>
+                                    <a href="{{ route('account.index') }}" class="dropdown-item">Tài khoản của tôi</a>
+                                    <a href="{{ route('invoice.index') }}" class="dropdown-item">Đơn hàng</a>
                                     <form action="{{ route('logout_customer.post') }}" method="POST">
                                         @csrf
                                         <button type="submit" class="dropdown-item">Đăng xuất</button>
@@ -162,8 +162,8 @@
                         <a href="{{ route('product.index') }}" class="header__nav-item">Product</a>
                         @if (Auth::guard('customer')->check())
                         <a href="{{ route('cart.index') }}" class="header__nav-item">Shopping Cart</a>
-                        <a href="{{ route('account.index', ['id' => Auth::guard('customer')->user()->id]) }}" class="header__nav-item">My Account</a>
-                        <a href="{{ route('invoice.index', ['id' => Auth::guard('customer')->user()->id]) }}" class="header__nav-item">My Invoices</a>
+                        <a href="{{ route('account.index') }}" class="header__nav-item">My Account</a>
+                        <a href="{{ route('invoice.index') }}" class="header__nav-item">My Invoices</a>
                         @else
                         <a href="{{ route('login_customer.index') }}" class="header__nav-item">Login</a>
                         @endif

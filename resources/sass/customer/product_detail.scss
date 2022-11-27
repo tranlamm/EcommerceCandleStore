@@ -84,7 +84,7 @@
 
         .product-des {
             font-size: 18px;
-            color: $text-color;
+            color: #666;
             margin-top: 32px;
             padding-bottom: 24px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -305,7 +305,7 @@
             .star-post {
                 display: flex;
                 font-size: 16px;
-                margin-right: 50px;
+                margin-right: 12px;
 
                 .star-post-icon {
                     margin-right: 2px;
@@ -345,7 +345,20 @@
             transition: background-color 200ms linear;
             &:hover {
                 cursor: pointer;
-                background-color: darkolivegreen;
+                background-color: rgb(8, 75, 8);
+            }
+
+            &.post-btn-sm {
+                padding: 4px 24px;
+                margin-left: 8px;
+            }
+
+            &.post-btn-reset {
+                background-color: #777777;
+
+                &:hover {
+                    background-color: black;
+                }
             }
         }
     }

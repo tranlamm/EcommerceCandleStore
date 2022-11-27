@@ -67,44 +67,44 @@
                 @endphp
                 @if (count($invoices_pending) > 0)
                     @foreach ($invoices_pending as $invoice)
-                    <div class="invoice-item">
-                        <div class="invoice-info">
-                            <div class="invoice-text">Ngày mua hàng: @date_format($invoice->created_at)</div>
-                            <div class="invoice-text text-danger">Tổng tiền: @currency_format($invoice->tongTien)</div>
+                        <div class="invoice-item">
+                            <div class="invoice-info">
+                                <div class="invoice-text">Ngày mua hàng: @date_format($invoice->created_at)</div>
+                                <div class="invoice-text text-danger">Tổng tiền: @currency_format($invoice->tongTien)</div>
+                            </div>
+                            <div class="invoice-dropdown" id="{{ 'invoice-btn-pending' . $k }}"><i class="fa-solid fa-chevron-down"></i></div>
                         </div>
-                        <div class="invoice-dropdown" id="{{ 'invoice-btn-pending' . $k }}"><i class="fa-solid fa-chevron-down"></i></div>
-                    </div>
-                    <div class="invoice-detail" id="{{ 'invoice-detail-pending' . $k }}">
-                        <div class="product-list">
-                            @foreach ($invoice->products as $product)
-                                <div class="product-item">
-                                    <div class="product-img">
-                                        <img src="{{ asset('images/products/' . $product->image_path) }}" alt="product">
+                        <div class="invoice-detail" id="{{ 'invoice-detail-pending' . $k }}">
+                            <div class="product-list">
+                                @foreach ($invoice->products as $product)
+                                    <div class="product-item">
+                                        <div class="product-img">
+                                            <img src="{{ asset('images/products/' . $product->image_path) }}" alt="product">
+                                        </div>
+                                        <div class="product-info">
+                                            <div class="product-text--main">{{ $product->tenSanPham }}</div>
+                                            <div class="product-text--sub">{{ $product->manufacturer()->first()->ten }}</div>
+                                        </div>
+                                        <div class="product-info">
+                                            <div class="product-text--sub">Loại sản phẩm: {{ $product->loaiSanPham }}</div>
+                                            <div class="product-text--sub">Trọng lượng: {{ $product->trongLuong }}</div>
+                                        </div>
+                                        <div class="product-info">
+                                            <div class="product-text--sub">Loại mùi: {{ $product->fragrance()->first()->theLoai }}</div>
+                                            <div class="product-text--sub">Mùi hương: {{ $product->muiHuong }}</div>
+                                        </div>
+                                        <div class="product-info">
+                                            <div class="product-price">Đơn giá: @currency_format($product->giaBan)</div>
+                                            <div class="product-price">Số lượng: {{ $product->pivot->soLuong }}</div>
+                                        </div>
                                     </div>
-                                    <div class="product-info">
-                                        <div class="product-text--main">{{ $product->tenSanPham }}</div>
-                                        <div class="product-text--sub">{{ $product->manufacturer()->first()->ten }}</div>
-                                    </div>
-                                    <div class="product-info">
-                                        <div class="product-text--sub">Loại sản phẩm: {{ $product->loaiSanPham }}</div>
-                                        <div class="product-text--sub">Trọng lượng: {{ $product->trongLuong }}</div>
-                                    </div>
-                                    <div class="product-info">
-                                        <div class="product-text--sub">Loại mùi: {{ $product->fragrance()->first()->theLoai }}</div>
-                                        <div class="product-text--sub">Mùi hương: {{ $product->muiHuong }}</div>
-                                    </div>
-                                    <div class="product-info">
-                                        <div class="product-price">Đơn giá: @currency_format($product->giaBan)</div>
-                                        <div class="product-price">Số lượng: {{ $product->pivot->soLuong }}</div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div> 
+                                @endforeach
+                            </div>
+                        </div> 
+                        @php
+                            $k++;
+                        @endphp
                     @endforeach
-                    @php
-                        $k++;
-                    @endphp
                 @else
                     <div class="empty-img-wrapper">
                         <img src="{{ asset('images/shop/empty-invoice.webp') }}" alt="empty">

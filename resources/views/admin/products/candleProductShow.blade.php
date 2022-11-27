@@ -66,7 +66,7 @@
             <th scope="col">Đã bán</th>
             <th scope="col">Created At</th>
             <th scope="col">Updated At</th>
-            <th scope="col" colspan="2">Thao tác</th>
+            <th scope="col">Thao tác</th>
           </tr>
         </thead>
         <tbody>
@@ -91,6 +91,7 @@
                       <div class="btn-group" role="group" aria-label="Basic example">
                         <a role="button" href="/admin/candleproduct/{{ $candleProduct->id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
                         <button class="btn btn-outline-danger btn-sm" data-id="{{ $candleProduct->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                        <a role="button" href="{{ route('product.review', ['id' => $candleProduct->id]) }}" class="btn btn-outline-success btn-sm">Reviews</a>
                       </div>
                     </td>
                 </tr>

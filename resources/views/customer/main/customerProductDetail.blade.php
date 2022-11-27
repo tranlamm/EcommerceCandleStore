@@ -13,12 +13,12 @@
                 <div class="col col-8">
                     <div class="product-info">
                         <div class="product-name__wrapper">
-                            @if ($product->conLai <= 0)
-                                <div class="product-detail__tag product-detail__tag--empty">HẾT HÀNG<i class="fa-solid fa-sack-xmark ms-1"></i></div> 
-                            @elseif ($product->diemDanhGia > 4.5)
+                            @if ($product->diemDanhGia > 4.5)
                                 <div class="product-detail__tag product-detail__tag--love">YÊU THÍCH<i class="fa-solid fa-heart ms-1"></i></div>
                             @elseif ($product->daBan > 100)
                                 <div class="product-detail__tag product-detail__tag--hot">BÁN CHẠY<i class="fa-solid fa-fire ms-1"></i></div>
+                            @elseif ($product->conLai <= 0)
+                                <div class="product-detail__tag product-detail__tag--empty">HẾT HÀNG<i class="fa-solid fa-sack-xmark ms-1"></i></div> 
                             @else
                                 <div class="product-detail__tag product-detail__tag--good-price">GIÁ TỐT<i class="fa-solid fa-coins ms-1"></i></div>
                             @endif
@@ -103,23 +103,25 @@
                                             <div class="comment-date">
                                                 @date_format($comment->created_at)
                                             </div>
-                                            <div class="comment-star">
-                                                @php
-                                                    $percent = $comment->productReview()->where('product_id', '=', $product->id)->first()->pivot->point / 5 * 100;
-                                                @endphp
-                                                <div class="stars-outer">
-                                                    <div class="stars-inner" style="{{ 'width: ' . $percent . "%" }}">
+                                            @if ($comment->productReview()->where('product_id', '=', $product->id)->exists())
+                                                <div class="comment-star">
+                                                    @php
+                                                        $percent = $comment->productReview()->where('product_id', '=', $product->id)->first()->pivot->point / 5 * 100;
+                                                    @endphp
+                                                    <div class="stars-outer">
+                                                        <div class="stars-inner" style="{{ 'width: ' . $percent . "%" }}">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            @endif
                                         </div>
                                         @if (Auth::guard('customer')->check())
                                             @if (Auth::guard('customer')->user()->id == $comment->id)
-                                                <form action="{{ route('comment.delete',  ['customer_id' => Auth::guard('customer')->user()->id, 'product_id' => $product->id]) }}" method="POST">
+                                                <form action="{{ route('comment.delete',  ['product_id' => $product->id]) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <input type="hidden" value="{{ $comment->pivot->id }}" name="comment_id">
-                                                    <button class="comment-delete"><i class="fa-regular fa-trash-can"></i></button>
+                                                    <button type="submit" class="comment-delete"><i class="fa-regular fa-trash-can"></i></button>
                                                 </form>
                                             @endif
                                         @endif
@@ -147,7 +149,8 @@
                                 <i id="star4" class="fa-solid fa-star star-post-icon" data-count="4"></i>
                                 <i id="star5" class="fa-solid fa-star star-post-icon" data-count="5"></i>
                             </div>
-                            <div id="rate-btn" class="post-btn">Send</div>
+                            <div id="reset-btn" class="post-btn post-btn-sm post-btn-reset">Reset</div>
+                            <div id="rate-btn" class="post-btn post-btn-sm">Rate</div>
                         </div>
                         <div class="mt-4"></div>
                         <div class="review-post-label">Add A Comment</div>
@@ -259,6 +262,11 @@
             }
             point = count;
         });
+        $('#reset-btn').click(function()
+        {
+            point = 0;
+            $('.star-post-icon').removeClass('star-post-icon--active');
+        });
 
         $('#rate-btn').click(function()
         {
@@ -270,7 +278,7 @@
                 });
                 $.ajax({
                     type: 'post',
-                    url: '{{ route('review.post', ['customer_id' => Auth::guard('customer')->user()->id, 'product_id' => $product->id]) }}',
+                    url: '{{ route('review.post', ['product_id' => $product->id]) }}',
                     data: {
                         'point': point,
                     },
@@ -306,7 +314,7 @@
                 });
                 $.ajax({
                     type: 'post',
-                    url: '{{ route('comment.post', ['customer_id' => Auth::guard('customer')->user()->id, 'product_id' => $product->id]) }}',
+                    url: '{{ route('comment.post', ['product_id' => $product->id]) }}',
                     data: {
                         'comment': $('#comment-input').val(),
                     },

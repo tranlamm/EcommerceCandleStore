@@ -4,7 +4,7 @@
 
 <div class="cart">
     @if (session()->has('success'))
-        <div class="add-toast add-toast-success">
+        <div class="add-toast add-toast-special">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="add-toast-text">{{ session()->get('success') }}</div>
                 <div class="add-toast-btn"><i class="fa-solid fa-xmark"></i></div>
@@ -94,13 +94,13 @@
                 <div class="modal-body-text"><span class="modal-body-label">Email</span>: {{ Auth::guard('customer')->user()->email }}</div>
             
                 <div class="modal-body-detail">
-                    <a href="" class="modal-btn">Thay đổi thông tin cá nhân</a>
+                    <a href="{{ route('account.index') }}" class="modal-btn">Thay đổi thông tin cá nhân</a>
                     <div class="modal-body-total">Tổng thanh toán: <span class="ms-2" id="modal-total-js"></span></div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="modal-btn modal-btn-sm modal-btn-cancel" data-bs-dismiss="modal">Close</button>
-                <button type="submit" form="checkout-form" class="modal-btn modal-btn-sm">Save changes</button>
+                <button type="button" class="modal-btn modal-btn-sm modal-btn-cancel" data-bs-dismiss="modal">Hủy</button>
+                <button type="submit" form="checkout-form" class="modal-btn modal-btn-sm">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -109,7 +109,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <script type="text/javascript">
     @if (session()->has('success'))
-        $('.add-toast-success').addClass('add-toast-active');
+        $('.add-toast-special').addClass('add-toast-active');
         $('.add-toast-btn').click(function()
         {
             $('.add-toast').removeClass('add-toast-active');

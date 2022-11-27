@@ -72,16 +72,16 @@ class CustomerLoginController extends Controller
         return back()->with('message', 'Sign up successfully !');
     }
 
-    public function showAccountInfo(Request $request, $id)
+    public function showAccountInfo(Request $request)
     {
-        $customer = Customer::find($id);
+        $customer = Auth::guard('customer')->user();
 
         return view('customer.main.customerAccountInfo', [
             'customer' => $customer,
         ]);
     }
 
-    public function changeAccountInfo(Request $request, $id)
+    public function changeAccountInfo(Request $request)
     {
         $request->validate([
             'fullname' => 'bail|required',
@@ -94,7 +94,9 @@ class CustomerLoginController extends Controller
             ),
         ]);
 
-        Customer::where('id', $id)->update([
+        $customer = Auth::guard('customer')->user();
+
+        $customer->update([
             'fullname' => $request->input('fullname'),
             'phoneNumber' => $request->input('phoneNumber'),
             'email' => $request->input('email'),
@@ -104,14 +106,14 @@ class CustomerLoginController extends Controller
         return back()->with('message', 'Change information successfully !');
     }
 
-    public function changePassword(Request $request, $id)
+    public function changePassword(Request $request)
     {
         $request->validate([
             'old_password' => 'bail|required|min:8',
             'password' => 'bail|required|confirmed|min:8',
         ]);
         
-        $customer = Customer::find($id);
+        $customer = Auth::guard('customer')->user();
         if (!Hash::check($request->input('old_password'), $customer->password))
             return back()->withErrors(['old_password' => 'Wrong password!']);
 

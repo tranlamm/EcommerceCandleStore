@@ -90,6 +90,7 @@
                       <div class="btn-group" role="group" aria-label="Basic example">
                         <a role="button" href="/admin/essentialoilproduct/{{ $essentialOil->id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
                         <button class="btn btn-outline-danger btn-sm" data-id="{{ $essentialOil->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                        <a role="button" href="{{ route('product.review', ['id' => $essentialOil->id]) }}" class="btn btn-outline-success btn-sm">Reviews</a>
                       </div>
                     </td>
                 </tr>

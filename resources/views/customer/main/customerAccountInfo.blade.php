@@ -14,7 +14,7 @@
                         @endif
                     </div>
                     <div class="info-main">
-                        <form id="info-change" action="{{ route('info.change', ['id' => Auth::guard('customer')->user()->id]) }}" class="info-form" method="POST">
+                        <form id="info-change" action="{{ route('info.change') }}" class="info-form" method="POST">
                             @csrf
                             <div class="info-group">
                                 <label class="info-label">Họ và tên <span class="text-danger">*</span></label>
@@ -60,7 +60,7 @@
                         Đổi mật khẩu
                     </div>
                     <div class="info-main">
-                        <form id="password-change" action="{{ route('password.change', ['id' => Auth::guard('customer')->user()->id]) }}" class="info-form" method="POST">
+                        <form id="password-change" action="{{ route('password.change') }}" class="info-form" method="POST">
                             @csrf
                             <div class="info-group">
                                 <label class="info-label">Username <span class="text-danger">*</span></label>

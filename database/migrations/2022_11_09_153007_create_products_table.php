@@ -23,7 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('nhaCungCap');
             $table->foreign('nhaCungCap')->references('id')->on('manufacturers')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedSmallInteger('trongLuong');
-            $table->string('moTa')->nullable();
+            $table->text('moTa')->nullable();
             $table->string('image_path')->nullable();
             $table->unsignedBigInteger('giaNhap');
             $table->unsignedBigInteger('giaBan');

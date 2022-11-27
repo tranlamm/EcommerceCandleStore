@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+
 use DB;
+use Carbon\Carbon;
 
 class AdminSeeder extends Seeder
 {
@@ -23,7 +25,9 @@ class AdminSeeder extends Seeder
         DB::table('admins')->insert([
             'username' => 'admin',
             'password' => bcrypt('admin'),
-            'role' => 1
+            'role' => 1, 
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
     }
 }
