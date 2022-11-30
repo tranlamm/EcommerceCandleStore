@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\admin\accounts;
+namespace App\Http\Controllers\admin\comments;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\auth\Customer;
+use App\Models\products\Product;
+use App\Models\products\Comment;
 
-class CustomerAccountController extends Controller
+class AdminCommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,21 +18,26 @@ class CustomerAccountController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-
-        if ($request->input('order-name')) {
-            $customers = Customer::query()
-                ->where('fullname', 'LIKE', "%{$search}%")
-                ->orderBy($request->input('order-name'), ($request->input('order-type') ? $request->input('order-type') : 'asc'))
+        if ($search)
+        {
+            $comments = Comment::whereIn('product_id', Product::select('id')->where('tenSanPham', 'LIKE', "%{$search}%"))
                 ->paginate(10);
         }
-        else {
-            $customers = Customer::query()
-                ->where('fullname', 'LIKE', "%{$search}%")
-                ->paginate(10);
+        else 
+        {
+            if ($request->input('order-name')) {
+                $comments = Comment::query()
+                    ->orderBy($request->input('order-name'), ($request->input('order-type') ? $request->input('order-type') : 'asc'))
+                    ->paginate(10);
+            }
+            else {
+                $comments = Comment::query()
+                    ->paginate(10);
+            }
         }
 
-        return view('admin.accounts.customerAccountShow', [
-            'accounts' => $customers,
+        return view('admin.comments.commentShow', [
+            'comments' => $comments,
         ]);
     }
 
@@ -98,8 +104,8 @@ class CustomerAccountController extends Controller
      */
     public function destroy($id)
     {
-        $customer = Customer::find($id);
-        $customer->delete();
-        return redirect(route('customeraccount.index'))->with('message', 'Deleted successfully!');
+        $comment = Comment::find($id);
+        $comment->delete();
+        return redirect(route('comment.index'))->with('message', 'Deleted successfully!');
     }
 }

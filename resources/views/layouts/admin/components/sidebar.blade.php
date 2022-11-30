@@ -2,6 +2,12 @@
     <div class="sidebar">
         <ul class="nav flex-column">
             <li class="nav-item nav_title">
+                Candle Shop
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav_link" href="{{ route('admin.index') }}"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
+            </li>
+            <li class="nav-item nav_title">
                 Thiết lập dữ liệu
             </li>
             <li class="nav-item" data-bs-toggle="collapse" data-bs-target="#sanPham" aria-expanded="false" aria-controls="sanPham">
@@ -50,32 +56,20 @@
                 </li>
             </div>
             <li class="nav-item nav_title">
-                Báo cáo thống kê
+                Quản lý đánh giá
             </li>
             <li class="nav-item">
-                <a class="nav-link nav_link" href=""><i class="fa-solid fa-chart-line"></i>Thống kê doanh thu</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link nav_link" href=""><i class="fa-solid fa-chart-simple"></i>Thống kê doanh số</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link nav_link" href=""><i class="fa-solid fa-chart-pie"></i>Thống kê nhập xuất</a>
-            </li>
-            <li class="nav-item nav_title">
-                Quản lý khuyến mãi
-            </li>
-            <li class="nav-item">
-                <a class="nav-link nav_link"><i class="fa-solid fa-tag"></i>Mã khuyến mãi</a>
+                <a class="nav-link nav_link" href="{{ route('comment.index') }}"><i class="fa-solid fa-tag"></i>Danh sách bình luận</a>
             </li>
             <li class="nav-item nav_title">
                 Quản lý tài khoản
             </li>
             <li class="nav-item" data-bs-toggle="collapse" data-bs-target="#taiKhoan" aria-expanded="false">
-                <a class="nav-link nav_link" href=""><i class="fa-solid fa-user"></i>Tài khoản</a>
+                <a class="nav-link nav_link"><i class="fa-solid fa-user"></i>Tài khoản</a>
             </li>
             <div class="collapse" id="taiKhoan">
                 <li class="nav-item">
-                    <a class="nav-link nav_link ps-5" href=""><i class="fa-solid fa-headset"></i>Admins</a>
+                    <a class="nav-link nav_link ps-5"><i class="fa-solid fa-headset"></i>Admins</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav_link ps-5" href="{{ route('customeraccount.index') }}"><i class="fa-solid fa-person"></i>Customers</a>

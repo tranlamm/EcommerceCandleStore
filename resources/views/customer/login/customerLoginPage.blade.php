@@ -27,7 +27,10 @@
                             @if ($errors->has('username'))
                                 <span class="text-danger">{{ $errors->first('username') }}</span>
                             @endif
-                            <input type="password" name="password" class="form-input" placeholder="Password" required>
+                            <div class="input-reveal">
+                                <input type="password" id="signin-password" name="password" class="form-input" placeholder="Password" required>
+                                <i data-name="signin-password" class="fa-solid fa-eye-slash reveal-btn"></i>
+                            </div>
                             @if ($errors->has('password'))
                                 <span class="text-danger">{{ $errors->first('password') }}</span>
                             @endif
@@ -94,11 +97,17 @@
                             @if ($errors->has('exists'))
                                 <span class="text-danger">{{ $errors->first('exists') }}</span>
                             @endif
-                            <input type="password" class="form-input form-input-info" placeholder="Password" name="password" required>
+                            <div class="input-reveal input-reveal-sm">
+                                <input type="password" id="register-password" class="form-input form-input-info" placeholder="Password" name="password" required>
+                                <i data-name="register-password" class="fa-solid fa-eye-slash reveal-btn"></i>
+                            </div>
                             @if ($errors->has('password'))
                                 <span class="text-danger">{{ $errors->first('password') }}</span>
                             @endif
-                            <input type="password" class="form-input form-input-info" placeholder="Confirm Password" name="password_confirmation" required> 
+                            <div class="input-reveal input-reveal-sm">
+                                <input type="password" id="register-password_confirmation" class="form-input form-input-info" placeholder="Confirm Password" name="password_confirmation" required> 
+                                <i data-name="password_confirmation" class="fa-solid fa-eye-slash reveal-btn"></i>
+                            </div>
                             @if ($errors->has('password_confirmation'))
                                 <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
                             @endif
@@ -149,6 +158,22 @@
     {
         $('#form-sign_up').show();
         $('#form-sign_in').hide();
+    })
+    $('.reveal-btn').click(function()
+    {
+        const name = $(this).attr('data-name');
+        let input;
+        if (name == 'signin-password')
+            input = $('#signin-password');
+        else if (name == 'register-password')
+            input = $('#register-password');
+        else 
+            input = $('#register-password_confirmation');        
+        if (input.attr('type') == 'password')
+            input.attr('type', 'text')
+        else
+            input.attr('type', 'password')
+        input.focus();
     })
 </script>
 @endsection

@@ -6,6 +6,11 @@
   <span class="page-title">Đánh giá sản phẩm</span>
   
   <div class="page__content-wrapper">
+    <div class="product-detail">
+      <div class="product-img">
+        <img src="{{ asset('images/products/' . $product->image_path) }}" alt="product">
+      </div>
+      <div>
         <div class="product-text"><span class="product-span">ID</span>{{ $product->id }}</div>
         <div class="product-text"><span class="product-span">Tên sản phẩm</span>{{ $product->tenSanPham }}</div>
         <div class="product-text"><span class="product-span">Nhà cung cấp</span>{{ $product->manufacturer()->first()->ten }}</div>
@@ -20,6 +25,8 @@
                 </div>
             </div>
         </div>
+      </div>
+    </div>
   </div>
 
   <div class="page__content-wrapper">
@@ -45,7 +52,7 @@
                 <th scope="row">{{ $comment->pivot->id }}</th>
                 <td>{{ $comment->username }}</td>
                 <td>{{ $comment->fullname }}</td>
-                <td>{{ $comment->pivot->comment }}</td>
+                <td class="comment-table">{{ $comment->pivot->comment }}</td>
                 <td>
                     @php
                         if ($comment->productReview()->where('product_id', '=', $product->id)->exists())

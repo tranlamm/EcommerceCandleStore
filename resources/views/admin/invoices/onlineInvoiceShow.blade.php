@@ -9,6 +9,7 @@
             <div class="col col-8 d-flex">
                 <div class="me-2">
                     <form class="d-flex" id="form__search" method="GET" action="{{ route('onlineinvoice.index') }}">
+                        <input class="form-control form-search-input" type="text" name="search" placeholder="Nhập tên khách hàng..."/>
 
                         <select name="trangThai" class="form-select form-search-select">
                             <option value="">Trạng thái</option>

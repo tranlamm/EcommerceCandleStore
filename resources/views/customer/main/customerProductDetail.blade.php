@@ -13,14 +13,14 @@
                 <div class="col col-8">
                     <div class="product-info">
                         <div class="product-name__wrapper">
-                            @if ($product->diemDanhGia > 4.5)
-                                <div class="product-detail__tag product-detail__tag--love">YÊU THÍCH<i class="fa-solid fa-heart ms-1"></i></div>
+                            @if ($product->conLai <= 0)
+                                <div class="product-detail__tag product-detail__tag--empty">SOLD OUT<i class="fa-solid fa-sack-xmark ms-1"></i></div> 
                             @elseif ($product->daBan > 100)
-                                <div class="product-detail__tag product-detail__tag--hot">BÁN CHẠY<i class="fa-solid fa-fire ms-1"></i></div>
-                            @elseif ($product->conLai <= 0)
-                                <div class="product-detail__tag product-detail__tag--empty">HẾT HÀNG<i class="fa-solid fa-sack-xmark ms-1"></i></div> 
+                                <div class="product-detail__tag product-detail__tag--hot">BEST SELLER<i class="fa-solid fa-fire ms-1"></i></div>
+                            @elseif ($product->diemDanhGia > 4.5)
+                                <div class="product-detail__tag product-detail__tag--love">RECOMMENDED<i class="fa-solid fa-heart ms-1"></i></div>
                             @else
-                                <div class="product-detail__tag product-detail__tag--good-price">GIÁ TỐT<i class="fa-solid fa-coins ms-1"></i></div>
+                                <div class="product-detail__tag product-detail__tag--good-price">GOOD PRICE<i class="fa-solid fa-coins ms-1"></i></div>
                             @endif
                             <div class="product-name">{{ $product->tenSanPham }}</div>
                         </div>
@@ -87,14 +87,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="point-quantity">({{ $product->luotDanhGia }} Reviews)</div>
+                                <div class="point-quantity">({{ $product->luotDanhGia }} Rates)</div>
                             </div>
                         </div>
                         <div class="comment-list">
                             <div class="comment-label">All Comments !</div>
                             @if (count($product->productComment) > 0)
                                 @foreach ($product->productComment as $comment)
-                                <div class="comment-item">
+                                <div class="comment-item" id="{{ 'comment-item' . $comment->pivot->id }}">
                                     <div class="d-flex w-100 justify-content-between">
                                         <div class="comment-info">
                                             <div class="comment-name">
@@ -117,12 +117,9 @@
                                         </div>
                                         @if (Auth::guard('customer')->check())
                                             @if (Auth::guard('customer')->user()->id == $comment->id)
-                                                <form action="{{ route('comment.delete',  ['product_id' => $product->id]) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <input type="hidden" value="{{ $comment->pivot->id }}" name="comment_id">
-                                                    <button type="submit" class="comment-delete"><i class="fa-regular fa-trash-can"></i></button>
-                                                </form>
+                                                <div>
+                                                    <div data-id="{{ $comment->pivot->id }}" class="comment-delete comment-delete-btn"><i class="fa-regular fa-trash-can"></i></div>
+                                                </div>
                                             @endif
                                         @endif
                                     </div>
@@ -154,10 +151,11 @@
                         </div>
                         <div class="mt-4"></div>
                         <div class="review-post-label">Add A Comment</div>
-                        <div class="comment-post-wrapper">
-                            <textarea id="comment-input" rows="4" class="comment-input" spellcheck="false" required></textarea>
-                            <div id="comment-btn" class="post-btn">Send Comment !</div>
-                        </div>
+                        <form class="comment-post-wrapper" action="{{ route('comment.post', ['product_id' => $product->id]) }}" method="POST">
+                            @csrf
+                            <textarea name="comment" rows="4" class="comment-input" spellcheck="false" required></textarea>
+                            <button id="comment-btn" class="post-btn">Send Comment !</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -185,7 +183,7 @@
 </div>
 
 <div class="add-toast add-toast-wrong">
-    <div class="add-toast-text">Vui lòng nhập đủ thông tin đánh giá</div>
+    <div class="add-toast-text">Action Failed</div>
     <div class="add-toast-btn"><i class="fa-solid fa-xmark"></i></div>
 </div>
 {{-- End toast --}}
@@ -304,27 +302,26 @@
             @endif
         });
 
-        $('#comment-btn').click(function()
+        $('.comment-delete-btn').click(function()
         {
             @if (Auth::guard('customer')->check())
+                const comment_id = $(this).attr('data-id');
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
                 $.ajax({
-                    type: 'post',
-                    url: '{{ route('comment.post', ['product_id' => $product->id]) }}',
+                    type: 'delete',
+                    url: '{{ route('comment.delete') }}',
                     data: {
-                        'comment': $('#comment-input').val(),
+                        'comment_id': comment_id,
                     },
                     success: function(data)
                     {
                         $('.add-toast').removeClass('add-toast-active');
                         if ($.isEmptyObject(data.errors)) {
-                            setTimeout(() => {
-                                $('.add-toast-special').addClass('add-toast-active');
-                            }, 100);
+                            $('#comment-item' + comment_id).remove();
                         }
                         else {
                             const resp = data.errors;

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\products\Product;
+use App\Models\products\Comment;
 
 use Validator;
 use Auth;
@@ -62,11 +63,11 @@ class CommentController extends Controller
         ]);
 
         if ($validator->fails())
-            return response()->json(['errors' => 'Failed review']);
+            return back();
 
         $product = Product::find($product_id);
         if (!$product) 
-            return response()->json(['errors' => 'Failed review']);
+            return back();
         // End Validate
         $comment = $request->input('comment');
 
@@ -77,7 +78,7 @@ class CommentController extends Controller
         return back();
     }
 
-    public function deleteComment(Request $request, $product_id)
+    public function deleteComment(Request $request)
     {
         $request->validate([
             'comment_id' => 'bail|required',
@@ -94,9 +95,10 @@ class CommentController extends Controller
         }
 
         if (!$found)
-            return back();
+            return response()->json(['errors' => 'Failed review']);
 
-        DB::table('customer_product_comment')->delete($request->input('comment_id'));
-        return back();
+        $comment = Comment::find($request->input('comment_id'));
+        $comment->delete();
+        return response()->json(['success' => 'Success']);
     }
 }

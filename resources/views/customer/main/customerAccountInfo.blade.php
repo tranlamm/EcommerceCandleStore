@@ -68,21 +68,30 @@
                             </div>
                             <div class="info-group">
                                 <label class="info-label">Mật khẩu cũ <span class="text-danger">*</span></label>
-                                <input type="password" name="old_password" class="info-input" required placeholder="Old Password" minlength="8">
+                                <div class="input-reveal">
+                                    <input type="password" name="old_password" class="info-input" required placeholder="Old Password" minlength="8">
+                                    <i data-name="old_password" class="fa-solid fa-eye-slash reveal-btn"></i>
+                                </div>
                                 @if ($errors->has('old_password'))
                                     <span class="text-danger">{{ $errors->first('old_password') }}</span>
                                 @endif
                             </div>
                             <div class="info-group">
                                 <label class="info-label">Mật khẩu mới <span class="text-danger">*</span></label>
-                                <input type="password" name="password" class="info-input" required placeholder="Password" minlength="8">
+                                <div class="input-reveal">
+                                    <input type="password" name="password" class="info-input" required placeholder="Password" minlength="8">
+                                    <i data-name="password" class="fa-solid fa-eye-slash reveal-btn"></i>
+                                </div>
                                 @if ($errors->has('password'))
                                     <span class="text-danger">{{ $errors->first('password') }}</span>
                                 @endif
                             </div>
                             <div class="info-group">
                                 <label class="info-label">Nhập lại mật khẩu mới <span class="text-danger">*</span></label>
-                                <input type="password" name="password_confirmation" class="info-input" required placeholder="Confirm Password" minlength="8">
+                                <div class="input-reveal">
+                                    <input type="password" name="password_confirmation" class="info-input" required placeholder="Confirm Password" minlength="8">
+                                    <i data-name="password_confirmation" class="fa-solid fa-eye-slash reveal-btn"></i>
+                                </div>
                             </div>
                         </form> 
                     </div>
@@ -114,6 +123,17 @@
     {
         $('#info').hide();
         $('#account').show();
+    })
+
+    $('.reveal-btn').click(function()
+    {
+        const name = $(this).attr('data-name');
+        const input = $(`input[name='${name}']`);
+        if (input.attr('type') == 'password')
+            input.attr('type', 'text')
+        else
+            input.attr('type', 'password')
+        input.focus();
     })
 </script>
 @endsection

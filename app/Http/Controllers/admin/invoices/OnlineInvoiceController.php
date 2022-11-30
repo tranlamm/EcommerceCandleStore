@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\invoices\OnlineInvoice;
 use App\Models\products\Product;
+use App\Models\auth\Customer;
 
 class OnlineInvoiceController extends Controller
 {
@@ -17,16 +18,25 @@ class OnlineInvoiceController extends Controller
      */
     public function index(Request $request)
     {
-        $trangThai = $request->input('trangThai');
-        if ($request->input('order-name')) {
-            $onlineInvoices = OnlineInvoice::where('trangThai', 'LIKE', "%{$trangThai}%")
-                ->orderBy($request->input('order-name'), (in_array($request->input('order-type'), ['asc', 'desc'], true) ? $request->input('order-type') : 'asc'))
+        $search = $request->input('search');
+        if ($search)
+        {
+            $onlineInvoices = OnlineInvoice::whereIn('account_id', Customer::select('id')->where('fullname', 'LIKE', "%{$search}%"))
                 ->paginate(10);
         }
-        else {
-            $onlineInvoices = OnlineInvoice::where('trangThai', 'LIKE', "%{$trangThai}%")
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
+        else 
+        {
+            $trangThai = $request->input('trangThai');
+            if ($request->input('order-name')) {
+                $onlineInvoices = OnlineInvoice::where('trangThai', 'LIKE', "%{$trangThai}%")
+                    ->orderBy($request->input('order-name'), (in_array($request->input('order-type'), ['asc', 'desc'], true) ? $request->input('order-type') : 'asc'))
+                    ->paginate(10);
+            }
+            else {
+                $onlineInvoices = OnlineInvoice::where('trangThai', 'LIKE', "%{$trangThai}%")
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(10);
+            }
         }
 
         return view('admin.invoices.onlineInvoiceShow', [

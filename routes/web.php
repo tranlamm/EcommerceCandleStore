@@ -14,6 +14,8 @@ use App\Http\Controllers\admin\invoices\OnlineInvoiceController;
 
 use App\Http\Controllers\admin\accounts\CustomerAccountController;
 
+use App\Http\Controllers\admin\comments\AdminCommentController;
+
 use App\Http\Controllers\admin\statistics\StatisticController;
 
 // Login
@@ -71,6 +73,9 @@ Route::group(['middleware' => 'login_admin'], function() {
 
     // Account management
     Route::resource('/admin/customeraccount', CustomerAccountController::class);
+
+    // Comment management
+    Route::resource('/admin/comment', AdminCommentController::class);
 });
 
 // Guest
@@ -98,5 +103,5 @@ Route::group(['middleware' => 'login_customer'], function() {
     // Review
     Route::post('/customer/review/{product_id}', [CommentController::class, 'postReview'])->name('review.post');
     Route::post('/customer/comment/{product_id}', [CommentController::class, 'postComment'])->name('comment.post');
-    Route::delete('/customer/comment/{product_id}/delete', [CommentController::class, 'deleteComment'])->name('comment.delete');
+    Route::delete('/customer/comment/delete', [CommentController::class, 'deleteComment'])->name('comment.delete');
 });

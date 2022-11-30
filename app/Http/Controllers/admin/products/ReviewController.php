@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\products\Product;
+use App\Models\products\Comment;
 
 use DB;
 
@@ -22,7 +23,8 @@ class ReviewController extends Controller
     }
     public function destroy($id)
     {
-        DB::table('customer_product_comment')->delete($id);
+        $comment = Comment::find($id);
+        $comment->delete();
         return back()->with('message', 'Deleted successfully!');
     }
 }

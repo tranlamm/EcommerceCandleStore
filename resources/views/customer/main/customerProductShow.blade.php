@@ -38,14 +38,14 @@
                             </div>
                         </a>
                         <div class="product-btn add-cart-btn" data-id="{{ $product->id }}">Add to cart</div>
-                        @if ($product->diemDanhGia > 4.5)
-                            <div class="product-tag product-tag__love">YÊU THÍCH<i class="fa-solid fa-heart ms-2"></i></div>
+                        @if ($product->conLai <= 0)
+                            <div class="product-tag product-tag__empty">SOLD OUT<i class="fa-solid fa-sack-xmark ms-2"></i></div> 
                         @elseif ($product->daBan > 10)
-                            <div class="product-tag product-tag__hot">BÁN CHẠY<i class="fa-solid fa-fire ms-2"></i></div>
-                        @elseif ($product->conLai <= 0)
-                            <div class="product-tag product-tag__empty">HẾT HÀNG<i class="fa-solid fa-sack-xmark ms-2"></i></div> 
+                            <div class="product-tag product-tag__hot">BEST SELLER<i class="fa-solid fa-fire ms-2"></i></div>
+                        @elseif ($product->diemDanhGia > 4.5)
+                            <div class="product-tag product-tag__love">RECOMMENDED<i class="fa-solid fa-heart ms-2"></i></div>
                         @else
-                            <div class="product-tag product-tag__good-price">GIÁ TỐT<i class="fa-solid fa-coins ms-2"></i></div>
+                            <div class="product-tag product-tag__good-price">GOOD PRICE<i class="fa-solid fa-coins ms-2"></i></div>
                         @endif
                     </div>
                 </div>

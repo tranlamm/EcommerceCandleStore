@@ -77,8 +77,8 @@
                         <img class="product__image" src="{{ asset('images/products/' . $essentialOil->image_path) }}" alt="Ảnh sản phẩm">
                       </div>
                     </td>
-                    <td>{{ $essentialOil->loaiSanPham }}</td>
                     <td>{{ $essentialOil->tenSanPham }}</td>
+                    <td>{{ $essentialOil->loaiSanPham }}</td>
                     <td>{{ $essentialOil->manufacturer()->first()->ten }}</td>
                     <td>@currency_format($essentialOil->giaNhap)</td>
                     <td>@currency_format($essentialOil->giaBan)</td>

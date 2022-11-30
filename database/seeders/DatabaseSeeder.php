@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             ManufacturerSeeder::class,
             ProductSeeder::class,
             CustomerSeeder::class,
+            ImportInvoiceSeeder::class,
+            OnlineInvoiceSeeder::class,
         ]);
     }
 }

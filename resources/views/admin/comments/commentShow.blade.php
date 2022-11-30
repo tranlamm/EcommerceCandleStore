@@ -3,14 +3,14 @@
 @section('content')
 
 <div class="page-wrapper">
-  <span class="page-title">Danh sách tài khoản khách hàng</span>
+  <span class="page-title">Danh sách bình luận đánh giá sản phẩm</span>
   
   <div class="page__content-wrapper">
     <div class="row">
       <div class="col col-8 d-flex">
         <div class="me-2">
-          <form class="d-flex" id="form__search" method="GET" action="{{ route('customeraccount.index') }}">
-            <input class="form-control form-search-input" type="text" name="search" placeholder="Nhập tên khách hàng"/>
+          <form class="d-flex" id="form__search" method="GET" action="{{ route('comment.index') }}">
+            <input class="form-control form-search-input" type="text" name="search" placeholder="Nhập tên sản phẩm"/>
 
             <input type="hidden" name="order-type" id="order-type">
             <input type="hidden" name="order-name" id="order-name">
@@ -23,7 +23,7 @@
         </div>
 
         <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
-        <a role="button" class="btn btn-outline-secondary" href="{{ route('customeraccount.index') }}">Reset</a>
+        <a role="button" class="btn btn-outline-secondary" href="{{ route('comment.index') }}">Reset</a>
       </div>
     </div>
   </div>
@@ -34,32 +34,44 @@
     @endif
     <table class="table">
         <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Username</th>
-            <th scope="col">Tên khách hàng</th>
-            <th scope="col">Địa chỉ</th>
-            <th scope="col">Số điện thoại</th>
-            <th scope="col">Email</th>
-            <th scope="col">Created At</th>
-            <th scope="col">Updated At</th>
-            <th scope="col" colspan="1">Thao tác</th>
-          </tr>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Image</th>
+                <th scope="col">Product</th>
+                <th scope="col">Username</th>
+                <th scope="col">Comment</th>
+                <th scope="col">Point</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Thao tác</th>
+              </tr>
         </thead>
         <tbody>
-            @foreach ($accounts as $account)
+            @foreach ($comments as $comment)
                 <tr>
-                    <th scope="row">{{ $account->id }}</th>
-                    <td>{{ $account->username }}</td>
-                    <td>{{ $account->fullname }}</td>
-                    <td>{{ $account->address }}</td>
-                    <td>{{ $account->phoneNumber }}</td>
-                    <td>{{ $account->email }}</td>
-                    <td>@date_format($account->created_at)</td>
-                    <td>@date_format($account->updated_at)</td>
+                    <th scope="row">{{ $comment->id }}</th>
+                    <td>
+                        <div class="product__image-wrapper">
+                            <img class="product__image" src="{{ asset('images/products/' . $comment->product()->first()->image_path) }}" alt="product">
+                        </div>
+                    </td>
+                    <td>{{ $comment->product()->first()->tenSanPham }}</td>
+                    <td>{{ $comment->account()->first()->username }}</td>
+                    <td class="comment-table">{{ $comment->comment }}</td>
+                    <td>
+                        @php
+                            if ($comment->account()->first()->productReview()->where('product_id', '=', $comment->product()->first()->id)->exists())
+                                $percent = $comment->account()->first()->productReview()->where('product_id', '=', $comment->product()->first()->id)->first()->pivot->point / 5 * 100;
+                            else $percent = 0;
+                        @endphp
+                        <div class="stars-outer">
+                            <div class="stars-inner" style="{{ 'width: ' . $percent . "%" }}">
+                            </div>
+                        </div>
+                    </td>
+                    <td>@date_format($comment->created_at)</td>
                     <td>
                       <div class="btn-group" role="group" aria-label="Basic example">
-                        <button class="btn btn-outline-danger btn-sm" data-id="{{ $account->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                        <button class="btn btn-outline-danger btn-sm" data-id="{{ $comment->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
                       </div>
                     </td>
                 </tr>
@@ -67,7 +79,7 @@
         </tbody>
       </table>
       <div class="d-flex justify-content-center">
-        {{ $accounts->links('pagination::bootstrap-4') }}
+        {{ $comments->links('pagination::bootstrap-4') }}
       </div>
   </div>
 </div>
@@ -110,7 +122,7 @@
   exampleModal.addEventListener('show.bs.modal', event => {
     const button = event.relatedTarget
     const id = button.getAttribute('data-id')
-    formDelete.action = `/admin/customeraccount/${id}`;
+    formDelete.action = `/admin/comment/${id}`;
 
     btnDelete.onclick = function () {
       formDelete.submit();
