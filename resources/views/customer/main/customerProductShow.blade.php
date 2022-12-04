@@ -7,49 +7,55 @@
 <div class="content-product-wrapper">
     <div class="container">
         <div class="row">
-            @foreach ($products as $product)
-                <div class="col col-3">
-                    <div class="product">
-                        <a href="{{ route('product.detail', ['id' => $product->id]) }}" class="product-wrapper">
-                            <div class="product-img">
-                                <img src="{{ asset('images/products/' . $product->image_path) }}" alt="Product">
-                            </div>
-                            <div class="product-info">
-                                <div class="d-flex flex-column align-items-center">
-                                    <div class="product-name">{{ $product->tenSanPham }}</div>
-                                    <div class="product-type">{{ $product->loaiSanPham }}</div>
+            @if (count($products) > 0)
+                @foreach ($products as $product)
+                    <div class="col col-3">
+                        <div class="product">
+                            <a href="{{ route('product.detail', ['id' => $product->id]) }}" class="product-wrapper">
+                                <div class="product-img">
+                                    <img src="{{ asset('images/products/' . $product->image_path) }}" alt="Product">
                                 </div>
-                                <div class="d-flex flex-column">
-                                    <div class="product-manufacturer">{{ 'Nhà cung cấp: ' . $product->manufacturer()->first()->ten }}</div>
-                                    <div class="product-fragrance">{{ 'Mùi hương: ' .$product->muiHuong }}</div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div class="product-price">@currency_format($product->giaBan)</div>
-                                    <div class="product-review">
-                                        @php
-                                            $percent = round($product->diemDanhGia / 5 * 100, 0);
-                                        @endphp
-                                        <div class="stars-outer">
-                                            <div class="stars-inner" style="{{ 'width: ' . $percent . "%" }}">
+                                <div class="product-info">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="product-name">{{ $product->tenSanPham }}</div>
+                                        <div class="product-type">{{ $product->loaiSanPham }}</div>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <div class="product-manufacturer">{{ 'Nhà cung cấp: ' . $product->manufacturer()->first()->ten }}</div>
+                                        <div class="product-fragrance">{{ 'Mùi hương: ' .$product->muiHuong }}</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <div class="product-price">@currency_format($product->giaBan)</div>
+                                        <div class="product-review">
+                                            @php
+                                                $percent = round($product->diemDanhGia / 5 * 100, 0);
+                                            @endphp
+                                            <div class="stars-outer">
+                                                <div class="stars-inner" style="{{ 'width: ' . $percent . "%" }}">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                        <div class="product-btn add-cart-btn" data-id="{{ $product->id }}">Add to cart</div>
-                        @if ($product->conLai <= 0)
-                            <div class="product-tag product-tag__empty">SOLD OUT<i class="fa-solid fa-sack-xmark ms-2"></i></div> 
-                        @elseif ($product->daBan > 10)
-                            <div class="product-tag product-tag__hot">BEST SELLER<i class="fa-solid fa-fire ms-2"></i></div>
-                        @elseif ($product->diemDanhGia > 4.5)
-                            <div class="product-tag product-tag__love">RECOMMENDED<i class="fa-solid fa-heart ms-2"></i></div>
-                        @else
-                            <div class="product-tag product-tag__good-price">GOOD PRICE<i class="fa-solid fa-coins ms-2"></i></div>
-                        @endif
+                            </a>
+                            <div class="product-btn add-cart-btn" data-id="{{ $product->id }}">Add to cart</div>
+                            @if ($product->conLai <= 0)
+                                <div class="product-tag product-tag__empty">SOLD OUT<i class="fa-solid fa-sack-xmark ms-2"></i></div> 
+                            @elseif ($product->daBan > 10)
+                                <div class="product-tag product-tag__hot">BEST SELLER<i class="fa-solid fa-fire ms-2"></i></div>
+                            @elseif ($product->diemDanhGia > 4.5)
+                                <div class="product-tag product-tag__love">RECOMMENDED<i class="fa-solid fa-heart ms-2"></i></div>
+                            @else
+                                <div class="product-tag product-tag__good-price">GOOD PRICE<i class="fa-solid fa-coins ms-2"></i></div>
+                            @endif
+                        </div>
                     </div>
+                @endforeach
+            @else
+                <div class="col col-6 offset-3 empty-product-list">
+                    <img src="{{ asset('images/shop/empty-invoice.webp') }}" alt="empty">
                 </div>
-            @endforeach
+            @endif
         </div>
         <div class="product-pagination">
             {{ $products->links('pagination::bootstrap-5') }}

@@ -170,6 +170,14 @@
             }
         }
     }
+
+    .empty-product-list {
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
     
     .product-pagination {
         display: flex;
