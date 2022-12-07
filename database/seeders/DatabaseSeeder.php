@@ -27,7 +27,10 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             CustomerSeeder::class,
             ImportInvoiceSeeder::class,
+            ExportInvoiceSeeder::class,
             OnlineInvoiceSeeder::class,
+            ReviewSeeder::class,
+            CommentSeeder::class,
         ]);
     }
 }

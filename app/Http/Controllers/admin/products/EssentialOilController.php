@@ -21,6 +21,7 @@ class EssentialOilController extends Controller
         $manufacturers = Manufacturer::all();
         $search = $request->input('search');
         $nhaCungCap = $request->input('nhaCungCap');
+        $data = $request->all();
 
         if ($request->input('order-name') && $request->input('order-type')) {
             $essentialOils = Product::query()
@@ -39,7 +40,11 @@ class EssentialOilController extends Controller
                 ->paginate(10);
         }
 
-        return view('admin.products.essentialOilProductShow', ['essentialOils' => $essentialOils, 'manufacturers' => $manufacturers]);
+        return view('admin.products.essentialOilProductShow', [
+            'essentialOils' => $essentialOils, 
+            'manufacturers' => $manufacturers,
+            'data' => $data,
+        ]);
     }
 
     /**

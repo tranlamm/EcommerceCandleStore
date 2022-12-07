@@ -98,7 +98,7 @@
         </tbody>
       </table>
     <div class="d-flex justify-content-center">
-      {{ $scentedWaxProducts->links('pagination::bootstrap-4') }}
+      {{ $scentedWaxProducts->appends($data)->links('pagination::bootstrap-4') }}
     </div>
   </div>
 </div>

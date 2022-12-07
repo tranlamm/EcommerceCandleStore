@@ -19,6 +19,7 @@ class OnlineInvoiceController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $data = $request->all();
         if ($search)
         {
             $onlineInvoices = OnlineInvoice::whereIn('account_id', Customer::select('id')->where('fullname', 'LIKE', "%{$search}%"))
@@ -41,6 +42,7 @@ class OnlineInvoiceController extends Controller
 
         return view('admin.invoices.onlineInvoiceShow', [
             'onlineInvoices' => $onlineInvoices,
+            'data' => $data,
         ]);
     }
 

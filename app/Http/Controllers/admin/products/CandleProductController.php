@@ -21,6 +21,7 @@ class CandleProductController extends Controller
         $manufacturers = Manufacturer::all();
         $search = $request->input('search');
         $nhaCungCap = $request->input('nhaCungCap');
+        $data = $request->all();
 
         if ($request->input('order-name') && $request->input('order-type')) {
             $candleProducts = Product::query()
@@ -39,7 +40,11 @@ class CandleProductController extends Controller
                 ->paginate(10);
         }
 
-        return view('admin.products.candleProductShow', ['candleProducts' => $candleProducts, 'manufacturers' => $manufacturers]);
+        return view('admin.products.candleProductShow', [
+            'candleProducts' => $candleProducts, 
+            'manufacturers' => $manufacturers,
+            'data' => $data,
+        ]);
     }
 
     /**

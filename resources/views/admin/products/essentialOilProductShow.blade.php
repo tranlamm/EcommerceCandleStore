@@ -98,7 +98,7 @@
         </tbody>
       </table>
     <div class="d-flex justify-content-center">
-      {{ $essentialOils->links('pagination::bootstrap-4') }}
+      {{ $essentialOils->appends($data)->links('pagination::bootstrap-4') }}
     </div>
   </div>
 </div>

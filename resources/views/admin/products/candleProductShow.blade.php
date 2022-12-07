@@ -99,7 +99,7 @@
         </tbody>
       </table>
       <div class="d-flex justify-content-center">
-        {{ $candleProducts->links('pagination::bootstrap-4') }}
+        {{ $candleProducts->appends($data)->links('pagination::bootstrap-4') }}
       </div>
   </div>
 </div>

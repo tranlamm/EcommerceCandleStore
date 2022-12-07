@@ -26,7 +26,8 @@
 
                             <div class="info-group">
                             <label class="info-label">Số điện thoại <span class="text-danger">*</span></label>
-                            <input type="text" name="phoneNumber" class="info-input" placeholder="Phone Number" value="{{ $customer->phoneNumber }}" required>
+                            <input type="text" name="phoneNumber" class="info-input" placeholder="Phone Number" 
+                            value="{{ $customer->phoneNumber }}" required pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b">
                                 @if ($errors->has('phoneNumber'))
                                     <span class="text-danger">{{ $errors->first('phoneNumber') }}</span>
                                 @endif
@@ -34,7 +35,8 @@
 
                             <div class="info-group">
                             <label class="info-label">Email <span class="text-danger">*</span></label>
-                            <input type="text" name="email" class="info-input" placeholder="Email" value="{{ $customer->email }}" required>
+                            <input type="text" name="email" class="info-input" placeholder="Email" 
+                            value="{{ $customer->email }}" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                                 @if ($errors->has('email'))
                                     <span class="text-danger">{{ $errors->first('email') }}</span>
                                 @endif

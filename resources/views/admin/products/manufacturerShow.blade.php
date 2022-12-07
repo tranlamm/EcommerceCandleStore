@@ -78,7 +78,7 @@
         </tbody>
       </table>
       <div class="d-flex justify-content-center">
-        {{ $manufacturers->links('pagination::bootstrap-4') }}
+        {{ $manufacturers->appends($data)->links('pagination::bootstrap-4') }}
       </div>
   </div>
 </div>

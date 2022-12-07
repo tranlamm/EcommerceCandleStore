@@ -30,13 +30,15 @@ class Product extends Model
     {
         return $this->belongsToMany(Customer::class, 'customer_product_review', 'product_id', 'account_id')
                     ->withPivot('point')
-                    ->withTimestamps();
+                    ->withTimestamps()
+                    ->orderBy('customer_product_comment.updated_at', 'desc');
     }
 
     public function productComment()
     {
         return $this->belongsToMany(Customer::class, 'customer_product_comment', 'product_id', 'account_id')
                     ->withPivot('comment', 'id')
-                    ->withTimestamps();
+                    ->withTimestamps()
+                    ->orderBy('customer_product_comment.updated_at', 'desc');
     }
 }

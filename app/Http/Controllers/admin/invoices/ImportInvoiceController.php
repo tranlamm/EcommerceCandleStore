@@ -20,6 +20,7 @@ class ImportInvoiceController extends Controller
     public function index(Request $request)
     {
         $tenDonHang = $request->input('tenDonHang');
+        $data = $request->all();
 
         if ($request->input('order-name')) {
             $importInvoices = ImportInvoice::query()
@@ -36,6 +37,7 @@ class ImportInvoiceController extends Controller
 
         return view('admin.invoices.importInvoiceShow', [
             'importInvoices' => $importInvoices,
+            'data' => $data,
         ]);
     }
 

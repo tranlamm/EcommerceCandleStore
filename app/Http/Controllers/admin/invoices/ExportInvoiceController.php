@@ -18,6 +18,7 @@ class ExportInvoiceController extends Controller
     public function index(Request $request)
     {
         $tenDonHang = $request->input('tenDonHang');
+        $data = $request->all();
 
         if ($request->input('order-name')) {
             $exportInvoices = ExportInvoice::query()
@@ -34,6 +35,7 @@ class ExportInvoiceController extends Controller
 
         return view('admin.invoices.exportInvoiceShow', [
             'exportInvoices' => $exportInvoices,
+            'data' => $data,
         ]);
     }
 

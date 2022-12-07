@@ -71,7 +71,7 @@
             </tbody>
         </table>
         <div class="d-flex justify-content-center">
-            {{ $exportInvoices->links('pagination::bootstrap-4') }}
+            {{ $exportInvoices->appends($data)->links('pagination::bootstrap-4') }}
         </div>
     </div>
 </div>

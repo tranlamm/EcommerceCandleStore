@@ -21,6 +21,7 @@ class ScentedWaxController extends Controller
         $manufacturers = Manufacturer::all();
         $search = $request->input('search');
         $nhaCungCap = $request->input('nhaCungCap');
+        $data = $request->all();
 
         if ($request->input('order-name') && $request->input('order-type')) {
             $scentedWaxProducts = Product::query()
@@ -39,7 +40,11 @@ class ScentedWaxController extends Controller
                 ->paginate(10);
         }
 
-        return view('admin.products.scentedWaxProductShow', ['scentedWaxProducts' => $scentedWaxProducts, 'manufacturers' => $manufacturers]);
+        return view('admin.products.scentedWaxProductShow', [
+            'scentedWaxProducts' => $scentedWaxProducts, 
+            'manufacturers' => $manufacturers,
+            'data' => $data,
+        ]);
     }
 
     /**

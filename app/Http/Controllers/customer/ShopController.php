@@ -63,12 +63,15 @@ class ShopController extends Controller
         $fragrances = Fragrance::all();
         $manufacturers = Manufacturer::all();
         session()->flashInput($request->input());
+
+        $data = $request->all();        
         return view('customer.main.customerProductShow', [
             'products' => $products,
             'manufacturers' => $manufacturers, 
             'fragrances' => $fragrances,
             'nhaCungCap' => $nhaCungCap,
             'muiHuong' => $muiHuong,
+            'data' => $data,
         ]);
     }
 

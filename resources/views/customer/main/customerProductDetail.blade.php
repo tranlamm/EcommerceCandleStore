@@ -48,7 +48,7 @@
                     <div class="product-buy">
                         <div class="product-quantity">
                             <div class="quantity-label">Số lượng</div>
-                            <input type="number" min="1" max="{{ $product->conLai }}" class="quantity-input" id="quantity">
+                            <input type="number" min="1" max="{{ $product->conLai }}" class="quantity-input" id="quantity" required>
                             <div class="quantity-left">{{ $product->conLai }} sản phẩm có sẵn</div>
                         </div>
                         <div class="error-quantity" id="error-message">Vui lòng nhập số lượng sản phẩm</div>

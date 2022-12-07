@@ -81,11 +81,13 @@
                             @if ($errors->has('address'))
                                 <span class="text-danger">{{ $errors->first('address') }}</span>
                             @endif
-                            <input type="tel" class="form-input form-input-info" placeholder="Phone Number" name="phoneNumber" value="{{ old('phoneNumber') }}" maxlength="11" required/> 
+                            <input type="tel" class="form-input form-input-info" placeholder="Phone Number" name="phoneNumber" 
+                            value="{{ old('phoneNumber') }}" maxlength="11" required pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"/> 
                             @if ($errors->has('phoneNumber'))
                                 <span class="text-danger">{{ $errors->first('phoneNumber') }}</span>
                             @endif
-                            <input type="text" class="form-input form-input-info" placeholder="Email" name="email" value="{{ old('email') }}" required>
+                            <input type="text" class="form-input form-input-info" placeholder="Email" name="email" 
+                            value="{{ old('email') }}" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                             @if ($errors->has('email'))
                                 <span class="text-danger">{{ $errors->first('email') }}</span>
                             @endif

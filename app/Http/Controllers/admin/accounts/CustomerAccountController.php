@@ -17,6 +17,7 @@ class CustomerAccountController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $data = $request->all();
 
         if ($request->input('order-name')) {
             $customers = Customer::query()
@@ -32,6 +33,7 @@ class CustomerAccountController extends Controller
 
         return view('admin.accounts.customerAccountShow', [
             'accounts' => $customers,
+            'data' => $data,
         ]);
     }
 

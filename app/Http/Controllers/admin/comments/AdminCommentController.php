@@ -18,6 +18,7 @@ class AdminCommentController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $data = $request->all();
         if ($search)
         {
             $comments = Comment::whereIn('product_id', Product::select('id')->where('tenSanPham', 'LIKE', "%{$search}%"))
@@ -32,12 +33,14 @@ class AdminCommentController extends Controller
             }
             else {
                 $comments = Comment::query()
+                    ->orderBy('updated_at', 'desc')
                     ->paginate(10);
             }
         }
 
         return view('admin.comments.commentShow', [
             'comments' => $comments,
+            'data' => $data,
         ]);
     }
 

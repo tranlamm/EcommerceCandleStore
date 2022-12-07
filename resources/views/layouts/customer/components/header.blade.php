@@ -90,6 +90,9 @@
                             <div class="dropdown dropdown-menu-end">
                                 <div class="dropdown-toggle cart-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-cart-shopping"></i>
+                                    @if (session()->has('cart'))
+                                        <div class="cart-dropdown-count">{{ count(session()->get('cart')) }}</div>
+                                    @endif
                                 </div>
                                 <div class="dropdown-menu cart-wrapper">
                                     @if (session()->has('cart'))

@@ -79,7 +79,7 @@
         </tbody>
       </table>
       <div class="d-flex justify-content-center">
-        {{ $comments->links('pagination::bootstrap-4') }}
+        {{ $comments->appends($data)->links('pagination::bootstrap-4') }}
       </div>
   </div>
 </div>

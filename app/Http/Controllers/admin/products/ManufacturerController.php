@@ -16,6 +16,7 @@ class ManufacturerController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $data = $request->all();
 
         if ($request->input('order-name')) {
             $manufacturers = Manufacturer::query()
@@ -30,7 +31,10 @@ class ManufacturerController extends Controller
                 ->paginate(10);
         }
 
-        return view('admin.products.manufacturerShow', ['manufacturers' => $manufacturers]);
+        return view('admin.products.manufacturerShow', [
+            'manufacturers' => $manufacturers,
+            'data' => $data,
+        ]);
     }
 
     /**

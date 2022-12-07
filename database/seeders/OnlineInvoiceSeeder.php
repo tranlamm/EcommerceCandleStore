@@ -30,6 +30,15 @@ class OnlineInvoiceSeeder extends Seeder
             ['account_id' => 1, 'trangThai' => 'pending', 'tongTien' => '4500000', 'created_at' => Carbon::create(2022, 10, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 10, 18, 0, 0, 0)],
             ['account_id' => 1, 'trangThai' => 'pending', 'tongTien' => '6000000', 'created_at' => Carbon::create(2022, 11, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 11, 18, 0, 0, 0)],
             ['account_id' => 1, 'trangThai' => 'pending', 'tongTien' => '7000000', 'created_at' => Carbon::create(2022, 12, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 12, 18, 0, 0, 0)],
+
+            ['account_id' => 2, 'trangThai' => 'pending', 'tongTien' => '500000', 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
+            ['account_id' => 3, 'trangThai' => 'pending', 'tongTien' => '400000', 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
+            ['account_id' => 4, 'trangThai' => 'pending', 'tongTien' => '500000', 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
+            ['account_id' => 5, 'trangThai' => 'pending', 'tongTien' => '400000', 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
+            ['account_id' => 6, 'trangThai' => 'pending', 'tongTien' => '500000', 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
+            ['account_id' => 7, 'trangThai' => 'pending', 'tongTien' => '400000', 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
+            ['account_id' => 8, 'trangThai' => 'pending', 'tongTien' => '500000', 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
+            ['account_id' => 9, 'trangThai' => 'pending', 'tongTien' => '5000000', 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
         ]);
 
         DB::table('online_invoice_product')->insert([
@@ -46,6 +55,15 @@ class OnlineInvoiceSeeder extends Seeder
             ['online_invoice_id' => 11, 'product_id' => 23, 'soLuong' => 20, 'created_at' => Carbon::create(2022, 11, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 11, 18, 0, 0, 0)],
             ['online_invoice_id' => 12, 'product_id' => 22, 'soLuong' => 20, 'created_at' => Carbon::create(2022, 12, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 12, 18, 0, 0, 0)],
             ['online_invoice_id' => 12, 'product_id' => 10, 'soLuong' => 4, 'created_at' => Carbon::create(2022, 12, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 12, 18, 0, 0, 0)],
+
+            ['online_invoice_id' => 13, 'product_id' => 3, 'soLuong' => 2, 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
+            ['online_invoice_id' => 14, 'product_id' => 16, 'soLuong' => 2, 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
+            ['online_invoice_id' => 15, 'product_id' => 3, 'soLuong' => 2, 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
+            ['online_invoice_id' => 16, 'product_id' => 16, 'soLuong' => 2, 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
+            ['online_invoice_id' => 17, 'product_id' => 3, 'soLuong' => 2, 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
+            ['online_invoice_id' => 18, 'product_id' => 16, 'soLuong' => 2, 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
+            ['online_invoice_id' => 19, 'product_id' => 3, 'soLuong' => 2, 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
+            ['online_invoice_id' => 20, 'product_id' => 24, 'soLuong' => 10, 'created_at' => Carbon::now(), 'updated_at' =>  Carbon::now()],
         ]);
     }
 }
