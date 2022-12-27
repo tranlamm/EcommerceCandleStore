@@ -28,6 +28,9 @@ use App\Http\Controllers\customer\CartController;
 use App\Http\Controllers\customer\InvoiceController;
 use App\Http\Controllers\customer\CommentController;
 
+// API
+use App\Http\Controllers\chat\ChatCustomerAPI;
+use App\Http\Controllers\chat\ChatAdminAPI;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,6 +57,7 @@ Route::post('/customer/logout/post', [ CustomerLoginController::class, 'postLogo
 Route::group(['middleware' => 'login_admin'], function() {
     // Admin Dashboard
     Route::get('/admin', [StatisticController::class, 'showDashboard'])->name('admin.index');
+    Route::get('/admin/chat', [ChatAdminAPI::class, 'index'])->name('admin.chat');
   
     // Products management
     Route::resource('/admin/candleproduct', CandleProductController::class);
@@ -105,3 +109,17 @@ Route::group(['middleware' => 'login_customer'], function() {
     Route::post('/customer/comment/{product_id}', [CommentController::class, 'postComment'])->name('comment.post');
     Route::delete('/customer/comment/delete', [CommentController::class, 'deleteComment'])->name('comment.delete');
 });
+
+// API for chat realtime
+Route::group(['middleware' => 'login_customer'] , function () {
+   Route::get('/customer/getCurrentUser', [ChatCustomerAPI::class, 'getCurrentUser']);
+   Route::get('/customer/chat/getMessages', [ChatCustomerAPI::class, 'getMessages']);
+   Route::post('/customer/chat/postMessage', [ChatCustomerAPI::class, 'storeMessage']); 
+});
+
+Route::group(['middleware' => 'login_admin'] , function () {
+    Route::get('/admin/chat/getAllUser', [ChatAdminAPI::class, 'getAllUser']);
+    Route::get('/admin/chat/getMessages', [ChatAdminAPI::class, 'getMessages']);
+    Route::post('/admin/chat/postMessage', [ChatAdminAPI::class, 'postMessage']);
+ });
+ 

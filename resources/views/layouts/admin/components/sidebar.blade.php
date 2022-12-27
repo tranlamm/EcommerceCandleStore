@@ -7,6 +7,9 @@
             <li class="nav-item">
                 <a class="nav-link nav_link" href="{{ route('admin.index') }}"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link nav_link" href="{{ route('admin.chat') }}"><i class="fa-regular fa-comments"></i>Chatting</a>
+            </li>
             <li class="nav-item nav_title">
                 Thiết lập dữ liệu
             </li>
