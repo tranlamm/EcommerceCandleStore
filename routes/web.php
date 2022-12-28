@@ -119,7 +119,7 @@ Route::group(['middleware' => 'login_customer'] , function () {
 
 Route::group(['middleware' => 'login_admin'] , function () {
     Route::get('/admin/chat/getAllUser', [ChatAdminAPI::class, 'getAllUser']);
-    Route::get('/admin/chat/getMessages', [ChatAdminAPI::class, 'getMessages']);
-    Route::post('/admin/chat/postMessage', [ChatAdminAPI::class, 'postMessage']);
+    Route::get('/admin/chat/getMessages/{user_id}', [ChatAdminAPI::class, 'getMessages']);
+    Route::post('/admin/chat/postMessage/{user_id}', [ChatAdminAPI::class, 'postMessage']);
  });
  

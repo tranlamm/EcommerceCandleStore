@@ -22,21 +22,21 @@ class ChatAdminAPI extends Controller
         return response()->json(['users' => $users]);
     }
 
-    public function getMessages(Request $request)
+    public function getMessages(Request $request, $user_id)
     {
-        $messages = Message::with('user')->where('chatroom', '=', $request->input('chatroom'))->orderBy('created_at', 'asc')->get();
+        $messages = Message::with('user')->where('chatroom', '=', $user_id)->orderBy('created_at', 'asc')->get();
         return response()->json(['messages' => $messages]);
     }
 
-    public function postMessage(Request $request)
+    public function postMessage(Request $request, $user_id)
     {
         $message = new Message();
 
         $message->sender = 1;
-        $message->chatroom = $request->input('chatroom');
+        $message->chatroom = $user_id;
         $message->content = $request->input('content');
 
         $message->save();
-        return $response->json(['message' => $message->load('user')]);
+        return response()->json(['message' => $message->load('user')]);
     }
 }
