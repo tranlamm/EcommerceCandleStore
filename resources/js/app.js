@@ -18,26 +18,7 @@ const appAdmin = createApp({});
 import ChatAdminWrapper from './components/admin/ChatAdminWrapper.vue';
 appAdmin.component('chat-wrapper', ChatAdminWrapper);
 
-const appCustomer = createApp({
-    data() {
-        return {
-            currentUserLogin: {}
-        }
-    },
-    created() {
-        this.getCurrentUser();
-    },
-    methods: {
-        async getCurrentUser() {
-            try {
-                const response = await axios.get('/customer/getCurrentUser');
-                this.currentUserLogin = response.data;
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }
-});
+const appCustomer = createApp({});
 
 import ChatWrapper from './components/customer/ChatWrapper.vue';
 appCustomer.component('chat-wrapper', ChatWrapper);

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="chat-item chat-user" v-if="message.user.id === $root.currentUserLogin.id">
+        <div class="chat-item chat-user" v-if="this.message.user.id === this.currentUser.id">
             <div class="chat-message">
                 {{ message.content }}
             </div>
@@ -24,6 +24,10 @@
             message: {
                 type: Object,
                 default: "",
+            },
+            currentUser: {
+                type: Object,
+                default: {},
             }
         }
     }

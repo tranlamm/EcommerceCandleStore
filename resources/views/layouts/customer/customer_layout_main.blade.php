@@ -22,6 +22,7 @@
         'resources/sass/customer/customer.scss', 'resources/sass/customer/shop_view.scss', 'resources/sass/customer/content.scss',
         'resources/sass/customer/product_detail.scss', 'resources/sass/customer/cart.scss', 'resources/sass/customer/chat.scss'])
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="http://localhost:6001/socket.io/socket.io.js"></script>
     </head>
 
     <body>
@@ -32,11 +33,11 @@
 
        @if (Auth::guard('customer')->check())
             @include('layouts.customer.components.chat')
-       @endif
-
-       @include('layouts.customer.components.footer')
-
-       {{-- Owl Carousel --}}
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        @endif
+            
+        @include('layouts.customer.components.footer')
+        
+        {{-- Owl Carousel --}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </body>
 </html>

@@ -9,7 +9,7 @@
         </div>
 
         <div class="chatlayout-body">
-            <ChatItem v-for="(message, index) in messageList" :key="index" :message="message"></ChatItem>
+            <ChatItem v-for="(message, index) in messageList" :key="index" :message="message" :currentUser="currentUser"></ChatItem>
             <div ref="scrollIntoMe"></div>
         </div>
 
@@ -27,21 +27,41 @@ import ChatItem from './ChatItem.vue';
             closeChatBox: {
                 type: Function,
                 default: () => {}
-            }
+            },
         },
         components: {
             ChatItem,
         },  
         data() {
             return {
+                currentUser: {},
                 messageList: [],
                 messageInput: "",
             }
         },
-        created() {
-            this.loadMessages();
+        async created() {
+            await this.getCurrentUser();
+            await this.loadMessages();
+            await Echo.private(`channel.${this.currentUser.id}`)
+                .listen('MessagePosted', (e) => {
+                    this.messageList.push(e.message);
+            })
+        },
+        beforeDestroy () {
+            // huỷ lắng nghe tin nhắn ở chatroom hiện tại
+            // nếu như user chuyển qua route/chatroom khác
+            Echo.leave(`channel.${this.currentUser.id}`)
         },
         methods: {
+            async getCurrentUser() {
+                try {
+                    const response = await axios.get('/customer/getCurrentUser');
+                    this.currentUser = response.data;
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+
             async loadMessages() {
                 try {
                     const response = await axios.get('/customer/chat/getMessages');

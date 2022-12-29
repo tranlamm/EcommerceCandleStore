@@ -37,6 +37,16 @@
         created() {
             this.getMessages();
             setTimeout(this.scrollToElement, 1000);
+
+            Echo.private(`channel.${this.currentUser.id}`)
+                .listen('MessagePosted', (e) => {
+                    this.messageList.push(e.message);
+            })
+        },
+        beforeDestroy () {
+            // huỷ lắng nghe tin nhắn ở chatroom hiện tại
+            // nếu như user chuyển qua route/chatroom khác
+            Echo.leave(`channel.${this.currentUser.id}`)
         },
         data() {
             return {

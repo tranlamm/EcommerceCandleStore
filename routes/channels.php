@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('channel.{id}', function ($user, $id) {
+    return true; // user có thể join vào bất kì chatroom nào
+}, ['guards' => ['admin', 'customer']]);
+

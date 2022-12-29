@@ -4,6 +4,7 @@ namespace App\Http\Controllers\chat;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Events\MessagePosted;
 
 use App\Models\chat\Message;
 use Auth;
@@ -30,6 +31,8 @@ class ChatCustomerAPI extends Controller
         $message->content = $request->input('content');
 
         $message->save();
+
+        broadcast(new MessagePosted($message->load('user')))->toOthers();
         return response()->json(['message' => $message->load('user')]);
     }
 }

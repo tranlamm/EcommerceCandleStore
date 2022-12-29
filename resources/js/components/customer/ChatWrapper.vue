@@ -15,7 +15,7 @@
     export default {
         components: {
             ChatLayout,
-        },        
+        },    
         data() {
             return {
                 isShow: false,
@@ -28,7 +28,7 @@
             openChatBox() {
                 this.isShow = true;
                 setTimeout(this.$refs.chatLayout.scrollToElement, 100);
-            }
+            },
         }
     }
 </script>
