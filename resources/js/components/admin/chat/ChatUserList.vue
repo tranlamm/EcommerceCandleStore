@@ -4,7 +4,7 @@
             <input type="text" class="list-search" spellcheck="false" placeholder="Search....." v-model="search" @keyup.enter="search=''">
         </div>
         <div class="list-body">
-            <ChatUserItem v-for="(user, index) in this.searchUserList" :key="index" :data="user" :currentUser="currentUser" :setUser="setUser"></ChatUserItem>
+            <ChatUserItem v-for="(user, index) in this.searchUserList" :key="index" :data="user" :currentUser="currentUser" :setCurrentUser="setCurrentUser" :removeAlert="removeAlert"></ChatUserItem>
         </div>
     </div>
 </template>
@@ -21,10 +21,14 @@
                 type: Object,
                 default: {}
             },
-            setUser: {
+            setCurrentUser: {
                 type: Function,
                 default: () => {}
-            }
+            },
+            removeAlert: {
+                type: Function,
+                default: () => {}
+            },
         },
         components: {
             ChatUserItem
@@ -39,9 +43,6 @@
                 return this.userList.filter(user => user.username.includes(this.search));
             }
         },
-        methods: {
-            
-        }
     }
 </script>
 

@@ -25,15 +25,25 @@
 <script>
     import MessageItem from './MessageItem.vue';
     export default {
+        components: {
+            MessageItem,
+        }, 
         props: {
             currentUser: {
                 type: Object,
                 default: {},
+            },
+            alert: {
+                type: Function,
+                default: () => {},
             }
         },
-        components: {
-            MessageItem,
-        }, 
+        data() {
+            return {
+                messageList: [],
+                messageInput: "",
+            }
+        },
         created() {
             this.getMessages();
             setTimeout(this.scrollToElement, 1000);
@@ -41,18 +51,14 @@
             Echo.private(`channel.${this.currentUser.id}`)
                 .listen('MessagePosted', (e) => {
                     this.messageList.push(e.message);
+                    setTimeout(this.scrollToElement, 100);
+                    this.alert(this.currentUser.id);
             })
         },
         beforeDestroy () {
             // huỷ lắng nghe tin nhắn ở chatroom hiện tại
             // nếu như user chuyển qua route/chatroom khác
             Echo.leave(`channel.${this.currentUser.id}`)
-        },
-        data() {
-            return {
-                messageList: [],
-                messageInput: "",
-            }
         },
         methods: {
             async getMessages() {
@@ -80,7 +86,7 @@
                 if (el) {
                     el.scrollIntoView({behavior: 'smooth'})
                 }
-            }
+            },
         }
     }
 </script>

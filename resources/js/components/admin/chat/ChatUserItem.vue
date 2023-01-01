@@ -1,5 +1,5 @@
 <template>
-    <div class="chat-user-item" :class="{active: currentUser.id === data.id}" @click="setUser(data.id)">
+    <div class="chat-user-item" :class="{active: currentUser.id === data.id}" @click="this.handleClick">
         <div class="user-avatar">
             <img src="/images/shop/chat-user.png" alt="avatar">
         </div>
@@ -12,6 +12,8 @@
                 {{ data.username }}
             </div>
         </div>
+
+        <div v-show="data.isAlert" class="user-notify">!</div>
     </div>
 </template>
 
@@ -26,9 +28,19 @@ export default {
             type: Object,
             default: {}
         },
-        setUser: {
+        setCurrentUser: {
             type: Function,
             default: () => {}
+        },
+        removeAlert: {
+            type: Function,
+            default: () => {}
+        }
+    },
+    methods: {
+        handleClick() {
+            this.setCurrentUser(this.data.id);
+            this.removeAlert(this.data.id);
         }
     }
 }
@@ -37,6 +49,7 @@ export default {
 <style lang="scss" scoped>
     .chat-user-item {
         display: flex;
+        align-items: center;
         margin-bottom: 10px;
         padding: 10px 12px;
         border-radius: 8px;
@@ -46,15 +59,14 @@ export default {
             background-color: #efefef;
             cursor: pointer;
         }
-
         &.active {
             background-color: #efefef;
         }
     }
 
     .user-avatar {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         margin-right: 18px;
 
         img {
@@ -65,6 +77,7 @@ export default {
     }
 
     .user-info {
+        flex-grow: 1;
         display: flex;
         flex-direction: column;
 
@@ -78,5 +91,18 @@ export default {
             font-size: 14px;
             color: #666;
         }
+    }
+
+    .user-notify {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: red;
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
     }
 </style>

@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         <!-- Scripts -->
-        @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/customer/header.js', 'resources/js/customer/owlCarousel.js',
+        @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/customerVue.js', 'resources/js/customer/header.js', 'resources/js/customer/owlCarousel.js',
         'resources/sass/customer/customer.scss', 'resources/sass/customer/shop_view.scss', 'resources/sass/customer/content.scss',
         'resources/sass/customer/product_detail.scss', 'resources/sass/customer/cart.scss', 'resources/sass/customer/chat.scss'])
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

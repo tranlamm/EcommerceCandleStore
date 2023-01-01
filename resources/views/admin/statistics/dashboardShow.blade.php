@@ -134,6 +134,12 @@
             </div>
         </div>
 
+        <div class="dashboard-statistic-wrapper">
+            <div id="statistic-vue">
+                <revenue-wrapper></revenue-wrapper>
+            </div>
+        </div>
+
         <div class="dashboard-chart-wrapper">
             <div class="expense-chart-wrapper">
                 <div class="expense-chart-header">

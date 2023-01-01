@@ -58,7 +58,8 @@ Route::group(['middleware' => 'login_admin'], function() {
     // Admin Dashboard
     Route::get('/admin', [StatisticController::class, 'showDashboard'])->name('admin.index');
     Route::get('/admin/chat', [ChatAdminAPI::class, 'index'])->name('admin.chat');
-  
+    Route::get('/admin/data/month/{month}', [StatisticController::class, 'getData']);
+
     // Products management
     Route::resource('/admin/candleproduct', CandleProductController::class);
     Route::resource('/admin/essentialoilproduct', EssentialOilController::class);
@@ -121,5 +122,5 @@ Route::group(['middleware' => 'login_admin'] , function () {
     Route::get('/admin/chat/getAllUser', [ChatAdminAPI::class, 'getAllUser']);
     Route::get('/admin/chat/getMessages/{user_id}', [ChatAdminAPI::class, 'getMessages']);
     Route::post('/admin/chat/postMessage/{user_id}', [ChatAdminAPI::class, 'postMessage']);
- });
+});
  

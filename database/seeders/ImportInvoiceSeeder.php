@@ -22,6 +22,9 @@ class ImportInvoiceSeeder extends Seeder
             ['tenDonHang' => 'Nhập hàng đợt 2', 'noiDung' => 'Nhập kho khai trương cửa hàng sản phẩm nến 3 bấc', 'tongTien' => '450000000', 'created_at' => Carbon::create(2022, 3, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 3, 18, 0, 0, 0)],
             ['tenDonHang' => 'Nhập hàng đợt 3', 'noiDung' => 'Nhập kho khai trương cửa hàng sản phẩm tinh dầu', 'tongTien' => '110000000', 'created_at' => Carbon::create(2022, 5, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 5, 18, 0, 0, 0)],
             ['tenDonHang' => 'Nhập hàng đợt 4', 'noiDung' => 'Nhập kho khai trương cửa hàng sản phẩm sáp thơm', 'tongTien' => '100000000', 'created_at' => Carbon::create(2022, 7, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 7, 18, 0, 0, 0)],
+            ['tenDonHang' => 'Nhập hàng đợt 5', 'noiDung' => 'Nhập kho khai trương cửa hàng', 'tongTien' => '50000000', 'created_at' => Carbon::create(2022, 2, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 2, 18, 0, 0, 0)],
+            ['tenDonHang' => 'Nhập hàng đợt 6', 'noiDung' => 'Nhập kho khai trương cửa hàng', 'tongTien' => '50000000', 'created_at' => Carbon::create(2022, 4, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 4, 18, 0, 0, 0)],
+            ['tenDonHang' => 'Nhập hàng đợt 7', 'noiDung' => 'Nhập kho khai trương cửa hàng', 'tongTien' => '50000000', 'created_at' => Carbon::create(2022, 6, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 6, 18, 0, 0, 0)],
         ]);
 
         DB::table('import_invoice_product')->insert([
@@ -53,6 +56,12 @@ class ImportInvoiceSeeder extends Seeder
             ['import_invoice_id' => 4, 'product_id' => 23, 'soLuong' => 200, 'donGia' => 100000, 'tongTien' => 20000000, 'created_at' => Carbon::create(2022, 7, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 7, 18, 0, 0, 0) ],
             ['import_invoice_id' => 4, 'product_id' => 24, 'soLuong' => 200, 'donGia' => 100000, 'tongTien' => 20000000, 'created_at' => Carbon::create(2022, 7, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 7, 18, 0, 0, 0) ],
             ['import_invoice_id' => 4, 'product_id' => 25, 'soLuong' => 200, 'donGia' => 100000, 'tongTien' => 20000000, 'created_at' => Carbon::create(2022, 7, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 7, 18, 0, 0, 0) ],
+
+            ['import_invoice_id' => 5, 'product_id' => 26, 'soLuong' => 1000, 'donGia' => 50000, 'tongTien' => 50000000, 'created_at' => Carbon::create(2022, 2, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 2, 18, 0, 0, 0) ],
+            
+            ['import_invoice_id' => 6, 'product_id' => 27, 'soLuong' => 1000, 'donGia' => 50000, 'tongTien' => 50000000, 'created_at' => Carbon::create(2022, 4, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 4, 18, 0, 0, 0) ],
+            
+            ['import_invoice_id' => 7, 'product_id' => 28, 'soLuong' => 1000, 'donGia' => 50000, 'tongTien' => 50000000, 'created_at' => Carbon::create(2022, 6, 18, 0, 0, 0), 'updated_at' =>  Carbon::create(2022, 6, 18, 0, 0, 0) ],
         ]);
     }
 }

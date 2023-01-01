@@ -2,12 +2,12 @@
     <div class="container-fluid chat-wrapper">
         <div class="row flex-grow-1">
             <div class="col col-4">
-                <ChatUserList :user-list="userList" :currentUser="currentUser" :setUser="setUser"></ChatUserList>
+                <ChatUserList :userList="userList" :currentUser="currentUser" :setCurrentUser="setCurrentUser" :removeAlert="removeAlert"></ChatUserList>
             </div>
 
             <div class="col col-8">
                 <div v-for="(user, index) in userList" :key="index">
-                    <ChatBoxWrapper :currentUser="currentUser" v-if="user.id === currentUser.id"></ChatBoxWrapper>
+                    <ChatBoxWrapper :currentUser="currentUser" v-if="user.id === currentUser.id" :alert="alert"></ChatBoxWrapper>
                 </div>
             </div>
         </div>
@@ -35,19 +35,40 @@
             async getAllUser() {
                 try {
                     const response = await axios.get('/admin/chat/getAllUser');
-                    this.userList = response.data.users;
-                    this.setUser(2);
+                    this.userList = response.data.users.map(user => ({
+                        ...user,
+                        isAlert: false,
+                    }));
+                    this.setCurrentUser(2);
                 } catch (error) {
                     console.log(error);
                 }
             },
 
-            setUser(id) {
+            setCurrentUser(id) {
                 this.userList.forEach(user => {
                     if (user.id === id) 
                     {
                         this.currentUser = user;
                         return;
+                    }
+                })
+            },
+
+            alert(id) {
+                this.userList.forEach(user => {
+                    if (user.id === id)
+                    {
+                        user.isAlert = true;
+                    }
+                })
+            },
+
+            removeAlert(id) {
+                this.userList.forEach(user => {
+                    if (user.id === id)
+                    {
+                        user.isAlert = false;
                     }
                 })
             }

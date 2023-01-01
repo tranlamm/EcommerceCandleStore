@@ -1,6 +1,6 @@
 <template>
-    <div class="chatlayout-wrapper">
-        <div class="chatlayout-header">
+    <div class="chatlayout-wrapper" @click="this.isAlert = false">
+        <div class="chatlayout-header" :class="{'header-alert': isAlert}">
             <div class="title">
                 <div class="title-text">Chăm sóc khách hàng</div>
                 <i class="fa-solid fa-headphones"></i>
@@ -28,6 +28,14 @@ import ChatItem from './ChatItem.vue';
                 type: Function,
                 default: () => {}
             },
+            setAlert: {
+                type: Function,
+                default: () => {}
+            },
+            isShow: {
+                type: Boolean,
+                default: true
+            }
         },
         components: {
             ChatItem,
@@ -37,6 +45,7 @@ import ChatItem from './ChatItem.vue';
                 currentUser: {},
                 messageList: [],
                 messageInput: "",
+                isAlert: false,
             }
         },
         async created() {
@@ -45,6 +54,8 @@ import ChatItem from './ChatItem.vue';
             await Echo.private(`channel.${this.currentUser.id}`)
                 .listen('MessagePosted', (e) => {
                     this.messageList.push(e.message);
+                    this.alert();                    
+                    setTimeout(this.scrollToElement, 100);
             })
         },
         beforeDestroy () {
@@ -89,6 +100,15 @@ import ChatItem from './ChatItem.vue';
                 if (el) {
                     el.scrollIntoView({behavior: 'smooth'});
                 }
+            },
+
+            alert() {
+                if (this.isShow) {
+                    this.isAlert = true;
+                }
+                else {
+                    this.setAlert();
+                }
             }
         }
     }
@@ -115,6 +135,10 @@ import ChatItem from './ChatItem.vue';
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        &.header-alert {
+            background-color: rgba(14, 30, 37, 0.1);
+        }
 
         .title {
             display: flex;

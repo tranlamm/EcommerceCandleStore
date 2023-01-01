@@ -5,23 +5,12 @@
  */
 
 import './bootstrap';
-import { createApp } from 'vue';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
  * to use in your application's views. An example is included for you.
  */
-
-const appAdmin = createApp({});
-
-import ChatAdminWrapper from './components/admin/ChatAdminWrapper.vue';
-appAdmin.component('chat-wrapper', ChatAdminWrapper);
-
-const appCustomer = createApp({});
-
-import ChatWrapper from './components/customer/ChatWrapper.vue';
-appCustomer.component('chat-wrapper', ChatWrapper);
 
 /**
  * The following block of code may be used to automatically register your
@@ -41,5 +30,3 @@ appCustomer.component('chat-wrapper', ChatWrapper);
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-appCustomer.mount('#chat');
-appAdmin.mount('#chatAdmin');

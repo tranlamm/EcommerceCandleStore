@@ -78,4 +78,39 @@ class StatisticController extends Controller
         ]);
     }
 
+    public function getData(Request $request, $month) 
+    {
+        $week = [[1, 7], [8, 14], [15, 21], [22, 31]];
+        $data = [];
+        for ($i = 0; $i < 4; ++$i)
+        {
+            $candle_count = 0;
+            $oil_count = 0;
+            $wax_count = 0;
+
+            $res = DB::table('export_invoice_product')
+                    ->select('soLuong', 'products.loaiSanPham')
+                    ->whereBetween('export_invoice_product.created_at', ['2022-' . $month . '-' . $week[$i][0], '2022-' . $month . '-' . $week[$i][1]] )
+                    ->join('products', 'export_invoice_product.product_id', '=', 'products.id')
+                    ->get();
+
+            foreach ($res as $value) {
+                if (str_contains($value->loaiSanPham, 'candle'))
+                {
+                    $candle_count += $value->soLuong;
+                }
+                else if (str_contains($value->loaiSanPham, 'oil'))
+                {
+                    $oil_count += $value->soLuong;
+                }
+                else if (str_contains($value->loaiSanPham, 'wax'))
+                {
+                    $wax_count += $value->soLuong;
+                }
+            }
+
+            array_push($data, ['candle' => $candle_count, 'oil' => $oil_count, 'wax' => $wax_count]);
+        }
+        return response()->json($data);
+    }
 }
