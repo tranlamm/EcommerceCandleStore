@@ -2,12 +2,12 @@
     <div class="revenue-wrapper">
         <div class="revenue-header">
             <div class="revenue-nav">
-                <div class="revenue-nav-item" v-for="month in 12" :key="month" @click="this.handleClickMonth(month)">{{ month }}</div>
+                <div class="revenue-nav-item" :class="{'revenue-nav-item--active': month === activeMonth}" v-for="month in 12" :key="month" @click="this.handleClickMonth(month)">{{ month }}</div>
             </div>
         </div>
 
         <div class="revenue-body">
-            <RevenueChart ></RevenueChart>
+            <RevenueChart v-if="this.isLoaded" :activeMonth="activeMonth" :dataPerMonth="dataPerMonth"></RevenueChart>
         </div>
     </div>
 </template>
@@ -26,14 +26,18 @@ import RevenueChart from './RevenueChart.vue';
             return {
                 activeMonth: 1,
                 dataPerMonth: [],
+                isLoaded: false,
             }
         },
         methods: {
             async getMonthData(month) {
                 try {
+                    this.isLoaded = false;
                     const response = await axios.get(`/admin/data/month/${month}`);
                     this.dataPerMonth = response.data;
+                    this.isLoaded = true;
                 } catch (error) {
+                    this.isLoaded = false;
                     console.log(error);
                 }
             },
@@ -46,6 +50,7 @@ import RevenueChart from './RevenueChart.vue';
                         await this.getMonthData(month);
                     }
                 } catch (error) {
+                    this.isLoaded = false;
                     console.log(error);
                 }
             }
@@ -62,8 +67,8 @@ import RevenueChart from './RevenueChart.vue';
     }
 
     .revenue-header {
-        padding-bottom: 18px;
-        margin-bottom: 24px;
+        padding-bottom: 32px;
+        margin-bottom: 50px;
         border-bottom: 1px solid #d5d6d7;
 
         .revenue-nav {
@@ -81,6 +86,11 @@ import RevenueChart from './RevenueChart.vue';
                 &:hover {
                     cursor: pointer;
                     background-color: rgba(0, 0, 0, 0.2);
+                }
+
+                &.revenue-nav-item--active {
+                    background-color: #0d6efd;
+                    color: white;
                 }
             }
         }

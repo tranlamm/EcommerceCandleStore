@@ -88,28 +88,66 @@ class StatisticController extends Controller
             $oil_count = 0;
             $wax_count = 0;
 
-            $res = DB::table('export_invoice_product')
-                    ->select('soLuong', 'products.loaiSanPham')
+            $candle_price = 0;
+            $oil_price = 0;
+            $wax_price = 0;
+
+            $exportInvoice = DB::table('export_invoice_product')
+                    ->select('soLuong', 'tongTien', 'products.loaiSanPham')
                     ->whereBetween('export_invoice_product.created_at', ['2022-' . $month . '-' . $week[$i][0], '2022-' . $month . '-' . $week[$i][1]] )
                     ->join('products', 'export_invoice_product.product_id', '=', 'products.id')
                     ->get();
+            
+            $onlineInvoice = DB::table('online_invoice_product')
+                    ->select('soLuong', 'products.giaBan', 'products.loaiSanPham')
+                    ->whereBetween('online_invoice_product.created_at', ['2022-' . $month . '-' . $week[$i][0], '2022-' . $month . '-' . $week[$i][1]] )
+                    ->join('products', 'online_invoice_product.product_id', '=', 'products.id')
+                    ->get();
 
-            foreach ($res as $value) {
+            foreach ($exportInvoice as $value) {
                 if (str_contains($value->loaiSanPham, 'candle'))
                 {
                     $candle_count += $value->soLuong;
+                    $candle_price += $value->tongTien;
                 }
                 else if (str_contains($value->loaiSanPham, 'oil'))
                 {
                     $oil_count += $value->soLuong;
+                    $oil_price += $value->tongTien;
                 }
                 else if (str_contains($value->loaiSanPham, 'wax'))
                 {
                     $wax_count += $value->soLuong;
+                    $wax_price += $value->tongTien;
                 }
             }
 
-            array_push($data, ['candle' => $candle_count, 'oil' => $oil_count, 'wax' => $wax_count]);
+            foreach ($onlineInvoice as $value) {
+                if (str_contains($value->loaiSanPham, 'candle'))
+                {
+                    $candle_count += $value->soLuong;
+                    $candle_price += $value->giaBan * $value->soLuong;
+                }
+                else if (str_contains($value->loaiSanPham, 'oil'))
+                {
+                    $oil_count += $value->soLuong;
+                    $oil_price += $value->giaBan * $value->soLuong;
+                }
+                else if (str_contains($value->loaiSanPham, 'wax'))
+                {
+                    $wax_count += $value->soLuong;
+                    $wax_price += $value->giaBan * $value->soLuong;
+                }
+            }
+
+            array_push($data, [
+                'candle' => $candle_count, 
+                'oil' => $oil_count, 
+                'wax' => $wax_count, 
+                'candle_price' => $candle_price, 
+                'oil_price' => $oil_price,
+                'wax_price' => $wax_price
+            ]);
         }
         return response()->json($data);
     }

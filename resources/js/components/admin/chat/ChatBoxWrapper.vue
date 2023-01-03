@@ -44,8 +44,8 @@
                 messageInput: "",
             }
         },
-        created() {
-            this.getMessages();
+        async created() {
+            await this.getMessages();
             setTimeout(this.scrollToElement, 1000);
 
             Echo.private(`channel.${this.currentUser.id}`)
