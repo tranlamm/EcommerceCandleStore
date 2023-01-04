@@ -6,35 +6,28 @@
         </div>
 
         <div class="chatbox" v-show="isShow">
-            <ChatLayout :isShow="isShow" :closeChatBox="closeChatBox" ref="chatLayout" :setAlert="setAlert"></ChatLayout>
+            <ChatLayout ref="chatLayout"></ChatLayout>
         </div>
     </div>
 </template>
 
 <script>
-    import ChatLayout from './ChatLayout.vue'
+import { mapGetters, mapMutations } from 'vuex';
+import ChatLayout from './ChatLayout.vue'
     export default {
         components: {
             ChatLayout,
         },    
-        data() {
-            return {
-                isShow: false,
-                isAlert: false,
-            }
-        },
         methods: {
-            closeChatBox() {
-                this.isShow = false;
-            },
+            ...mapMutations(['SET_BOX', 'SET_ALERT']),
             openChatBox() {
-                this.isShow = true;
-                this.isAlert = false;
-                setTimeout(this.$refs.chatLayout.scrollToElement, 100);
+                this.SET_BOX(true);
+                this.SET_ALERT(false);
+                setTimeout(this.$refs.chatLayout.scrollToBottom, 100);
             },
-            setAlert() {
-                this.isAlert = true;
-            }
+        },
+        computed: {
+            ...mapGetters(['isShow', 'isAlert']),
         }
     }
 </script>

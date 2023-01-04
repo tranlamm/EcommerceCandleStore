@@ -1,62 +1,39 @@
 <template>
-    <div class="chatlayout-wrapper" @click="this.isAlert = false">
+    <div class="chatlayout-wrapper" @click="SET_ALERT(false)">
         <div class="chatlayout-header" :class="{'header-alert': isAlert}">
             <div class="title">
                 <div class="title-text">Chăm sóc khách hàng</div>
                 <i class="fa-solid fa-headphones"></i>
             </div>
-            <div class="close-btn" @click="closeChatBox"><i class="fa-solid fa-xmark"></i></div>
+            <div class="close-btn" @click="SET_BOX(false)"><i class="fa-solid fa-xmark"></i></div>
         </div>
 
-        <div class="chatlayout-body">
-            <ChatItem v-for="(message, index) in messageList" :key="index" :message="message" :currentUser="currentUser"></ChatItem>
+        <div class="chatlayout-body" v-if="messageList">
+            <ChatItem v-for="(message, index) in messageList" :key="index" :message="message"></ChatItem>
             <div ref="scrollIntoMe"></div>
         </div>
 
         <div class="chatlayout-footer">
-            <input class="chat-input" type="text" spellcheck="false" v-model="messageInput" @keydown.enter="postMessage">
-            <div class="chat-send" @click="postMessage"><i class="fa-regular fa-paper-plane"></i></div>
+            <input class="chat-input" type="text" spellcheck="false" v-model="messageInput" @keydown.enter="this.sendMessage(messageInput)">
+            <div class="chat-send" @click="this.sendMessage(messageInput)"><i class="fa-regular fa-paper-plane"></i></div>
         </div>
     </div>
 </template>
 
 <script>
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import ChatItem from './ChatItem.vue';
     export default {
-        props: {
-            closeChatBox: {
-                type: Function,
-                default: () => {}
-            },
-            setAlert: {
-                type: Function,
-                default: () => {}
-            },
-            isShow: {
-                type: Boolean,
-                default: true
-            }
-        },
         components: {
             ChatItem,
         },  
         data() {
             return {
-                currentUser: {},
-                messageList: [],
                 messageInput: "",
-                isAlert: false,
             }
         },
         async created() {
-            await this.getCurrentUser();
-            await this.loadMessages();
-            await Echo.private(`channel.${this.currentUser.id}`)
-                .listen('MessagePosted', (e) => {
-                    this.messageList.push(e.message);
-                    this.alert();                    
-                    setTimeout(this.scrollToElement, 100);
-            })
+            await this.created();
         },
         beforeDestroy () {
             // huỷ lắng nghe tin nhắn ở chatroom hiện tại
@@ -64,52 +41,34 @@ import ChatItem from './ChatItem.vue';
             Echo.leave(`channel.${this.currentUser.id}`)
         },
         methods: {
-            async getCurrentUser() {
-                try {
-                    const response = await axios.get('/customer/getCurrentUser');
-                    this.currentUser = response.data;
-                } catch (error) {
-                    console.log(error);
-                }
+            ...mapMutations(['SET_BOX', 'SET_ALERT', 'PUSH_MESSAGE']),
+            ...mapActions(['fetchCurrentUser', 'fetchMessageList', 'postMessage']),
+            async created() {
+                await this.fetchCurrentUser();
+                await this.fetchMessageList();
+                Echo.private(`channel.${this.currentUser.id}`)
+                    .listen('MessagePosted', (e) => {
+                        this.PUSH_MESSAGE(e.message);
+                        this.SET_ALERT(true);
+                        setTimeout(this.scrollToBottom, 100);                  
+                })
             },
 
-            async loadMessages() {
-                try {
-                    const response = await axios.get('/customer/chat/getMessages');
-                    this.messageList = response.data.messages;
-                } catch (error) {
-                    console.log(error);
-                }
+            async sendMessage(content) {
+                await this.postMessage(content);
+                this.messageInput = "";
+                this.scrollToBottom();
             },
 
-            async postMessage() {
-                try {
-                    const response = await axios.post('/customer/chat/postMessage', {
-                        content: this.messageInput
-                    });
-                    this.messageList.push(response.data.message);
-                    this.messageInput = "";
-                    setTimeout(this.scrollToElement, 100);
-                } catch (error) {
-                    console.log(error);
-                }
-            },
-
-            scrollToElement() {
+            scrollToBottom() {
                 const el = this.$refs.scrollIntoMe;
                 if (el) {
                     el.scrollIntoView({behavior: 'smooth'});
                 }
-            },
-
-            alert() {
-                if (this.isShow) {
-                    this.isAlert = true;
-                }
-                else {
-                    this.setAlert();
-                }
             }
+        },
+        computed: {
+            ...mapGetters(['isAlert', 'messageList', 'currentUser'])
         }
     }
 </script>

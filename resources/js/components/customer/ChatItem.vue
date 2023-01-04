@@ -19,16 +19,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
     export default {
         props: {
             message: {
                 type: Object,
                 default: "",
             },
-            currentUser: {
-                type: Object,
-                default: {},
-            }
+        },
+        computed: {
+            ...mapGetters(['currentUser']),
         }
     }
 </script>
