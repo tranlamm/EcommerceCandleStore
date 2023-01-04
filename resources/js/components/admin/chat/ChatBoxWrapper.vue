@@ -5,88 +5,115 @@
                 <img src="/images/shop/chat-user2.png" alt="avatar">
             </div>
             <div class="d-flex flex-column">
-                <div class="chatbox-name">{{ currentUser.fullname }}</div>
-                <div class="chatbox-username">{{ currentUser.username }}</div>
+                <div class="chatbox-name">{{ this.currentUser.fullname }}</div>
+                <div class="chatbox-username">{{ this.currentUser.username }}</div>
             </div>
         </div>
 
         <div class="chatbox-body">
-            <MessageItem v-for="(message, index) in messageList" :message="message" :key="index"></MessageItem>
+            <MessageItem v-for="(message, index) in this.messageList" :message="message" :key="index"></MessageItem>
             <div ref="scrollElement"></div>
         </div>
 
         <div class="chatbox-footer">
-            <input type="text" class="chatbox-send" spellcheck="false" v-model="messageInput" @keyup.enter="this.postMessage">
-            <i class="fa-regular fa-paper-plane chatbox-btn" @click="this.postMessage"></i>
+            <input type="text" class="chatbox-send" spellcheck="false" v-model="messageInput" @keyup.enter="this.sendMessage">
+            <i class="fa-regular fa-paper-plane chatbox-btn" @click="this.sendMessage"></i>
         </div>
     </div>
 </template>
 
 <script>
-    import MessageItem from './MessageItem.vue';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+import MessageItem from './MessageItem.vue';
     export default {
         components: {
             MessageItem,
         }, 
-        props: {
-            currentUser: {
-                type: Object,
-                default: {},
-            },
-            alert: {
-                type: Function,
-                default: () => {},
-            }
-        },
         data() {
             return {
                 messageList: [],
                 messageInput: "",
+                id: 2,
             }
         },
         async created() {
-            await this.getMessages();
-            setTimeout(this.scrollToElement, 1000);
+            await this.created();
+            this.id = this.currentUser.id;
 
-            Echo.private(`channel.${this.currentUser.id}`)
+            Echo.join(`channel.${this.id}`)
+                .here((users) => { 
+                    // gọi ngay thời điểm ta join vào phòng, trả về tổng số user hiện tại có trong phòng (cả ta)
+                    if (users.length > 1) {
+                        this.SET_ONLINE_USER({
+                            id: this.id,
+                            isOnline: true,
+                        })
+                    }
+                })
+                .joining((user) => { 
+                    // gọi khi có user mới join vào phòng
+                    this.SET_ONLINE_USER({
+                        id: this.id,
+                        isOnline: true,
+                    })
+                })
+                .leaving((user) => { 
+                    // gọi khi có user rời phòng
+                    this.SET_ONLINE_USER({
+                        id: this.id,
+                        isOnline: false,
+                    })
+                })
                 .listen('MessagePosted', (e) => {
                     this.messageList.push(e.message);
-                    setTimeout(this.scrollToElement, 100);
-                    this.alert(this.currentUser.id);
+                    setTimeout(this.scrollToBottom, 100);
+                    this.SET_ALERT_USER({
+                        id: this.id, 
+                        isAlert: true
+                    });
             })
         },
         beforeDestroy () {
             // huỷ lắng nghe tin nhắn ở chatroom hiện tại
             // nếu như user chuyển qua route/chatroom khác
-            Echo.leave(`channel.${this.currentUser.id}`)
+            Echo.leave(`channel.${this.id}`)
         },
         methods: {
-            async getMessages() {
+            ...mapActions(['getMessage', 'postMessage']),
+            ...mapMutations(['SET_ALERT_USER', 'SET_ONLINE_USER']),
+            async created() {
                 try {
-                    const response = await axios.get(`/admin/chat/getMessages/${this.currentUser.id}`);
+                    const response = await this.getMessage(this.currentUser.id);
                     this.messageList = response.data.messages;
+                    setTimeout(this.scrollToBottom, 100);
                 } catch (error) {
                     console.log(error);
                 }
             },
-            async postMessage() {
+
+            async sendMessage() {
                 try {
-                    const response = await axios.post(`/admin/chat/postMessage/${this.currentUser.id}`, {
-                        content: this.messageInput
+                    const response = await this.postMessage({
+                        id: this.currentUser.id, 
+                        content: this.messageInput,
                     });
                     this.messageList.push(response.data.message);
                     this.messageInput = "";
-                    setTimeout(this.scrollToElement, 100);
+                    setTimeout(this.scrollToBottom, 100);
                 } catch (error) {
                     console.log(error);
                 }
             },
-            scrollToElement() {
+
+            scrollToBottom() {
                 const el = this.$refs.scrollElement;
                 if (el) {
                     el.scrollIntoView({behavior: 'smooth'})
                 }
             },
+        },
+        computed: {
+            ...mapGetters(['currentUser']),
         }
     }
 </script>

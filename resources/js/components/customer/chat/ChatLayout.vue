@@ -46,7 +46,7 @@ import ChatItem from './ChatItem.vue';
             async created() {
                 await this.fetchCurrentUser();
                 await this.fetchMessageList();
-                Echo.private(`channel.${this.currentUser.id}`)
+                Echo.join(`channel.${this.currentUser.id}`)
                     .listen('MessagePosted', (e) => {
                         this.PUSH_MESSAGE(e.message);
                         this.SET_ALERT(true);

@@ -2,76 +2,31 @@
     <div class="container-fluid chat-wrapper">
         <div class="row flex-grow-1">
             <div class="col col-4">
-                <ChatUserList :userList="userList" :currentUser="currentUser" :setCurrentUser="setCurrentUser" :removeAlert="removeAlert"></ChatUserList>
+                <ChatUserList></ChatUserList>
             </div>
 
-            <div class="col col-8">
-                <div v-for="(user, index) in userList" :key="index">
-                    <ChatBoxWrapper :currentUser="currentUser" v-if="user.id === currentUser.id" :alert="alert"></ChatBoxWrapper>
+            <div class="col col-8" v-if="this.currentUser.id">
+                <div v-for="(user, index) in this.userList" :key="index">
+                    <ChatBoxWrapper v-if="user.id === currentUser.id"></ChatBoxWrapper>
                 </div>
             </div>
+
+            <div class="col col-8 chat-placeholder" v-else></div>
         </div>
     </div>
 </template>
 
 <script>
-    import ChatUserList from './ChatUserList.vue';
-    import ChatBoxWrapper from './ChatBoxWrapper.vue';
+import ChatUserList from './ChatUserList.vue';
+import ChatBoxWrapper from './ChatBoxWrapper.vue';
+import { mapGetters } from 'vuex';
     export default {
         components: {
             ChatUserList,
             ChatBoxWrapper,
         },
-        data() {
-            return {
-                userList: [],
-                currentUser: {},
-            }
-        },
-        created() {
-            this.getAllUser();
-        },
-        methods: {
-            async getAllUser() {
-                try {
-                    const response = await axios.get('/admin/chat/getAllUser');
-                    this.userList = response.data.users.map(user => ({
-                        ...user,
-                        isAlert: false,
-                    }));
-                    this.setCurrentUser(2);
-                } catch (error) {
-                    console.log(error);
-                }
-            },
-
-            setCurrentUser(id) {
-                this.userList.forEach(user => {
-                    if (user.id === id) 
-                    {
-                        this.currentUser = user;
-                        return;
-                    }
-                })
-            },
-
-            alert(id) {
-                this.userList.forEach(user => {
-                    if (user.id === id)
-                    {
-                        user.isAlert = true;
-                    }
-                })
-            },
-
-            removeAlert(id) {
-                this.userList.forEach(user => {
-                    if (user.id === id)
-                    {
-                        user.isAlert = false;
-                    }
-                })
-            }
+        computed: {
+            ...mapGetters(['userList', 'currentUser']),
         }
     }
 </script>
@@ -82,5 +37,15 @@
         display: flex;
         align-items: center;
         padding: 0 24px;
+    }
+
+    .chat-placeholder {
+        border-radius: 12px;
+        border: 1px solid rgba(0,0,0,.125);
+        background-color: rgba(0,0,0,.15);
+        display: flex;
+        flex-direction: column;
+        height: 630px;
+        cursor: wait;
     }
 </style>

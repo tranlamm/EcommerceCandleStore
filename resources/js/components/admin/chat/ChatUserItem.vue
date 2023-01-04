@@ -1,47 +1,44 @@
 <template>
-    <div class="chat-user-item" :class="{active: currentUser.id === data.id}" @click="this.handleClick">
+    <div class="chat-user-item" :class="{active: currentUser.id === user.id}" @click="this.handleClick">
         <div class="user-avatar">
             <img src="/images/shop/chat-user.png" alt="avatar">
         </div>
 
         <div class="user-info">
             <div class="user-name">
-                {{ data.fullname }}
+                <div class="user-online" v-show="user.isOnline"></div>
+                {{ user.fullname }}
             </div>
             <div class="user-username">
-                {{ data.username }}
+                {{ user.username }}
             </div>
         </div>
 
-        <div v-show="data.isAlert" class="user-notify">!</div>
+        <div v-show="user.isAlert" class="user-notify">!</div>
     </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
 export default {
     props: {
-        data: {
+        user: {
             type: Object,
             default: {}
         },
-        currentUser: {
-            type: Object,
-            default: {}
-        },
-        setCurrentUser: {
-            type: Function,
-            default: () => {}
-        },
-        removeAlert: {
-            type: Function,
-            default: () => {}
-        }
     },
     methods: {
+        ...mapMutations(['SET_CURRENT_USER', 'SET_ALERT_USER']),
         handleClick() {
-            this.setCurrentUser(this.data.id);
-            this.removeAlert(this.data.id);
+            this.SET_CURRENT_USER(this.user);
+            this.SET_ALERT_USER({
+                id: this.user.id, 
+                isAlert: false
+            });
         }
+    },
+    computed: {
+        ...mapGetters(['currentUser']),
     }
 }
 </script>
@@ -85,6 +82,16 @@ export default {
             font-size: 16px;
             font-weight: 600;
             color: black;
+            display: flex;
+            align-items: center;
+
+            .user-online {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: green;
+                margin-right: 10px;
+            }
         }
 
         .user-username {

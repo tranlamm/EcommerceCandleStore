@@ -1,8 +1,8 @@
 import { createApp } from 'vue';
 import { createStore } from 'vuex';
-import mutations from './customerStoreVuex/mutations';
-import actions from './customerStoreVuex/actions';
-import getters from './customerStoreVuex/getters';
+import mutations from './customerStoreVuex/chat/mutations';
+import actions from './customerStoreVuex/chat/actions';
+import getters from './customerStoreVuex/chat/getters';
 
 // create store
 const store = createStore({
@@ -23,7 +23,7 @@ const store = createStore({
 const chatCustomer = createApp({});
 
 // add components
-import ChatWrapper from './components/customer/ChatWrapper.vue';
+import ChatWrapper from './components/customer/chat/ChatWrapper.vue';
 chatCustomer.component('chat-wrapper', ChatWrapper);
 
 // add store

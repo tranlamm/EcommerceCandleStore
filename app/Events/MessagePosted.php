@@ -34,6 +34,7 @@ class MessagePosted implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel.' . $this->message->chatroom);
+        // return new PrivateChannel('channel.' . $this->message->chatroom);
+        return new PresenceChannel('channel.' . $this->message->chatroom);
     }
 }

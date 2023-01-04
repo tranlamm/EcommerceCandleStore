@@ -3,5 +3,4 @@ export default {
     isAlert: state => state.isAlert,
     currentUser: state => state.currentUser,
     messageList: state => state.messageList,
-    messageInput: state => state.messageInput,
 }

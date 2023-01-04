@@ -18,6 +18,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('channel.{id}', function ($user, $id) {
-    return true;
+    return $user;
 }, ['guards' => ['admin', 'customer']]);
 

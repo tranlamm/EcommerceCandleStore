@@ -1,44 +1,34 @@
 <template>
     <div class="chat-user-list">
         <div class="list-header">
-            <input type="text" class="list-search" spellcheck="false" placeholder="Search....." v-model="search" @keyup.enter="search=''">
+            <input type="text" class="list-search" spellcheck="false" placeholder="Search....." v-model="search" @keyup.enter="search = ''">
         </div>
-        <div class="list-body">
-            <ChatUserItem v-for="(user, index) in this.searchUserList" :key="index" :data="user" :currentUser="currentUser" :setCurrentUser="setCurrentUser" :removeAlert="removeAlert"></ChatUserItem>
+        <div class="list-body" v-if="this.userList">
+            <ChatUserItem v-for="(user, index) in this.searchUserList" :key="index" :user="user"></ChatUserItem>
         </div>
     </div>
 </template>
 
 <script>
-    import ChatUserItem from './ChatUserItem.vue';
+import { mapActions, mapGetters } from 'vuex';
+import ChatUserItem from './ChatUserItem.vue';
     export default {
-        props: {
-            userList: {
-                type: Array,
-                default: [],
-            },
-            currentUser: {
-                type: Object,
-                default: {}
-            },
-            setCurrentUser: {
-                type: Function,
-                default: () => {}
-            },
-            removeAlert: {
-                type: Function,
-                default: () => {}
-            },
-        },
         components: {
             ChatUserItem
+        },
+        async created() {
+            await this.fetchUserList();
         },
         data() {
             return {
                 search: "",
             }
         },
+        methods: {
+            ...mapActions(['fetchUserList']),
+        },  
         computed: {
+            ...mapGetters(['userList']),
             searchUserList() {
                 return this.userList.filter(user => user.username.includes(this.search));
             }
