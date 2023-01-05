@@ -52,52 +52,55 @@
     @if (Session::has('message'))
       <h5 class="text-success mb-2 ms-2"><strong>{{ Session::get('message') }}</strong></h5>
     @endif
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Hình ảnh</th>
-            <th scope="col">Tên sản phẩm</th>
-            <th scope="col">Mặt hàng</th>
-            <th scope="col">Nhà sản xuất</th>
-            <th scope="col">Giá Nhập</th>
-            <th scope="col">Giá Bán</th>
-            <th scope="col">Còn lại</th>
-            <th scope="col">Đã bán</th>
-            <th scope="col">Created At</th>
-            <th scope="col">Updated At</th>
-            <th scope="col">Thao tác</th>
-          </tr>
-        </thead>
-        <tbody>
-            @foreach ($candleProducts as $candleProduct)
-                <tr>
-                    <th scope="row">{{ $candleProduct->id }}</th>
-                    <td>
-                      <div class="product__image-wrapper">
-                        <img class="product__image" src="{{ asset('images/products/' . $candleProduct->image_path) }}" alt="Ảnh sản phẩm">
-                      </div>
-                    </td>
-                    <td>{{ $candleProduct->tenSanPham }}</td>
-                    <td>{{ $candleProduct->loaiSanPham }}</td>
-                    <td>{{ $candleProduct->manufacturer()->first()->ten }}</td>
-                    <td>@currency_format($candleProduct->giaNhap)</td>
-                    <td>@currency_format($candleProduct->giaBan)</td>
-                    <td>{{ $candleProduct->conLai }}</td>
-                    <td>{{ $candleProduct->daBan }}</td>
-                    <td>@date_format($candleProduct->created_at)</td>
-                    <td>@date_format($candleProduct->updated_at)</td>
-                    <td>
-                      <div class="btn-group" role="group" aria-label="Basic example">
-                        <a role="button" href="/admin/candleproduct/{{ $candleProduct->id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
-                        <button class="btn btn-outline-danger btn-sm" data-id="{{ $candleProduct->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
-                        <a role="button" href="{{ route('product.review', ['id' => $candleProduct->id]) }}" class="btn btn-outline-success btn-sm">Reviews</a>
-                      </div>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-      </table>
+    <div class="table-responsive">
+
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Hình ảnh</th>
+              <th scope="col">Tên sản phẩm</th>
+              <th scope="col">Mặt hàng</th>
+              <th scope="col">Nhà sản xuất</th>
+              <th scope="col">Giá Nhập</th>
+              <th scope="col">Giá Bán</th>
+              <th scope="col">Còn lại</th>
+              <th scope="col">Đã bán</th>
+              <th scope="col">Created At</th>
+              <th scope="col">Updated At</th>
+              <th scope="col">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+              @foreach ($candleProducts as $candleProduct)
+                  <tr>
+                      <th scope="row">{{ $candleProduct->id }}</th>
+                      <td>
+                        <div class="product__image-wrapper">
+                          <img class="product__image" src="{{ asset('images/products/' . $candleProduct->image_path) }}" alt="Ảnh sản phẩm">
+                        </div>
+                      </td>
+                      <td>{{ $candleProduct->tenSanPham }}</td>
+                      <td>{{ $candleProduct->loaiSanPham }}</td>
+                      <td>{{ $candleProduct->manufacturer()->first()->ten }}</td>
+                      <td>@currency_format($candleProduct->giaNhap)</td>
+                      <td>@currency_format($candleProduct->giaBan)</td>
+                      <td>{{ $candleProduct->conLai }}</td>
+                      <td>{{ $candleProduct->daBan }}</td>
+                      <td>@date_format($candleProduct->created_at)</td>
+                      <td>@date_format($candleProduct->updated_at)</td>
+                      <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          <a role="button" href="/admin/candleproduct/{{ $candleProduct->id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
+                          <button class="btn btn-outline-danger btn-sm" data-id="{{ $candleProduct->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                          <a role="button" href="{{ route('product.review', ['id' => $candleProduct->id]) }}" class="btn btn-outline-success btn-sm">Reviews</a>
+                        </div>
+                      </td>
+                  </tr>
+              @endforeach
+          </tbody>
+        </table>
+    </div>
       <div class="d-flex justify-content-center">
         {{ $candleProducts->appends($data)->links('pagination::bootstrap-4') }}
       </div>

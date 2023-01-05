@@ -24,11 +24,12 @@
     <body>
         @include('layouts.admin.components.header')
         <div class="row content-wrapper">
-            <div class="col col-2">
+            @include('layouts.admin.components.offcanvas_sidebar')
+            <div class="col col-xl-2 d-none d-xl-block">
                 @include('layouts.admin.components.sidebar')
             </div>
-            
-            <div class="col col-10">
+
+            <div class="col col-xl-10 col-12">
                 @yield('content')
             </div>
         </div>
