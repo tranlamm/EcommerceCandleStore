@@ -42,10 +42,9 @@ import { mapGetters } from 'vuex';
     .chat-placeholder {
         border-radius: 12px;
         border: 1px solid rgba(0,0,0,.125);
-        background-color: rgba(0,0,0,.15);
+        background-color: rgba(0,0,0,.1);
         display: flex;
         flex-direction: column;
         height: 630px;
-        cursor: wait;
     }
 </style>

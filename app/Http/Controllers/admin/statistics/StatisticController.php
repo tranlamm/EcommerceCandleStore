@@ -27,7 +27,7 @@ class StatisticController extends Controller
         $offlineTotal = ExportInvoice::sum('tongTien');   
         $importTotal = ImportInvoice::sum('tongTien');   
 
-        $orderToday = OnlineInvoice::where(\DB::raw("DATE_FORMAT(created_at, '%D')"), Carbon::now()->day)->get();
+        $orderToday = OnlineInvoice::whereDate('created_at', Carbon::today())->get();
         $orderTotal = ExportInvoice::count() + OnlineInvoice::count();
         $orderPending = OnlineInvoice::where('trangThai', '=', 'pending')->count();
 
