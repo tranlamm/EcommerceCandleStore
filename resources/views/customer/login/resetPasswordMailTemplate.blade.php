@@ -1,0 +1,1 @@
+<h1>Your reset password token is: {{ $token }}</h1>

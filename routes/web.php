@@ -53,6 +53,11 @@ Route::post('/customer/login/post', [ CustomerLoginController::class, 'postLogin
 Route::post('/customer/register/post', [ CustomerLoginController::class, 'postRegisterCustomer'])->name('register_customer.post');
 Route::post('/customer/logout/post', [ CustomerLoginController::class, 'postLogoutCustomer'])->name('logout_customer.post');
 
+Route::get('/customer/resetpassword', [ CustomerLoginController::class, 'showChangePassword'])->name('reset_customer.index');
+Route::post('/customer/resetpassword/post', [ CustomerLoginController::class, 'mailResetPassword'])->name('reset_customer.post');
+Route::get('/customer/resetpassword/patch', [ CustomerLoginController::class, 'showSubmitToken'])->name('reset_customer_change.index');
+Route::patch('/customer/resetpassword/submit', [ CustomerLoginController::class, 'patchResetPassword'])->name('reset_customer.patch');
+
 // Admin
 Route::group(['middleware' => 'login_admin'], function() {
     // Admin Dashboard

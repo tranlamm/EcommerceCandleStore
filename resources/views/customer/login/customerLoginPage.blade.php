@@ -41,7 +41,7 @@
                         <div class="form-submit">
                             <button class="form-submit-btn">Đăng nhập</button>
                             <div class="form-helper">
-                                <div class="form-helper-label">Quên mật khẩu</div>
+                                <a  href="{{ route('reset_customer.index') }}" class="form-helper-label">Quên mật khẩu</a>
                                 <div>
                                     <input class="form-helper-input" id="ckb1" type="checkbox">
                                     <label class="form-helper-label" for="ckb1">
@@ -86,7 +86,7 @@
                             @if ($errors->has('phoneNumber'))
                                 <span class="text-danger">{{ $errors->first('phoneNumber') }}</span>
                             @endif
-                            <input type="text" class="form-input form-input-info" placeholder="Email" name="email" 
+                            <input type="email" class="form-input form-input-info" placeholder="Email" name="email" 
                             value="{{ old('email') }}" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                             @if ($errors->has('email'))
                                 <span class="text-danger">{{ $errors->first('email') }}</span>

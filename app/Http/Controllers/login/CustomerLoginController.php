@@ -4,13 +4,17 @@ namespace App\Http\Controllers\login;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use App\Models\auth\Customer;
+use App\Models\auth\CustomerPasswordReset;
 use App\Models\auth\Roles;
 
+use Carbon\Carbon;
 use Auth;
 use Session;
 use Hash;
+use Mail;
 
 class CustomerLoginController extends Controller
 {
@@ -122,6 +126,74 @@ class CustomerLoginController extends Controller
         ]);
 
         Auth::guard('customer')->logout();
-        return redirect(route('login_customer.index'))->with('message', 'Change password successfully !');
+        return redirect(route('login_customer.index'))->with('message', 'Change password successfully!');
+    }
+
+    public function showChangePassword()
+    {
+        return view('customer.login.customerResetPasswordPage');
+    }
+
+    public function mailResetPassword(Request $request) 
+    {
+        $request->validate([
+            'username' => 'bail|required',
+            'email' => 'bail|email',
+        ]);
+        $username = $request->input('username');
+        $email = $request->input('email');
+
+        $customer = Customer::where('username', '=', $username)
+                            ->where('email', '=', $email)
+                            ->first();
+        if (!$customer) 
+            return back()->with('wrong', 'Wrong username or email !')->withInput();
+
+        $passwordReset = CustomerPasswordReset::updateOrCreate(
+            ['email' => $email], 
+            ['token' => Str::random(60)]
+        );
+        
+        if ($passwordReset) {
+            Mail::send('customer.login.resetPasswordMailTemplate', ['token' => $passwordReset->token], function($message) use ($email){
+                $message->to($email)->subject('Reset Password');
+            });
+        }
+
+        return redirect(route('reset_customer_change.index'));
+    }
+
+    public function showSubmitToken()
+    {
+        return view('customer.login.customerNewPasswordPage');
+    }
+
+    public function patchResetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'bail|required',
+            'password' => 'bail|required|confirmed|min:8',
+        ]);
+        $token = $request->input('token');
+        $password = $request->input('password');
+
+        $passwordReset = CustomerPasswordReset::where('token', '=', $token)->first();
+        if (!$passwordReset) 
+            return back()->with('wrong', 'Token is invalid !');
+
+        if (Carbon::parse($passwordReset->updated_at)->addMinutes(5)->isPast())
+        {
+            $passwordReset->delete();
+            return back()->with('wrong', 'Token is expired !');
+        }
+
+        $customer = Customer::where('email', '=', $passwordReset->email)->first();
+        if (!$customer)
+            return back()->with('wrong', 'Token is invalid !');
+
+        $customer->update(['password' => bcrypt($password)]);
+        $passwordReset->delete();
+
+        return redirect(route('login_customer.index'))->with('message', 'Change password successfully!');
     }
 }
