@@ -39,7 +39,7 @@
                             @endif
                         </div>
                         <div class="form-submit">
-                            <button class="form-submit-btn">Đăng nhập</button>
+                            <button type="submit" class="form-submit-btn">Đăng nhập</button>
                             <div class="form-helper">
                                 <a  href="{{ route('reset_customer.index') }}" class="form-helper-label">Quên mật khẩu</a>
                                 <div>
@@ -125,6 +125,9 @@
                                     <span class="text-red">Điều khoản dịch vụ</span> & 
                                     <span class="text-red">Chính sách bảo mật</span>
                                 </div>
+                            </div>
+                            <div class="form-helper">
+                                <a  href="{{ route('register_customer_verify.index') }}" class="form-helper-label">Verify New Account</a>
                             </div>
                         </div>
                         <div class="form-social">

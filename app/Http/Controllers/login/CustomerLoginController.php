@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 use App\Models\auth\Customer;
 use App\Models\auth\CustomerPasswordReset;
+use App\Models\auth\CustomerVerifiedEmail;
 use App\Models\auth\Roles;
 
 use Carbon\Carbon;
@@ -62,11 +63,29 @@ class CustomerLoginController extends Controller
             ),
         ]);
 
+        $customer = Customer::where('email', '=',  $request->input('email'))->first();
+        if ($customer)
+        {
+            if ($customer->isVerified)
+                return back()->withErrors(['email_exists' => 'Email already exists'])->withInput($request->input());
+            else
+                return redirect(route('register_customer_verify.index'));
+        }
+
         if (Customer::where('username', '=',  $request->input('username'))->first())
             return back()->withErrors(['exists' => 'Username already exists'])->withInput($request->input());
 
-        if (Customer::where('email', '=',  $request->input('email'))->first())
-            return back()->withErrors(['email_exists' => 'Email already exists'])->withInput($request->input());
+        $email = $request->input('email');
+        $verifyToken = CustomerVerifiedEmail::updateOrCreate(
+            ['email' => $email], 
+            ['token' => Str::random(10)]
+        );
+        
+        if ($verifyToken) {
+            Mail::send('customer.login.createAccountMailTemplate', ['token' => $verifyToken->token], function($message) use ($email){
+                $message->to($email)->subject('Create Account Token');
+            });
+        }
 
         $role = Roles::where('role', 'client')->first();
         Customer::create([
@@ -78,8 +97,73 @@ class CustomerLoginController extends Controller
             'fullname' => $request->input('fullname'),
             'role' => $role->id,
         ]);
+        return redirect(route('register_customer_verify.index'));
+    }
 
-        return back()->with('message', 'Sign up successfully !');
+    public function getRegisterVerify()
+    {
+        return view('customer.login.customerVerifyAccount');
+    }
+
+    public function getResendMail()
+    {
+        return view('customer.login.customerResendMail');
+    }
+
+    public function resendMail(Request $request)
+    {
+        $request->validate([
+            'email' => 'bail|required|email',
+        ]);
+        $email = $request->input('email');
+
+        $customer = Customer::where('email', '=',  $request->input('email'))->first();
+        if (!$customer)
+            return back()->with('wrong', 'Email is invalid');
+        if ($customer->isVerified)
+            return back()->with('wrong', 'Account had verified');
+
+        $verifyToken = CustomerVerifiedEmail::updateOrCreate(
+            ['email' => $email], 
+            ['token' => Str::random(10)]
+        );
+        
+        if ($verifyToken) {
+            Mail::send('customer.login.createAccountMailTemplate', ['token' => $verifyToken->token], function($message) use ($email){
+                $message->to($email)->subject('Create Account Token');
+            });
+        }
+
+        return redirect(route('register_customer_verify.index'));
+    }
+
+    public function verifyCreateAccountToken(Request $request)
+    {
+        $request->validate([
+            'token' => 'bail|required',
+        ]);
+        $token = $request->input('token');
+
+        $verifyToken = CustomerVerifiedEmail::where('token', '=', $token)->first();
+        if (!$verifyToken)
+            return back()->with('wrong', 'Token is invalid !');
+
+        if (Carbon::parse($verifyToken->updated_at)->addMinutes(3)->isPast())
+        {
+            $verifyToken->delete();
+            return back()->with('wrong', 'Token is expired !');
+        }
+
+        $customer = Customer::where('email', '=', $verifyToken->email)->first();
+        if (!$customer)
+        {
+            $verifyToken->delete();
+            return back()->with('wrong', 'Token is invalid !');
+        }
+
+        $customer->update(['isVerified' => true]);
+        $verifyToken->delete();
+        return redirect(route('login_customer.index'))->with('message', 'Sign up successfully !');
     }
 
     // Change account info
@@ -168,7 +252,7 @@ class CustomerLoginController extends Controller
         
         if ($passwordReset) {
             Mail::send('customer.login.resetPasswordMailTemplate', ['token' => $passwordReset->token], function($message) use ($email){
-                $message->to($email)->subject('Reset Password');
+                $message->to($email)->subject('Reset Password Token');
             });
         }
 
@@ -199,7 +283,10 @@ class CustomerLoginController extends Controller
 
         $customer = Customer::where('email', '=', $passwordReset->email)->first();
         if (!$customer)
+        {
+            $passwordReset->delete();
             return back()->with('wrong', 'Token is invalid !');
+        }
 
         $request->session()->put('reset_password_customer', $customer);
         $passwordReset->delete();

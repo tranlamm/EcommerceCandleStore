@@ -50,8 +50,14 @@ Route::post('/admin/logout/post', [ AdminLoginController::class, 'postLogoutAdmi
     // Customer
 Route::get('/customer/login', [ CustomerLoginController::class, 'getLoginCustomer'])->name('login_customer.index');
 Route::post('/customer/login/post', [ CustomerLoginController::class, 'postLoginCustomer'])->name('login_customer.post');
-Route::post('/customer/register/post', [ CustomerLoginController::class, 'postRegisterCustomer'])->name('register_customer.post');
 Route::post('/customer/logout/post', [ CustomerLoginController::class, 'postLogoutCustomer'])->name('logout_customer.post');
+
+Route::post('/customer/register/post', [ CustomerLoginController::class, 'postRegisterCustomer'])->name('register_customer.post');
+Route::get('/customer/register/verify', [ CustomerLoginController::class, 'getRegisterVerify'])->name('register_customer_verify.index');
+Route::post('/customer/register/verify/post', [ CustomerLoginController::class, 'verifyCreateAccountToken'])->name('register_customer_verify.post');
+Route::get('/customer/register/resendmail', [ CustomerLoginController::class, 'getResendMail'])->name('register_customer_resend.index');
+Route::post('/customer/register/resendmail/post', [ CustomerLoginController::class, 'resendMail'])->name('register_customer_resend.post');
+
 
 Route::get('/customer/resetpassword', [ CustomerLoginController::class, 'getResetPassword'])->name('reset_customer.index');
 Route::post('/customer/resetpassword/sendMail', [ CustomerLoginController::class, 'sendTokenMail'])->name('reset_customer.mail');

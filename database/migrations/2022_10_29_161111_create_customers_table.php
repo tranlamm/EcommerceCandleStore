@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('fullname');
             $table->string('address');
             $table->string('phoneNumber');
-            $table->string('email');
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('email')->unique();
+            $table->boolean('isVerified')->default(false);
             $table->timestamps();
         });
     }
