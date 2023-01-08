@@ -18,6 +18,7 @@ use Mail;
 
 class CustomerLoginController extends Controller
 {
+    // Login
     public function getLoginCustomer()
     {
         return view('customer.login.customerLoginPage');
@@ -38,12 +39,14 @@ class CustomerLoginController extends Controller
         }
     }
 
+    // Logout
     public function postLogoutCustomer()
     {
         Auth::guard('customer')->logout();
         return back();
     }
 
+    // Register
     public function postRegisterCustomer(Request $request) 
     {
         $request->validate([
@@ -76,6 +79,7 @@ class CustomerLoginController extends Controller
         return back()->with('message', 'Sign up successfully !');
     }
 
+    // Change account info
     public function showAccountInfo(Request $request)
     {
         $customer = Auth::guard('customer')->user();
@@ -110,6 +114,7 @@ class CustomerLoginController extends Controller
         return back()->with('message', 'Change information successfully !');
     }
 
+    // Change password
     public function changePassword(Request $request)
     {
         $request->validate([
@@ -134,7 +139,13 @@ class CustomerLoginController extends Controller
         return view('customer.login.customerResetPasswordPage');
     }
 
-    public function mailResetPassword(Request $request) 
+    // Forgot password
+    public function getResetPassword()
+    {
+        return view('customer.login.customerResetPasswordPage');
+    }
+
+    public function sendTokenMail(Request $request) 
     {
         $request->validate([
             'username' => 'bail|required',
@@ -151,7 +162,7 @@ class CustomerLoginController extends Controller
 
         $passwordReset = CustomerPasswordReset::updateOrCreate(
             ['email' => $email], 
-            ['token' => Str::random(60)]
+            ['token' => Str::random(8)]
         );
         
         if ($passwordReset) {
@@ -160,28 +171,26 @@ class CustomerLoginController extends Controller
             });
         }
 
-        return redirect(route('reset_customer_change.index'));
+        return redirect(route('reset_customer_token.index'));
     }
 
-    public function showSubmitToken()
+    public function getToken()
     {
-        return view('customer.login.customerNewPasswordPage');
+        return view('customer.login.customerTokenPage');
     }
 
-    public function patchResetPassword(Request $request)
+    public function postToken(Request $request)
     {
         $request->validate([
             'token' => 'bail|required',
-            'password' => 'bail|required|confirmed|min:8',
         ]);
         $token = $request->input('token');
-        $password = $request->input('password');
 
         $passwordReset = CustomerPasswordReset::where('token', '=', $token)->first();
         if (!$passwordReset) 
             return back()->with('wrong', 'Token is invalid !');
 
-        if (Carbon::parse($passwordReset->updated_at)->addMinutes(5)->isPast())
+        if (Carbon::parse($passwordReset->updated_at)->addMinutes(3)->isPast())
         {
             $passwordReset->delete();
             return back()->with('wrong', 'Token is expired !');
@@ -191,9 +200,35 @@ class CustomerLoginController extends Controller
         if (!$customer)
             return back()->with('wrong', 'Token is invalid !');
 
-        $customer->update(['password' => bcrypt($password)]);
+        $request->session()->put('reset_password_customer', $customer);
         $passwordReset->delete();
+        return redirect(route('reset_customer_new.index'));
+    }
 
-        return redirect(route('login_customer.index'))->with('message', 'Change password successfully!');
+    public function getNewPassword(Request $request)
+    {
+        if (!$request->session()->has('reset_password_customer'))
+            return redirect(route('reset_customer.index'));
+             
+        $customer = $request->session()->get('reset_password_customer');
+        return view('customer.login.customerNewPasswordPage', ['customer' => $customer]);
+    }
+
+    public function patchResetPassword(Request $request)
+    {
+        $request->validate([
+            'password' => 'bail|required|confirmed|min:8',
+        ]);
+        $password = $request->input('password');
+
+        if (!$request->session()->has('reset_password_customer'))
+            return redirect(route('reset_customer_token.index'))->with('wrong', 'Token is invalid');
+
+        $id = $request->session()->get('reset_password_customer')->id;
+        $customer = Customer::where('id', $id)->first();
+        $customer->update(['password' => bcrypt($password)]);
+        $request->session()->forget('reset_password_customer');
+
+        return redirect(route('login_customer.index'))->with('message', 'Create new password successfully!');
     }
 }

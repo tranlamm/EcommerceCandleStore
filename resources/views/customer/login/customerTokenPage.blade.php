@@ -13,31 +13,33 @@
             <div class="col col-6">
                 <div class="login-form">
                     {{-- Reset Password --}}
-                    <form action="{{ route('reset_customer.mail') }}" class="form-wrapper" id="form-sign_in" method="POST">
+                    <form action="{{ route('reset_customer_token.post') }}" class="form-wrapper" id="form-sign_in" method="POST">
                         @csrf
                         <div class="form-header">
-                            <div class="form-header-main text-danger">Quên mật khẩu</div>
+                            <h5 class="text-success">
+                                <span>
+                                    We've sent you an email with a code to reset password. Please check your email ! 
+                                </span>
+                                <br/>
+                                <span>
+                                    Notice: Token will be expired after 3 minutes
+                                </span>
+                            </h5>
                         </div>
-                        @if (session()->has('message'))
-                            <span class="text-success mb-2">{{ session()->get('message') }}</span>
-                        @endif
                         <div class="form-main">
-                            <input type="text" value="{{ old('username') }}" name="username" class="form-input" placeholder="Username" required>
-                            @if ($errors->has('username'))
-                                <span class="text-danger">{{ $errors->first('username') }}</span>
+                            {{-- Token --}}
+                            <input type="text" name="token" class="form-input" placeholder="Enter token..." required>
+                            @if ($errors->has('token'))
+                                <span class="text-danger">{{ $errors->first('token') }}</span>
                             @endif
 
-                            <input type="email" value="{{ old('email') }}" name="email" class="form-input" placeholder="Email" required>
-                            @if ($errors->has('email'))
-                                <span class="text-danger">{{ $errors->first('email') }}</span>
-                            @endif
-
+                            {{-- Wrong message --}}
                             @if (session()->has('wrong'))
                                 <span class="text-danger text-center mt-2"><strong>{{ session()->get('wrong') }}</strong></span>
                             @endif
                         </div>
                         <div class="form-submit">
-                            <button type="submit" class="form-submit-btn">Send Mail</button>
+                            <button type="submit" class="form-submit-btn">Submit</button>
                         </div>
                         <div class="form-social">
                             <div class="form-social-btn form-facebook">
@@ -60,3 +62,4 @@
     </div>
 </div>
 @endsection
+

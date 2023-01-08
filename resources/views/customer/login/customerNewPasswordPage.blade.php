@@ -17,15 +17,10 @@
                         @csrf
                         @method('patch')
                         <div class="form-header">
-                            <div class="form-header-main text-success">We've sent you an email with a code to reset password. Please check your email !</div>
+                            <div class="form-header-main text-success">Create a new password</div>
                         </div>
                         <div class="form-main">
-                            {{-- Token --}}
-                            <input type="text" name="token" class="form-input" placeholder="Token" required>
-                            @if ($errors->has('token'))
-                                <span class="text-danger">{{ $errors->first('token') }}</span>
-                            @endif
-                            
+                            <input type="text" class="form-input" value="{{ $customer->username }}" disabled readonly>
                             {{-- Password --}}
                             <div class="input-reveal input-reveal-sm">
                                 <input type="password" id="register-password" class="form-input form-input-info" placeholder="New Password" name="password" required>
@@ -40,11 +35,6 @@
                             </div>
                             @if ($errors->has('password_confirmation'))
                                 <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
-                            @endif
-
-                            {{-- Wrong message --}}
-                            @if (session()->has('wrong'))
-                                <span class="text-danger text-center mt-2"><strong>{{ session()->get('wrong') }}</strong></span>
                             @endif
                         </div>
                         <div class="form-submit">
