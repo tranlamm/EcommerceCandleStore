@@ -32,7 +32,12 @@ class CustomerLoginController extends Controller
             'username' => 'required',
             'password' => 'required'
         ]);
-        if (Auth::guard('customer')->attempt(['username' => $request->input('username'), 'password' => $request->input('password')])) {
+
+        if (Auth::guard('customer')->attempt([
+            'username' => $request->input('username'), 
+            'password' => $request->input('password'), 
+            'isVerified' => true
+        ])) {
             return redirect(route('shop.index'));
         }
         else {

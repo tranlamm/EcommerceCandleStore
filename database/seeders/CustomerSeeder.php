@@ -28,7 +28,6 @@ class CustomerSeeder extends Seeder
             ['username' => 'quang.dminh2', 'password' => bcrypt('quang.dminh2'), 'role' => 2, 'fullname' => 'Dương Hồng Quang', 'address' => 'Số 8 Đại Cồ Việt', 'phoneNumber' => '0912345678', 'email' => 'trungvt2026@gmail.com', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'isVerified' => true],
             ['username' => 'thanh.nb2002', 'password' => bcrypt('thanh.nb2002'), 'role' => 2, 'fullname' => 'Nguyễn Bá Thanh', 'address' => 'Số 9 Đại Cồ Việt', 'phoneNumber' => '0912345678', 'email' => 'trungvt2027@gmail.com', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'isVerified' => true],
             ['username' => 'nguyenbathanh001', 'password' => bcrypt('nguyenbathanh001'), 'role' => 2, 'fullname' => 'Nguyễn Bảo Thanh', 'address' => 'Số 10 Đại Cồ Việt', 'phoneNumber' => '0912345678', 'email' => 'trungvt2028@gmail.com', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'isVerified' => true],
-            ['username' => 'lam.t2002', 'password' => bcrypt('lam.t2002'), 'role' => 2, 'fullname' => 'Tester', 'address' => 'Số 1 Đại Cồ Việt', 'phoneNumber' => '0123456789', 'email' => 'rauxaocachua123@gmail.com', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'isVerified' => true],
         ]);
     }
 }

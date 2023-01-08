@@ -13,6 +13,9 @@ class Roles extends Model
         'id', 'role'
     ];
     
+    // id == 1 => admin
+    // id == 2 => client
+
     public function admin() {
         return $this->hasMany(Admin::class, 'role', 'id');
     }
