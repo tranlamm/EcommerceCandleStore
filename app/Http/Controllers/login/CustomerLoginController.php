@@ -53,7 +53,7 @@ class CustomerLoginController extends Controller
             'username' => 'bail|required|min:3|max:50',
             'password' => 'bail|required|confirmed|min:8',
             'fullname' => 'bail|required',
-            'email' => 'bail|email',
+            'email' => 'bail|email|required',
             'address' => 'bail|required',
             'phoneNumber' => array(
                 'bail',
@@ -64,6 +64,9 @@ class CustomerLoginController extends Controller
 
         if (Customer::where('username', '=',  $request->input('username'))->first())
             return back()->withErrors(['exists' => 'Username already exists'])->withInput($request->input());
+
+        if (Customer::where('email', '=',  $request->input('email'))->first())
+            return back()->withErrors(['email_exists' => 'Email already exists'])->withInput($request->input());
 
         $role = Roles::where('role', 'client')->first();
         Customer::create([
@@ -93,7 +96,6 @@ class CustomerLoginController extends Controller
     {
         $request->validate([
             'fullname' => 'bail|required',
-            'email' => 'bail|email',
             'address' => 'bail|required',
             'phoneNumber' => array(
                 'bail',
@@ -107,7 +109,6 @@ class CustomerLoginController extends Controller
         $customer->update([
             'fullname' => $request->input('fullname'),
             'phoneNumber' => $request->input('phoneNumber'),
-            'email' => $request->input('email'),
             'address' => $request->input('address'),
         ]);
 

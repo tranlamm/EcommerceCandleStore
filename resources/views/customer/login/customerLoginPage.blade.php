@@ -91,6 +91,9 @@
                             @if ($errors->has('email'))
                                 <span class="text-danger">{{ $errors->first('email') }}</span>
                             @endif
+                            @if ($errors->has('email_exists'))
+                                <span class="text-danger">{{ $errors->first('email_exists') }}</span>
+                            @endif
                             <div class="form-input-split"></div>
                             <input type="text" class="form-input form-input-info" placeholder="Username" name="username" value="{{ old('username') }}" required>
                             @if ($errors->has('username'))

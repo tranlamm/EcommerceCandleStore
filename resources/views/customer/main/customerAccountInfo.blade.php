@@ -34,15 +34,6 @@
                             </div>
 
                             <div class="info-group">
-                            <label class="info-label">Email <span class="text-danger">*</span></label>
-                            <input type="text" name="email" class="info-input" placeholder="Email" 
-                            value="{{ $customer->email }}" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
-                                @if ($errors->has('email'))
-                                    <span class="text-danger">{{ $errors->first('email') }}</span>
-                                @endif
-                            </div>
-
-                            <div class="info-group">
                             <label class="info-label">Địa chỉ <span class="text-danger">*</span></label>
                             <input type="text" name="address" class="info-input" placeholder="Address" value="{{ $customer->address }}" required>
                                 @if ($errors->has('address'))
