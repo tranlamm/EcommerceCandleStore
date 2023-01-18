@@ -54,8 +54,10 @@ export default {
             });
             if (response.data.hasOwnProperty('error'))
                 commit('SET_MESSAGE', response.data.error);
-            else
+            else {
                 commit('SET_MESSAGE', response.data.success);
+                commit('SET_HAS_REVIEWED', true);
+            }
             await fetchProductReviewInfo({ commit }, id);
         } catch (error) {
             console.log(error);
@@ -71,8 +73,10 @@ export default {
             })
             if (response.data.hasOwnProperty('error'))
                 commit('SET_MESSAGE', response.data.error);
-            else
+            else {
                 commit('SET_MESSAGE', response.data.success);
+                commit('SET_HAS_REVIEWED', false);
+            }
             await fetchProductReviewInfo({ commit }, id);
         } catch (error) {
             console.log(error);

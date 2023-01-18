@@ -18,11 +18,11 @@
                     </div>
                     <div class="comment-list">
                         <div class="comment-label">All Comments !</div>
-                        <div v-if="this.productReviewList">
+                        <div v-if="this.productReviewList.length > 0">
                             <CommentItem v-for="(comment, index) in this.productReviewList" :key="index" :comment="comment"></CommentItem>
                         </div>
                         <div v-else>
-                            <img src="{{ asset('images/shop/empty-invoice.webp') }}" alt="empty">
+                            <img src="/images/shop/empty-invoice.webp" alt="empty">
                         </div>
                     </div>
                 </div>

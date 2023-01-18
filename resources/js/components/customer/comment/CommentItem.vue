@@ -34,7 +34,8 @@
                 return this.comment.pivot.point / 5 * 100;
             },
             dateFormat() {
-                return this.comment.updated_at.slice(0, 10);
+                const date = this.comment.updated_at;
+                return date.substring(8, 10) + '/' + date.substring(5, 7) + '/' + date.substring(0, 4);
             }
         }
     }

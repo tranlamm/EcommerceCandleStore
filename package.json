@@ -19,7 +19,6 @@
     "dependencies": {
         "laravel-echo": "^1.14.2",
         "vue-chartjs": "^5.1.0",
-        "vue-router": "^4.1.6",
         "vuex": "^4.0.2"
     }
 }

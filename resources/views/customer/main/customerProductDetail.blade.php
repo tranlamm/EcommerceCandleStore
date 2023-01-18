@@ -26,7 +26,7 @@
                         </div>
                         <div class="product-price__wrapper">
                             <div class="product-price"><span class="me-2">HOT PRICE:</span> @currency_format($product->giaBan)</div>
-                            <div class="product-price-label"><i class="fa-solid fa-tag me-2"></i>Giá tốt nhất so vỡi các sản phẩm cùng loại</div>
+                            <div class="product-price-label"><i class="fa-solid fa-tag me-2"></i>Giá tốt nhất so với các sản phẩm cùng loại</div>
                         </div>
                         <div class="product-text"><span class="product-span">Mặt hàng</span>: {{ $product->loaiSanPham }}</div>
                         <div class="product-text"><span class="product-span">Nhà cung cấp</span>: {{ $product->manufacturer()->first()->ten }}</div>

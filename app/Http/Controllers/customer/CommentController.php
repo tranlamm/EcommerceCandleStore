@@ -105,10 +105,11 @@ class CommentController extends Controller
         $hadBought = DB::table('online_invoices')
             ->join('online_invoice_product', 'online_invoices.id', '=', 'online_invoice_product.online_invoice_id')
             ->where('online_invoices.account_id', '=', $customer->id)
+            ->where('online_invoices.trangThai', '=', 'finished')
             ->where('online_invoice_product.product_id', '=', $id)
             ->first();
         if (!$hadBought)
-            return response()->json(['error' => 'Khách hàng chưa mua sản phẩm này']);
+            return response()->json(['error' => 'Quý khách cần nhận sản phẩm trước khi đánh giá !']);
         // End Validate
         
         $reviewExisted = Comment::where('account_id', $customer->id)
