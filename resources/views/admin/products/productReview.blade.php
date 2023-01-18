@@ -47,7 +47,7 @@
           </tr>
         </thead>
         <tbody>
-            @foreach ($product->productComment as $comment)
+            @foreach ($product->productReview as $comment)
             <tr>
                 <th scope="row">{{ $comment->pivot->id }}</th>
                 <td>{{ $comment->username }}</td>
@@ -55,16 +55,14 @@
                 <td class="comment-table">{{ $comment->pivot->comment }}</td>
                 <td>
                     @php
-                        if ($comment->productReview()->where('product_id', '=', $product->id)->exists())
-                            $percent = $comment->productReview()->where('product_id', '=', $product->id)->first()->pivot->point / 5 * 100;
-                        else $percent = 0;
+                        $percent = $comment->pivot->point / 5 * 100;
                     @endphp
                     <div class="stars-outer">
                         <div class="stars-inner" style="{{ 'width: ' . $percent . "%" }}">
                         </div>
                     </div>
                 </td>
-                <td>@date_format($comment->pivot->created_at)</td>
+                <td>@date_format($comment->pivot->updated_at)</td>
                 <td>
                   <div class="btn-group" role="group" aria-label="Basic example">
                     <button class="btn btn-outline-danger btn-sm" data-id="{{ $comment->pivot->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>

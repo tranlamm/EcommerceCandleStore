@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 // Admin
 use App\Http\Controllers\admin\products\CandleProductController;
 use App\Http\Controllers\admin\products\EssentialOilController;
@@ -26,9 +27,9 @@ use App\Http\Controllers\login\CustomerLoginController;
 use App\Http\Controllers\customer\ShopController;
 use App\Http\Controllers\customer\CartController;
 use App\Http\Controllers\customer\InvoiceController;
-use App\Http\Controllers\customer\CommentController;
 
 // API
+use App\Http\Controllers\customer\CommentController;
 use App\Http\Controllers\chat\ChatCustomerAPI;
 use App\Http\Controllers\chat\ChatAdminAPI;
 /*
@@ -58,7 +59,6 @@ Route::post('/customer/register/verify/post', [ CustomerLoginController::class, 
 Route::get('/customer/register/resendmail', [ CustomerLoginController::class, 'getResendMail'])->name('register_customer_resend.index');
 Route::post('/customer/register/resendmail/post', [ CustomerLoginController::class, 'resendMail'])->name('register_customer_resend.post');
 
-
 Route::get('/customer/resetpassword', [ CustomerLoginController::class, 'getResetPassword'])->name('reset_customer.index');
 Route::post('/customer/resetpassword/sendMail', [ CustomerLoginController::class, 'sendTokenMail'])->name('reset_customer.mail');
 Route::get('/customer/resetpassword/token', [ CustomerLoginController::class, 'getToken'])->name('reset_customer_token.index');
@@ -70,8 +70,8 @@ Route::patch('/customer/resetpassword/reset/patch', [ CustomerLoginController::c
 Route::group(['middleware' => 'login_admin'], function() {
     // Admin Dashboard
     Route::get('/admin', [StatisticController::class, 'showDashboard'])->name('admin.index');
-    Route::get('/admin/chat', [ChatAdminAPI::class, 'index'])->name('admin.chat');
     Route::get('/admin/data/month/{month}', [StatisticController::class, 'getData']);
+    Route::get('/admin/chat', [ChatAdminAPI::class, 'index'])->name('admin.chat');
 
     // Products management
     Route::resource('/admin/candleproduct', CandleProductController::class);
@@ -117,11 +117,6 @@ Route::group(['middleware' => 'login_customer'], function() {
     // Invoice
     Route::get('/customer/invoice', [InvoiceController::class, 'showInvoice'])->name('invoice.index');
     Route::post('/customer/checkout', [InvoiceController::class, 'checkout'])->name('product.checkout');
-
-    // Review
-    Route::post('/customer/review/{product_id}', [CommentController::class, 'postReview'])->name('review.post');
-    Route::post('/customer/comment/{product_id}', [CommentController::class, 'postComment'])->name('comment.post');
-    Route::delete('/customer/comment/delete', [CommentController::class, 'deleteComment'])->name('comment.delete');
 });
 
 // API for chat realtime
@@ -136,4 +131,14 @@ Route::group(['middleware' => 'login_admin'] , function () {
     Route::get('/admin/chat/getMessages/{user_id}', [ChatAdminAPI::class, 'getMessages']);
     Route::post('/admin/chat/postMessage/{user_id}', [ChatAdminAPI::class, 'postMessage']);
 });
- 
+
+// API for product review
+Route::get('/customer/product/review/detail/{id}', [CommentController::class, 'getProductReviewInfo']);
+Route::get('/customer/product/review/getCurrentUser/{id}', [CommentController::class, 'getCurrentUser']);
+Route::post('/customer/product/review/post', [CommentController::class, 'postReview']);
+Route::delete('/customer/product/review/delete', [CommentController::class, 'deleteReview']);
+
+// Token for api
+Route::get('/token', function () {
+    return csrf_token(); 
+});

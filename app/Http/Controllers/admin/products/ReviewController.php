@@ -21,6 +21,7 @@ class ReviewController extends Controller
             'product' => $product,
         ]);
     }
+    
     public function destroy($id)
     {
         $comment = Comment::find($id);

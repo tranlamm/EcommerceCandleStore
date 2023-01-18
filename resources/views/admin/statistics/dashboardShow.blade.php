@@ -211,6 +211,7 @@
                         <th scope="col">Image</th>
                         <th scope="col">Product</th>
                         <th scope="col">Username</th>
+                        <th scope="col">Point</th>
                         <th scope="col">Comment</th>
                         <th scope="col">Time</th>
                       </tr>
@@ -226,6 +227,15 @@
                             </td>
                             <td>{{ $comment->product()->first()->tenSanPham }}</td>
                             <td>{{ $comment->account()->first()->username }}</td>
+                            <td>
+                                @php
+                                    $percent = $comment->point / 5 * 100;
+                                @endphp
+                                <div class="stars-outer">
+                                    <div class="stars-inner" style="{{ 'width: ' . $percent . "%" }}">
+                                    </div>
+                                </div>
+                            </td>
                             <td class="comment-area">{{ $comment->comment }}</td>
                             <td>@date_format($comment->created_at)</td>
                           </tr>

@@ -59,9 +59,7 @@
                     <td class="comment-table">{{ $comment->comment }}</td>
                     <td>
                         @php
-                            if ($comment->account()->first()->productReview()->where('product_id', '=', $comment->product()->first()->id)->exists())
-                                $percent = $comment->account()->first()->productReview()->where('product_id', '=', $comment->product()->first()->id)->first()->pivot->point / 5 * 100;
-                            else $percent = 0;
+                            $percent = $comment->point / 5 * 100;
                         @endphp
                         <div class="stars-outer">
                             <div class="stars-inner" style="{{ 'width: ' . $percent . "%" }}">

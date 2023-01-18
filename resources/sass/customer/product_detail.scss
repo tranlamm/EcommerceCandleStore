@@ -196,7 +196,7 @@
     }
 
     .review-point__wrapper {
-        padding: 0 32px;
+        padding: 0 24px;
 
         .point-wrapper {
             background-color: #f1f6f7;
@@ -291,20 +291,39 @@
     .review-post-wrapper {
         display: flex;
         flex-direction: column;
-        padding: 0 32px;
+        padding: 0 24px 0 0;
 
         .review-post-label {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 900;
             font-family: 'Dancing Script', cursive;
+            margin-bottom: 18px;
+        }
+
+        .comment-post-wrapper {
+            margin-bottom: 12px;
+
+            .comment-post-text {
+                font-size: 16px;
+                font-weight: 500;
+                margin-bottom: 8px;
+            }
+
+            .comment-input {
+                width: 100%;
+                padding: 8px 12px;
+                font-size: 16px;
+            }
         }
 
         .star-post-wrapper {
             display: flex;
             align-items: center;
+            margin-bottom: 12px;
 
             .star-post-text {
                 font-size: 16px;
+                font-weight: 500;
                 margin-right: 12px;
             }
 
@@ -327,44 +346,47 @@
             }
         }
 
-        .comment-post-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-
-            .comment-input {
-                width: 100%;
-                padding: 8px 12px;
-                font-size: 16px;
-                margin-bottom: 24px;
-            }
-        }
-
         .post-btn {
             display: inline-block;
             font-size: 16px;
             font-weight: 500;
-            background-color: green;
-            color: white;
             padding: 10px 32px;
             border-radius: 24px;
             border: none;
             transition: background-color 200ms linear;
-            &:hover {
-                cursor: pointer;
-                background-color: rgb(8, 75, 8);
-            }
+            margin-top: 18px;
+            margin-right: 12px;
 
-            &.post-btn-sm {
-                padding: 4px 24px;
-                margin-left: 8px;
-            }
-
-            &.post-btn-reset {
-                background-color: #777777;
-
+            &.post-btn-success {
+                background-color: green;
+                color: white;
                 &:hover {
-                    background-color: black;
+                    cursor: pointer;
+                    background-color: rgb(8, 75, 8);
+                }
+            }
+
+            &.post-btn-disabled {
+                cursor: default;
+                background-color: gray;
+                color: white;
+            }
+
+            &.post-btn-update {
+                background-color: rgb(38, 38, 217);
+                color: white;
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgb(3, 3, 103);
+                }
+            }
+
+            &.post-btn-delete {
+                background-color: rgb(206, 24, 24);
+                color: white;
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgb(114, 2, 2);
                 }
             }
         }

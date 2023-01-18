@@ -57,7 +57,7 @@ class StatisticController extends Controller
             ->limit(10)
             ->get();
 
-        $comments = Comment::orderByDesc('created_at')->limit(20)->get();
+        $comments = Comment::orderByDesc('updated_at')->limit(20)->get();
 
         return view('admin.statistics.dashboardShow', [
             'expense' => $importTotal,

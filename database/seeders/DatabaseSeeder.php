@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
             ExportInvoiceSeeder::class,
             OnlineInvoiceSeeder::class,
             ReviewSeeder::class,
-            CommentSeeder::class,
         ]);
     }
 }

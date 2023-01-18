@@ -10,9 +10,9 @@ use App\Models\auth\Customer;
 class Comment extends Model
 {
     use HasFactory;
-    protected $table = 'customer_product_comment';
+    protected $table = 'customer_product_review';
     protected $fillable = [
-        'id', 'account_id', 'product_id', 'comment', 'created_at', 'updated_at'
+        'id', 'account_id', 'product_id', 'point', 'comment', 'created_at', 'updated_at'
     ];
 
     public function product()

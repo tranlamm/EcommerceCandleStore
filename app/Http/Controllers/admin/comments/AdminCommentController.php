@@ -17,8 +17,8 @@ class AdminCommentController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->input('search');
         $data = $request->all();
+        $search = $request->input('search');
         if ($search)
         {
             $comments = Comment::whereIn('product_id', Product::select('id')->where('tenSanPham', 'LIKE', "%{$search}%"))

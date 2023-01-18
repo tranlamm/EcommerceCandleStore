@@ -41,14 +41,7 @@ class Customer extends Authenticatable
     public function productReview()
     {
         return $this->belongsToMany(Product::class, 'customer_product_review', 'account_id', 'product_id')
-                    ->withPivot('point')
-                    ->withTimestamps();
-    }
-
-    public function productComment()
-    {
-        return $this->belongsToMany(Product::class, 'customer_product_comment', 'account_id', 'product_id')
-                    ->withPivot('comment', 'id')
+                    ->withPivot('point', 'comment')
                     ->withTimestamps();
     }
 }

@@ -29,16 +29,8 @@ class Product extends Model
     public function productReview()
     {
         return $this->belongsToMany(Customer::class, 'customer_product_review', 'product_id', 'account_id')
-                    ->withPivot('point')
+                    ->withPivot('id', 'point', 'comment')
                     ->withTimestamps()
-                    ->orderBy('customer_product_comment.updated_at', 'desc');
-    }
-
-    public function productComment()
-    {
-        return $this->belongsToMany(Customer::class, 'customer_product_comment', 'product_id', 'account_id')
-                    ->withPivot('comment', 'id')
-                    ->withTimestamps()
-                    ->orderBy('customer_product_comment.updated_at', 'desc');
+                    ->orderBy('customer_product_review.updated_at', 'desc');
     }
 }

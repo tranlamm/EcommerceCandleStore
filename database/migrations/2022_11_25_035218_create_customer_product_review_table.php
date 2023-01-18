@@ -14,12 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('customer_product_review', function (Blueprint $table) {
-            $table->primary(['account_id', 'product_id']);
+            $table->increments('id');
             $table->unsignedBigInteger('account_id');
             $table->unsignedBigInteger('product_id');
             $table->foreign('account_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedTinyInteger('point');
+            $table->text('comment');
             $table->timestamps();
         });
     }
