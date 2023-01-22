@@ -2,9 +2,9 @@
     <div>
         <div class="income-chart-header">
             <div>
-                <div class="income-chart-header-text">Sales Revenue</div>
+                <div class="income-chart-header-text">Total Expense</div>
                 <div class="income-chart-header-price">{{ this.currencyFormat }}</div>
-                <div class="income-chart-header-sub">Your sales monitoring dashboard. <a href="/admin/invoice/onlineinvoice">View details</a></div>
+                <div class="income-chart-header-sub">Your sales monitoring dashboard. <a href="/admin/invoice/importinvoice">View details</a></div>
             </div>
             <div class="date-wrapper">
                 <label class="date-label">Year</label>
@@ -14,7 +14,7 @@
             </div>
         </div>
         <div v-if="!this.isLoading" class="chart-wrapper">
-            <canvas ref="incomeChart"></canvas>
+            <canvas ref="expenseChart"></canvas>
         </div>
     </div>
 </template>
@@ -34,15 +34,14 @@ import Chart from 'chart.js/auto';
         async mounted() {
             await this.created();
             this.renderChart();
-            
         },
         methods: {
-            ...mapActions(['fetchYearRevenue']),
+            ...mapActions(['fetchYearExpense']),
 
             async created() {
                 try {
                     this.isLoading = true;
-                    const response =await this.fetchYearRevenue(this.year);
+                    const response = await this.fetchYearExpense(this.year);
                     this.data = response.data;
                     this.isLoading = false;
                 } catch (error) {
@@ -55,7 +54,7 @@ import Chart from 'chart.js/auto';
                 try {
                     if (this.year) {
                         this.isLoading = true;
-                        const response =await this.fetchYearRevenue(this.year);
+                        const response = await this.fetchYearExpense(this.year);
                         this.data = response.data;
                         this.isLoading = false; 
                         this.isWarning = false;
@@ -75,21 +74,21 @@ import Chart from 'chart.js/auto';
             },
 
             renderChart() {
-                const incomeChartData = {
+                const expenseChartData = {
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', "July", 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
                     datasets: [{
-                        label: 'Total Sales',
-                        backgroundColor: 'rgba(0, 128, 128, 0.3)',
-                        borderColor: 'rgba(0, 128, 128, 0.7)',
+                        label: 'Expense',
+                        backgroundColor: 'rgba(255, 0, 0, 0.3)',
+                        borderColor: 'rgba(255, 0, 0, 0.7)',
                         borderWidth: 2,
                         lineTension: 0.5,
                         data: this.data.data,
                     }]
                 };
-                const chart = this.$refs.incomeChart;
+                const chart = this.$refs.expenseChart;
                 new Chart(chart, {
                     type: 'line',
-                    data: incomeChartData,
+                    data: expenseChartData,
                     options: {
                         responsive: true,
                         scales: {
@@ -110,7 +109,7 @@ import Chart from 'chart.js/auto';
                         tooltips: {
                             callbacks: {
                                 label: function(tooltipItem) {
-                                    return 'Sales: ' + tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND';
+                                    return 'Expense: ' + tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND';
                                 },
                             }
                         },
@@ -120,9 +119,9 @@ import Chart from 'chart.js/auto';
         },
         computed: {
             currencyFormat() {
-                if (this.data.income)
+                if (this.data.expense)
                 {
-                    return this.data.income.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+                    return this.data.expense.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
                 }
                 else
                     return '0 VND';

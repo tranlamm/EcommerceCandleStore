@@ -70,7 +70,9 @@ Route::patch('/customer/resetpassword/reset/patch', [ CustomerLoginController::c
 Route::group(['middleware' => 'login_admin'], function() {
     // Admin Dashboard
     Route::get('/admin', [StatisticController::class, 'showDashboard'])->name('admin.index');
-    Route::get('/admin/data/month/{month}', [StatisticController::class, 'getData']);
+    Route::get('/admin/statistic/getrevenue/{year}', [StatisticController::class, 'getYearRevenue']);
+    Route::get('/admin/statistic/getexpense/{year}', [StatisticController::class, 'getYearExpense']);
+    Route::get('/admin/statistic/getdata/{year}/{month}', [StatisticController::class, 'getDataPerMonth']);
     Route::get('/admin/chat', [ChatAdminAPI::class, 'index'])->name('admin.chat');
 
     // Products management

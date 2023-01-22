@@ -89,72 +89,8 @@
     </div>
 
     <div class="dashboard-main">
-        <div class="dashboard-chart-wrapper">
-            <div class="income-chart-wrapper">
-                <div class="income-chart-header">
-                    <div class="income-chart-header-text">Sales Revenue</div>
-                    <div class="income-chart-header-price">@currency_format($income)</div>
-                    <div class="income-chart-header-sub">Your sales monitoring dashboard. <a href="{{ route('onlineinvoice.index') }}">View details</a></div>
-                </div>
-                <canvas id="incomeChart"></canvas>
-            </div>
-            
-            <div class="order-today">
-                <div class="order-today-header">
-                    <span>@date_format(Carbon\Carbon::now())</span>
-                    <span class="order-today-text">
-                        Today Order: 
-                        <span class="text-danger">@number_format($orderToday) Orders</span>
-                        <span class="ms-2 text-success"><i class="fa-solid fa-truck"></i></span>
-                    </span>
-                </div>
-                @if (count($orders) > 0)
-                    <div class="order-today-title">
-                        <div class="order-label">Username</div>
-                        <div class="order-label">Value</div>
-                        <div class="order-label">Status</div>
-                        <div class="order-label">Time</div>
-                    </div>
-                    <div class="order-today-list">
-                        @foreach ($orders as $order)
-                            <div class="order-today-item">
-                                <div class="order-text">{{ $order->account()->first()->username }}</div>
-                                <div class="order-text text-danger">@number_format($order->tongTien)</div>
-                                <div class="order-text">{{ $order->trangThai }}</div>
-                                <div class="order-text">{{ $order->created_at->format('H:i:s') }}</div>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <a href="{{ route('onlineinvoice.index') }}" class="order-btn">View All</a>
-                    </div>
-                @else
-                    <img class="empty-order" src="{{ asset('images/shop/empty-invoice.webp') }}" alt="Empty">
-                @endif
-            </div>
-        </div>
-
-        <div class="dashboard-statistic-wrapper">
-            <div id="statistic-vue">
-                <revenue-wrapper></revenue-wrapper>
-            </div>
-        </div>
-
-        <div class="dashboard-chart-wrapper">
-            <div class="expense-chart-wrapper">
-                <div class="expense-chart-header">
-                    <div class="expense-chart-header-text">Total Orders:</div>
-                    <div class="expense-chart-header-price">@number_format($orderTotal)</div>
-                </div>
-                <canvas id="orderChart"></canvas>
-            </div>
-            <div class="expense-chart-wrapper">
-                <div class="expense-chart-header">
-                    <div class="expense-chart-header-text">Total Expense:</div>
-                    <div class="expense-chart-header-price">@currency_format($expense)</div>
-                </div>
-                <canvas id="expenseChart"></canvas>
-            </div>
+        <div id="dashboard-vue">
+            <dashboard-wrapper></dashboard-wrapper>
         </div>
 
         <div class="dashboard-chart-wrapper">
@@ -192,9 +128,39 @@
                     @endforeach
                 </div>
             </div>
-            <div class="manufacturer-chart-wrapper">
-                <div class="manufacturer-chart-header">Amount Products Of Each Manufacturer</div>
-                <canvas id="manuChart" width="1000" height="1000"></canvas>
+            
+            <div class="order-today">
+                <div class="order-today-header">
+                    <span>@date_format(Carbon\Carbon::now())</span>
+                    <span class="order-today-text">
+                        Today Order: 
+                        <span class="text-danger">@number_format($orderToday) Orders</span>
+                        <span class="ms-2 text-success"><i class="fa-solid fa-truck"></i></span>
+                    </span>
+                </div>
+                @if (count($orders) > 0)
+                    <div class="order-today-title">
+                        <div class="order-label">Username</div>
+                        <div class="order-label">Value</div>
+                        <div class="order-label">Status</div>
+                        <div class="order-label">Time</div>
+                    </div>
+                    <div class="order-today-list">
+                        @foreach ($orders as $order)
+                            <div class="order-today-item">
+                                <div class="order-text">{{ $order->account()->first()->username }}</div>
+                                <div class="order-text text-danger">@number_format($order->tongTien)</div>
+                                <div class="order-text">{{ $order->trangThai }}</div>
+                                <div class="order-text">{{ $order->created_at->format('H:i:s') }}</div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('onlineinvoice.index') }}" class="order-btn">View All</a>
+                    </div>
+                @else
+                    <img class="empty-order" src="{{ asset('images/shop/empty-invoice.webp') }}" alt="Empty">
+                @endif
             </div>
         </div>
 
@@ -246,168 +212,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', "July", 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-    const incomePerMonth = {!! json_encode($dataIncome, JSON_HEX_TAG) !!};
-    const incomeChartData = {
-        labels: months,
-        datasets: [{
-            label: 'Total Sales',
-            backgroundColor: 'rgba(0, 128, 128, 0.3)',
-            borderColor: 'rgba(0, 128, 128, 0.7)',
-            borderWidth: 2,
-            data: incomePerMonth,
-        }]
-    };
-
-    const manufacturers = {!! json_encode($dataManufacturer, JSON_HEX_TAG) !!};
-    const manuLabels = [];
-    const manuDatas = [];
-    const manuChartColor = [];
-    for (const tmp of manufacturers)
-    {
-        manuLabels.push(tmp.name);
-        manuDatas.push(tmp.quantity);
-        manuChartColor.push('#' + Math.floor(Math.random()*16777215).toString(16));
-    }
-    const manuChartData = {
-        labels: manuLabels,
-        datasets: [{
-            labels: 'Total Products',
-            data: manuDatas,
-            backgroundColor: manuChartColor,
-        }]
-    };
-
-    const expensePerMonth = {!! json_encode($dataExpense, JSON_HEX_TAG) !!};
-    const expenseChartData = {
-        labels: months,
-        datasets: [{
-            label: 'Expense',
-            backgroundColor: 'rgba(255, 0, 0, 0.3)',
-            borderColor: 'rgba(255, 0, 0, 0.7)',
-            borderWidth: 2,
-            data: expensePerMonth,
-        }]
-    };
-
-    const orderPerMonth = {!! json_encode($dataOrder, JSON_HEX_TAG) !!};
-    const orderChartColor = [];
-    for (let tmp in orderPerMonth)
-    {
-        orderChartColor.push('#' + Math.floor(Math.random()*16777215).toString(16));
-    }
-    const orderChartData = {
-        labels: months,
-        datasets: [{
-            label: 'Orders',
-            backgroundColor: orderChartColor,
-            data: orderPerMonth,
-        }]
-    };
-
-    window.onload = function() {
-        new Chart(document.getElementById("incomeChart"), {
-            type: 'line',
-            data: incomeChartData,
-            options: {
-                responsive: true,
-                scales: {
-                    yAxes: [{
-                        display: true,
-                        ticks: {
-                            callback: (value) => {
-                                value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                                return value;
-                            }
-                        },
-                        afterDataLimits(scale) {
-                            scale.max += 1;
-                        },
-                    }]
-                },
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return 'Sales: ' + tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND';
-                        },
-                    }
-                },
-                legend: {
-                    position: 'bottom',
-                }
-            }
-        });
-        new Chart(document.getElementById("expenseChart"), {
-            type: 'line',
-            data: expenseChartData,
-            options: {
-                responsive: true,
-                scales: {
-                    yAxes: [{
-                        display: true,
-                        ticks: {
-                            callback: (value) => {
-                                value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                                return value;
-                            }
-                        },
-                        afterDataLimits(scale) {
-                            scale.max += 1;
-                        },
-                    }]
-                },
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return 'Expense: ' + tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' VND';
-                        },
-                    }
-                },
-                legend: {
-                    position: 'bottom',
-                }
-            }
-        });
-        new Chart(document.getElementById("orderChart"), {
-            type: 'bar',
-            data: orderChartData,
-            options: {
-                responsive: true,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            stepSize: 1,
-                            beginAtZero: true
-                        },
-                        afterDataLimits(scale) {
-                            scale.max += 1;
-                        },
-                    }]
-                },
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return 'Order: ' + tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' sản phẩm';
-                        },
-                    }
-                },
-                legend: {
-                    position: 'bottom',
-                }
-            }
-        });
-        new Chart(document.getElementById('manuChart'), {
-            type: 'doughnut',
-            data: manuChartData,
-            options: {
-                responsive: true,
-                legend: {
-                    position: 'bottom',
-                }
-            }
-        })
-    };
-</script>
 @endsection

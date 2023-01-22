@@ -17,8 +17,8 @@
         "vue": "^3.2.37"
     },
     "dependencies": {
+        "chart.js": "^4.2.0",
         "laravel-echo": "^1.14.2",
-        "vue-chartjs": "^5.1.0",
         "vuex": "^4.0.2"
     }
 }

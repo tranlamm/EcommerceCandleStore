@@ -41,7 +41,7 @@ const reviewStore = createStore({
 
 // create app
 const chatCustomer = createApp({});
-const reviewCustomer =createApp({});
+const reviewCustomer = createApp({});
 
 // add components
 import ChatWrapper from './components/customer/chat/ChatWrapper.vue';

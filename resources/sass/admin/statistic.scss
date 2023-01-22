@@ -182,6 +182,7 @@
     }
 
     .dashboard-main {
+        margin-top: 24px;
         .dashboard-chart-wrapper {
             display: flex;
             justify-content: space-between;
@@ -192,7 +193,7 @@
                 padding: 32px;
                 background-color: white;
                 border: 1px solid #d5d6d7;
-                width: 38%;
+                width: 39%;
 
                 .order-today-header {
                     display: flex;
@@ -274,77 +275,7 @@
                     object-fit: contain;
                 }
             }
-
-            .income-chart-wrapper {
-                padding: 32px;
-                background-color: white;
-                border: 1px solid #d5d6d7;
-                width: 60%;
-
-                .income-chart-header {
-                    margin-bottom: 14px;
-                    .income-chart-header-text {
-                        font-size: 18px;
-                        font-weight: 600;
-                    }
-                    .income-chart-header-price {
-                        font-size: 24px;
-                        font-weight: 600;
-                        color: #dc3545;
-                    }
-                    .income-chart-header-sub {
-                        font-size: 14px;
-                        color: #888;
-                        a {
-                            color: #888;
-                            &:hover {
-                                color: black;
-                            }
-                        }
-                    }
-                }
-            }
-
-            .expense-chart-wrapper {
-                padding: 32px;
-                background-color: white;
-                border: 1px solid #d5d6d7;
-                width: 48%;
-
-                &:last-child {
-                    width: 50.5%;
-                }
-
-                .expense-chart-header {
-                    margin-bottom: 18px;
-                    display: flex;
-                    align-items: center;
-                    .expense-chart-header-text {
-                        font-size: 18px;
-                        font-weight: 600;
-                        margin-right: 12px;
-                    }
-                    .expense-chart-header-price {
-                        font-size: 18px;
-                        font-weight: 600;
-                        color: #dc3545;
-                    }
-                }
-            }
-
-            .manufacturer-chart-wrapper {
-                width: 38%;
-                padding: 32px;
-                background-color: white;
-                border: 1px solid #d5d6d7;
-
-                .manufacturer-chart-header {
-                    font-size: 18px;
-                    font-weight: 600;
-                    margin-bottom: 32px;
-                }
-            }
-
+            
             .toprated-product {
                 width: 60%;
                 padding: 32px;
@@ -435,11 +366,6 @@
                     }
                 }
             }
-        }
-
-        .dashboard-statistic-wrapper {
-            margin-top: 24px;
-            border: 1px solid #d5d6d7;
         }
 
         .comment-wrapper {

@@ -20,37 +20,16 @@ class StatisticController extends Controller
 {
     public function showDashboard()
     {
-        $productCount = Product::count();
-        $manufacturerCount = Manufacturer::count();
-        $accountCount = Customer::count();
         $onlineTotal = OnlineInvoice::sum('tongTien');   
         $offlineTotal = ExportInvoice::sum('tongTien');   
         $importTotal = ImportInvoice::sum('tongTien');   
+        $productCount = Product::count();
+        $manufacturerCount = Manufacturer::count();
+        $accountCount = Customer::count();
 
-        $orderToday = OnlineInvoice::whereDate('created_at', Carbon::today())->get();
         $orderTotal = ExportInvoice::count() + OnlineInvoice::count();
         $orderPending = OnlineInvoice::where('trangThai', '=', 'pending')->count();
-
-        $year = 2022;
-        $months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-        $dataIncome = [];
-        $dataExpense = [];
-        $dataOrder = [];
-        foreach ($months as $m)
-        {
-            array_push($dataIncome, OnlineInvoice::where(\DB::raw("DATE_FORMAT(created_at, '%m')"), $m)->sum('tongTien')
-            + ExportInvoice::where(\DB::raw("DATE_FORMAT(created_at, '%m')"), $m)->sum('tongTien'));
-            array_push($dataExpense, ImportInvoice::where(\DB::raw("DATE_FORMAT(created_at, '%m')"), $m)->sum('tongTien'));
-            array_push($dataOrder, OnlineInvoice::where(\DB::raw("DATE_FORMAT(created_at, '%m')"), $m)->count()
-            + ExportInvoice::where(\DB::raw("DATE_FORMAT(created_at, '%m')"), $m)->count());
-        }
-
-        $dataManufacturer = [];
-        $manus = Manufacturer::all();
-        foreach ($manus as $manu)
-        {
-            array_push($dataManufacturer, ['name' => $manu->ten, 'quantity' => $manu->products()->count()]);
-        }
+        $orderToday = OnlineInvoice::whereDate('created_at', Carbon::today())->get();
 
         $products = Product::query()
             ->orderBy('diemDanhGia', 'desc')
@@ -65,90 +44,150 @@ class StatisticController extends Controller
             'productCount' => $productCount,
             'manufacturerCount' => $manufacturerCount,
             'accountCount' => $accountCount,
-            'orderToday' => $orderToday->count(), 
             'orderTotal' => $orderTotal,
             'orderPending' => $orderPending,
-            'dataIncome' => $dataIncome,
-            'dataExpense' => $dataExpense,
-            'dataOrder' => $dataOrder,
-            'dataManufacturer' => $dataManufacturer,
+            'orderToday' => $orderToday->count(), 
             'orders' => $orderToday,
             'products' => $products,
             'comments' => $comments,
         ]);
     }
 
-    public function getData(Request $request, $month) 
-    {
-        $week = [[1, 7], [8, 14], [15, 21], [22, 31]];
+    public function getYearRevenue(Request $request, $year) {
+        $months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         $data = [];
-        for ($i = 0; $i < 4; ++$i)
+        $onlineTotal = OnlineInvoice::whereYear('updated_at', $year)->sum('tongTien');   
+        $offlineTotal = ExportInvoice::whereYear('updated_at', $year)->sum('tongTien');   
+        foreach ($months as $month) 
         {
-            $candle_count = 0;
-            $oil_count = 0;
-            $wax_count = 0;
+            array_push($data, 
+            OnlineInvoice::whereYear('updated_at', $year)
+                        ->whereMonth('updated_at', $month)
+                        ->sum('tongTien')
+            + 
+            ExportInvoice::whereYear('updated_at', $year)
+                        ->whereMonth('updated_at', $month)
+                        ->sum('tongTien')
+            );
+        };
+        return response()->json([
+            'income' => $onlineTotal + $offlineTotal,
+            'data' => $data,
+        ]);
+    }
 
-            $candle_price = 0;
-            $oil_price = 0;
-            $wax_price = 0;
+    public function getYearExpense(Request $request, $year) {
+        $months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        $data = [];
+        $importTotal = (int) ImportInvoice::whereYear('updated_at', $year)->sum('tongTien');
+        foreach ($months as $month) 
+        {
+            array_push($data, 
+            (int) ImportInvoice::whereYear('updated_at', $year)
+                        ->whereMonth('updated_at', $month)
+                        ->sum('tongTien')
+            );
+        };
+        return response()->json([
+            'expense' => $importTotal,
+            'data' => $data,
+        ]);
+    }
 
-            $exportInvoice = DB::table('export_invoice_product')
-                    ->select('soLuong', 'tongTien', 'products.loaiSanPham')
-                    ->whereBetween('export_invoice_product.created_at', ['2022-' . $month . '-' . $week[$i][0], '2022-' . $month . '-' . $week[$i][1]] )
-                    ->join('products', 'export_invoice_product.product_id', '=', 'products.id')
-                    ->get();
-            
-            $onlineInvoice = DB::table('online_invoice_product')
-                    ->select('soLuong', 'products.giaBan', 'products.loaiSanPham')
-                    ->whereBetween('online_invoice_product.created_at', ['2022-' . $month . '-' . $week[$i][0], '2022-' . $month . '-' . $week[$i][1]] )
-                    ->join('products', 'online_invoice_product.product_id', '=', 'products.id')
-                    ->get();
+    public function getDataPerMonth(Request $request, $year, $month)
+    {
+        $candle_sale = 0;
+        $oil_sale = 0;
+        $wax_sale = 0;
 
-            foreach ($exportInvoice as $value) {
-                if (str_contains($value->loaiSanPham, 'candle'))
-                {
-                    $candle_count += $value->soLuong;
-                    $candle_price += $value->tongTien;
-                }
-                else if (str_contains($value->loaiSanPham, 'oil'))
-                {
-                    $oil_count += $value->soLuong;
-                    $oil_price += $value->tongTien;
-                }
-                else if (str_contains($value->loaiSanPham, 'wax'))
-                {
-                    $wax_count += $value->soLuong;
-                    $wax_price += $value->tongTien;
-                }
-            }
+        $candle_left = 0;
+        $oil_left = 0;
+        $wax_left = 0;
 
-            foreach ($onlineInvoice as $value) {
-                if (str_contains($value->loaiSanPham, 'candle'))
-                {
-                    $candle_count += $value->soLuong;
-                    $candle_price += $value->giaBan * $value->soLuong;
-                }
-                else if (str_contains($value->loaiSanPham, 'oil'))
-                {
-                    $oil_count += $value->soLuong;
-                    $oil_price += $value->giaBan * $value->soLuong;
-                }
-                else if (str_contains($value->loaiSanPham, 'wax'))
-                {
-                    $wax_count += $value->soLuong;
-                    $wax_price += $value->giaBan * $value->soLuong;
-                }
-            }
+        $exportInvoices = DB::table('export_invoice_product')
+                ->select('soLuong', 'products.loaiSanPham')
+                ->join('products', 'export_invoice_product.product_id', '=', 'products.id')
+                ->whereYear('export_invoice_product.updated_at', $year)
+                ->whereMonth('export_invoice_product.updated_at', $month)
+                ->get();
+        
+        $onlineInvoices = DB::table('online_invoice_product')
+                ->select('soLuong', 'products.loaiSanPham')
+                ->join('products', 'online_invoice_product.product_id', '=', 'products.id')
+                ->whereYear('online_invoice_product.updated_at', $year)
+                ->whereMonth('online_invoice_product.updated_at', $month)
+                ->get(); 
+                
+        $date = $year . '-' . $month . '-' . '31';
+        $importInvoicesLeft = DB::table('import_invoice_product')
+                ->select('soLuong', 'products.loaiSanPham')
+                ->join('products', 'import_invoice_product.product_id', '=', 'products.id')
+                ->whereDate('import_invoice_product.updated_at', '<=', $date)
+                ->get(); 
+        $exportInvoicesLeft = DB::table('export_invoice_product')
+                ->select('soLuong', 'products.loaiSanPham')
+                ->join('products', 'export_invoice_product.product_id', '=', 'products.id')
+                ->whereDate('export_invoice_product.updated_at', '<=', $date)
+                ->get(); 
+        $onlineInvoicesLeft = DB::table('online_invoice_product')
+                ->select('soLuong', 'products.loaiSanPham')
+                ->join('products', 'online_invoice_product.product_id', '=', 'products.id')
+                ->whereDate('online_invoice_product.updated_at', '<=', $date)
+                ->get(); 
+        
+        foreach ($exportInvoices as $invoice) {
+            if (str_contains($invoice->loaiSanPham, 'candle'))
+                $candle_sale += $invoice->soLuong;
+            else if (str_contains($invoice->loaiSanPham, 'oil'))
+                $oil_sale += $invoice->soLuong;
+            else if (str_contains($invoice->loaiSanPham, 'wax'))
+                $wax_sale += $invoice->soLuong;
+        };
 
-            array_push($data, [
-                'candle' => $candle_count, 
-                'oil' => $oil_count, 
-                'wax' => $wax_count, 
-                'candle_price' => $candle_price, 
-                'oil_price' => $oil_price,
-                'wax_price' => $wax_price
-            ]);
-        }
-        return response()->json($data);
+        foreach ($onlineInvoices as $invoice) {
+            if (str_contains($invoice->loaiSanPham, 'candle'))
+                $candle_sale += $invoice->soLuong;
+            else if (str_contains($invoice->loaiSanPham, 'oil'))
+                $oil_sale += $invoice->soLuong;
+            else if (str_contains($invoice->loaiSanPham, 'wax'))
+                $wax_sale += $invoice->soLuong;
+        };
+
+        // Product Left
+        foreach ($importInvoicesLeft as $invoice) {
+            if (str_contains($invoice->loaiSanPham, 'candle'))
+                $candle_left += $invoice->soLuong;
+            else if (str_contains($invoice->loaiSanPham, 'oil'))
+                $oil_left += $invoice->soLuong;
+            else if (str_contains($invoice->loaiSanPham, 'wax'))
+                $wax_left += $invoice->soLuong;
+        };
+
+        foreach ($exportInvoicesLeft as $invoice) {
+            if (str_contains($invoice->loaiSanPham, 'candle'))
+                $candle_left -= $invoice->soLuong;
+            else if (str_contains($invoice->loaiSanPham, 'oil'))
+                $oil_left -= $invoice->soLuong;
+            else if (str_contains($invoice->loaiSanPham, 'wax'))
+                $wax_left -= $invoice->soLuong;
+        };
+
+        foreach ($onlineInvoicesLeft as $invoice) {
+            if (str_contains($invoice->loaiSanPham, 'candle'))
+                $candle_left -= $invoice->soLuong;
+            else if (str_contains($invoice->loaiSanPham, 'oil'))
+                $oil_left -= $invoice->soLuong;
+            else if (str_contains($invoice->loaiSanPham, 'wax'))
+                $wax_left -= $invoice->soLuong;
+        };
+
+        return response()->json([
+            'candle_sale' => $candle_sale,
+            'oil_sale' => $oil_sale,
+            'wax_sale' => $wax_sale,
+            'candle_left' => $candle_left,
+            'oil_left' => $oil_left,
+            'wax_left' => $wax_left,
+        ]);
     }
 }
