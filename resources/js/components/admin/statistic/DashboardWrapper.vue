@@ -78,7 +78,7 @@ import DataPerMonth from './DataPerMonth.vue';
         padding: 50px 0;
 
         .dashboard-chart_vue {
-            width: 80%;
+            width: 70%;
             margin: auto;
         }
 
