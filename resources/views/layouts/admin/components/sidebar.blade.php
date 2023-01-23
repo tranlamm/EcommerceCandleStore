@@ -1,4 +1,4 @@
-<div class="sidebar-wrapper">
+<div class="sidebar-wrapper d-none d-xl-block">
     <div class="sidebar">
         <ul class="nav flex-column">
             <li class="nav-item nav_title">
