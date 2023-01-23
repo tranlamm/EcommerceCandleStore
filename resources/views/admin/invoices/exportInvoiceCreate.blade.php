@@ -46,7 +46,7 @@
             <label class="form-label"><strong>Dữ liệu xuất hàng <span class="text-red">*</span></strong></label>
 
             <div id="form-list" class="form-import-invoice">
-                <div class="row mb-3 align-items-start form-wrapper" id="form-wrapper">
+                <div class="row mb-3 align-items-end form-wrapper" id="form-wrapper">
                     <div class="col col-2">
                         <label class="form-label"><strong>Mặt hàng</strong></label>
                         <select id="form-loaiHang0" class="form-select">

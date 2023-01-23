@@ -58,7 +58,7 @@
             @endif
         </div>
         <div class="product-pagination">
-            {{ $products->appends($data)->links('pagination::bootstrap-5') }}
+            {{ $products->appends($data)->onEachSide(1)->links('pagination::bootstrap-5') }}
         </div>
     </div>
 </div>

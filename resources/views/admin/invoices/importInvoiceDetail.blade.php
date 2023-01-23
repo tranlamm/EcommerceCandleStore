@@ -38,36 +38,38 @@
             <div class="invoice-split"></div>
 
             <div class="mb-4">
-                <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Ảnh sản phẩm</th>
-                        <th scope="col">Tên sản phẩm</th>
-                        <th scope="col">Mặt hàng</th>
-                        <th scope="col">Nhà cung cấp</th>
-                        <th scope="col">Số lượng</th>
-                        <th scope="col">Đơn giá</th>
-                        <th scope="col">Tổng tiền</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($importInvoice->products as $product)
-                        <tr>
-                            <td>
-                                <div class="product__image-wrapper">
-                                  <img class="product__image" src="{{ asset('images/products/' . $product->image_path) }}" alt="Ảnh sản phẩm">
-                                </div>
-                            </td>
-                            <td>{{ $product->tenSanPham }}</td>
-                            <td>{{ $product->loaiSanPham }}</td>
-                            <td>{{ $product->manufacturer()->first()->ten }}</td>
-                            <td>{{ $product->pivot->soLuong }}</td>
-                            <td>@currency_format($product->pivot->donGia)</td>
-                            <td>@currency_format($product->pivot->tongTien)</td>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Ảnh sản phẩm</th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Mặt hàng</th>
+                            <th scope="col">Nhà cung cấp</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Đơn giá</th>
+                            <th scope="col">Tổng tiền</th>
                           </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($importInvoice->products as $product)
+                            <tr>
+                                <td>
+                                    <div class="product__image-wrapper">
+                                      <img class="product__image" src="{{ asset('images/products/' . $product->image_path) }}" alt="Ảnh sản phẩm">
+                                    </div>
+                                </td>
+                                <td>{{ $product->tenSanPham }}</td>
+                                <td>{{ $product->loaiSanPham }}</td>
+                                <td>{{ $product->manufacturer()->first()->ten }}</td>
+                                <td>{{ $product->pivot->soLuong }}</td>
+                                <td>@currency_format($product->pivot->donGia)</td>
+                                <td>@currency_format($product->pivot->tongTien)</td>
+                              </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="invoice-title float-end">

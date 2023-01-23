@@ -3,14 +3,15 @@
 @section('content')
 <div class="page-wrapper">
     <span class="page-title">Danh sách đơn mua trực tiếp tại cửa hàng</span>
-
     <div class="page__content-wrapper">
-        <div class="row">
-            <div class="col col-8 d-flex">
-                <div class="me-2">
-                    <form class="d-flex" id="form__search" method="GET" action="{{ route('exportinvoice.index') }}">
+        <div class="row mb-3">
+            <div class="col col-xl-6 col-12 mt-3">
+                <form class="row gx-2" id="form__search" method="GET" action="{{ route('exportinvoice.index') }}">
+                    <div class="col col-7">
                         <input class="form-control form-search-input" type="text" name="tenDonHang" placeholder="Nhập tên đơn hàng"/>
-
+                    </div>
+            
+                    <div class="col col-5">
                         <input type="hidden" name="order-type" id="order-type">
                         <input type="hidden" name="order-name" id="order-name">
                         <select id="form_order" class="form-select form-search-select">
@@ -20,15 +21,17 @@
                             <option value="created_at desc">Mới nhất</option>
                             <option value="created_at asc">Cũ nhất</option>
                         </select>
-                    </form>
-                </div>
-
-                <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
-                <a role="button" class="btn btn-outline-secondary" href="{{ route('exportinvoice.index') }}">Reset</a>
+                    </div>
+                </form>
             </div>
-
-            <div class="col col-4 d-flex justify-content-end">
-                <a role="button" class="btn btn-outline-primary" href="{{ route('exportinvoice.create') }}">Xuất hàng<i class="fa-solid fa-coins ms-2"></i></a>
+            <div class="col col-xl-6 col-12 mt-3">
+                <div class="d-flex">
+                    <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
+                    <a role="button" class="btn btn-outline-secondary me-2" href="{{ route('exportinvoice.index') }}">Reset</a>
+                    <div class="ms-auto">
+                        <a role="button" class="btn btn-outline-primary" href="{{ route('exportinvoice.create') }}">Thêm Mới<i class="fa-solid fa-plus ms-2"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -37,41 +40,43 @@
         @if (Session::has('message'))
             <h5 class="text-success mb-2 ms-2"><strong>{{ Session::get('message') }}</strong></h5>
         @endif
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Tên đơn hàng</th>
-                    <th scope="col">Tên khách hàng</th>
-                    <th scope="col">Số điện thoại</th>
-                    <th scope="col">Địa chỉ</th>
-                    <th scope="col">Tổng tiền</th>
-                    <th scope="col">Ngày xuất hàng</th>
-                    <th scope="col" colspan="3">Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($exportInvoices as $invoice)
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
                     <tr>
-                        <th scope="row">{{ $invoice->id }}</th>
-                        <td>{{ $invoice->tenDonHang }}</td>
-                        <td>{{ $invoice->tenKhachHang }}</td>
-                        <td>{{ $invoice->soDienThoai }}</td>
-                        <td>{{ $invoice->diaChi }}</td>
-                        <td>@currency_format($invoice->tongTien)</td>
-                        <td>@date_format($invoice->created_at)</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a role="button" href="{{ route('exportinvoice.show', "$invoice->id") }}" class="btn btn-outline-success btn-sm">Chi tiết</a>
-                                <button class="btn btn-outline-danger btn-sm" data-id="{{ $invoice->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Xóa</button>
-                            </div>
-                        </td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tên đơn hàng</th>
+                        <th scope="col">Tên khách hàng</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Địa chỉ</th>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col">Ngày xuất hàng</th>
+                        <th scope="col" colspan="3">Thao tác</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <div class="d-flex justify-content-center">
-            {{ $exportInvoices->appends($data)->links('pagination::bootstrap-4') }}
+                </thead>
+                <tbody>
+                    @foreach ($exportInvoices as $invoice)
+                        <tr>
+                            <th scope="row">{{ $invoice->id }}</th>
+                            <td>{{ $invoice->tenDonHang }}</td>
+                            <td>{{ $invoice->tenKhachHang }}</td>
+                            <td>{{ $invoice->soDienThoai }}</td>
+                            <td>{{ $invoice->diaChi }}</td>
+                            <td>@currency_format($invoice->tongTien)</td>
+                            <td>@date_format($invoice->created_at)</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a role="button" href="{{ route('exportinvoice.show', "$invoice->id") }}" class="btn btn-outline-success btn-sm">Chi tiết</a>
+                                    <button class="btn btn-outline-danger btn-sm" data-id="{{ $invoice->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Xóa</button>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+            {{ $exportInvoices->appends($data)->onEachSide(1)->links('pagination::bootstrap-4') }}
         </div>
     </div>
 </div>

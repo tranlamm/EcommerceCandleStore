@@ -12,9 +12,15 @@
                 <button class="date-btn" @click="handleClick">Submit</button>
             </div>
         </div>
-        <div v-if="!this.isLoading" class="body-wrapper">
-            <canvas ref="saleChart" class="chart-wrapper"></canvas>
-            <canvas ref="leftChart" class="chart-wrapper"></canvas>
+        <div v-if="!this.isLoading" class="body-wrapper container-fluid">
+            <div class="row">
+                <div class="col col-12 col-lg-6 mt-4">
+                    <canvas ref="saleChart" class="chart-wrapper"></canvas>
+                </div>
+                <div class="col col-12 col-lg-6 mt-4">
+                    <canvas ref="leftChart" class="chart-wrapper"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -215,17 +221,6 @@ import Chart from 'chart.js/auto';
                 margin-left: 20px;
                 border: none;
             }
-        }
-    }
-
-    .body-wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 32px;
-        justify-content: space-between;
-        .chart-wrapper {
-            width: 49% !important; 
-            height: 100% !important;
         }
     }
 </style>

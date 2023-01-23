@@ -25,7 +25,7 @@
             <label class="form-label mb3"><strong>Dữ liệu nhập hàng <span class="text-red">*</span></strong></label>
 
             <div id="form-list" class="form-import-invoice">
-                <div class="row mb-3 align-items-start form-wrapper" id="form-wrapper">
+                <div class="row mb-3 align-items-end form-wrapper" id="form-wrapper">
                     <div class="col col-2">
                         <label class="form-label"><strong>Nhà cung cấp</strong></label>
                         <select id="form-nhaCungCap0" class="form-select" name="nhaCungCap[]">
@@ -86,14 +86,14 @@
                 Add product<i class="fa-solid fa-plus ms-2"></i>
             </button>
 
-            <div class="d-flex justify-content-between mt-5">
+            <div class="d-flex justify-content-between mt-4">
                 <div>
-                    <a class="btn btn-success me-2" href="{{ route('manufacturer.create') }}" role="button">Thêm nhà cung cấp</a>
-                    <a class="btn btn-primary" href="{{ route('candleproduct.create') }}" role="button">Thêm sản phẩm</a>
+                    <a class="btn btn-success me-2 mt-3" href="{{ route('manufacturer.create') }}" role="button">Thêm nhà cung cấp</a>
+                    <a class="btn btn-primary mt-3" href="{{ route('candleproduct.create') }}" role="button">Thêm sản phẩm</a>
                 </div>
-                <div>
-                    <a class="btn btn-outline-secondary me-2" href="{{ route('importinvoice.index') }}" role="button">Danh sách đơn nhập</a>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="ms-2">
+                    <a class="btn btn-outline-secondary me-2 mt-3" href="{{ route('importinvoice.index') }}" role="button">Danh sách đơn nhập</a>
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
                 </div>
             </div>
         </form>

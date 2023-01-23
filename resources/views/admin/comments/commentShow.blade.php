@@ -4,26 +4,30 @@
 
 <div class="page-wrapper">
   <span class="page-title">Danh sách bình luận đánh giá sản phẩm</span>
-  
   <div class="page__content-wrapper">
-    <div class="row">
-      <div class="col col-8 d-flex">
-        <div class="me-2">
-          <form class="d-flex" id="form__search" method="GET" action="{{ route('comment.index') }}">
+    <div class="row mb-3">
+      <div class="col col-xl-6 col-12 mt-3">
+        <form class="row gx-2" id="form__search" method="GET" action="{{ route('comment.index') }}">
+          <div class="col col-7">
             <input class="form-control form-search-input" type="text" name="search" placeholder="Nhập tên sản phẩm"/>
+          </div>
 
+          <div class="col col-5">
             <input type="hidden" name="order-type" id="order-type">
             <input type="hidden" name="order-name" id="order-name">
-            <select id="form_order" class="form-select form-search-select">
+            <select id="form_order" class="form-select">
               <option value="">Sắp xếp</option>
               <option value="updated_at desc">Mới nhất</option>
               <option value="updated_at asc">Cũ nhất</option>
             </select>
-          </form>
+          </div>
+        </form>
+      </div>
+      <div class="col col-xl-6 col-12 mt-3">
+        <div class="d-flex">
+          <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
+          <a role="button" class="btn btn-outline-secondary me-2" href="{{ route('comment.index') }}">Reset</a>
         </div>
-
-        <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
-        <a role="button" class="btn btn-outline-secondary" href="{{ route('comment.index') }}">Reset</a>
       </div>
     </div>
   </div>
@@ -32,52 +36,54 @@
     @if (Session::has('message'))
       <h5 class="text-success mb-2 ms-2"><strong>{{ Session::get('message') }}</strong></h5>
     @endif
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Image</th>
-                <th scope="col">Product</th>
-                <th scope="col">Username</th>
-                <th scope="col">Comment</th>
-                <th scope="col">Point</th>
-                <th scope="col">Created At</th>
-                <th scope="col">Thao tác</th>
-              </tr>
-        </thead>
-        <tbody>
-            @foreach ($comments as $comment)
-                <tr>
-                    <th scope="row">{{ $comment->id }}</th>
-                    <td>
-                        <div class="product__image-wrapper">
-                            <img class="product__image" src="{{ asset('images/products/' . $comment->product()->first()->image_path) }}" alt="product">
-                        </div>
-                    </td>
-                    <td>{{ $comment->product()->first()->tenSanPham }}</td>
-                    <td>{{ $comment->account()->first()->username }}</td>
-                    <td class="comment-table">{{ $comment->comment }}</td>
-                    <td>
-                        @php
-                            $percent = $comment->point / 5 * 100;
-                        @endphp
-                        <div class="stars-outer">
-                            <div class="stars-inner" style="{{ 'width: ' . $percent . "%" }}">
-                            </div>
-                        </div>
-                    </td>
-                    <td>@date_format($comment->created_at)</td>
-                    <td>
-                      <div class="btn-group" role="group" aria-label="Basic example">
-                        <button class="btn btn-outline-danger btn-sm" data-id="{{ $comment->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
-                      </div>
-                    </td>
+    <div class="table-responsive">
+      <table class="table">
+          <thead>
+              <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Product</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Comment</th>
+                  <th scope="col">Point</th>
+                  <th scope="col">Created At</th>
+                  <th scope="col">Thao tác</th>
                 </tr>
-            @endforeach
-        </tbody>
-      </table>
-      <div class="d-flex justify-content-center">
-        {{ $comments->appends($data)->links('pagination::bootstrap-4') }}
+          </thead>
+          <tbody>
+              @foreach ($comments as $comment)
+                  <tr>
+                      <th scope="row">{{ $comment->id }}</th>
+                      <td>
+                          <div class="product__image-wrapper">
+                              <img class="product__image" src="{{ asset('images/products/' . $comment->product()->first()->image_path) }}" alt="product">
+                          </div>
+                      </td>
+                      <td>{{ $comment->product()->first()->tenSanPham }}</td>
+                      <td>{{ $comment->account()->first()->username }}</td>
+                      <td class="comment-table">{{ $comment->comment }}</td>
+                      <td>
+                          @php
+                              $percent = $comment->point / 5 * 100;
+                          @endphp
+                          <div class="stars-outer">
+                              <div class="stars-inner" style="{{ 'width: ' . $percent . "%" }}">
+                              </div>
+                          </div>
+                      </td>
+                      <td>@date_format($comment->created_at)</td>
+                      <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          <button class="btn btn-outline-danger btn-sm" data-id="{{ $comment->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                        </div>
+                      </td>
+                  </tr>
+              @endforeach
+          </tbody>
+        </table>
+    </div>
+      <div class="d-flex justify-content-center mt-4">
+        {{ $comments->appends($data)->onEachSide(1)->links('pagination::bootstrap-4') }}
       </div>
   </div>
 </div>

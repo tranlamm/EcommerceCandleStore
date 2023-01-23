@@ -11,7 +11,7 @@
                             <input type="text" class="search-input" name="search" spellcheck="false" placeholder="Nhập tên sản phẩm..." required>
                             <button type="submit" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </form>
-                        <div class="dashboard-label">Dashboard Overview</div>
+                        <div class="dashboard-label d-none d-sm-block">Dashboard Overview</div>
                     </div>
                 </div>
                 <div class="col col-xl-2 col-sm-6 justify-content-end d-none d-sm-flex">

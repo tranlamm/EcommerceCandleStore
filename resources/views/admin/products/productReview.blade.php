@@ -34,44 +34,47 @@
       <h5 class="text-success mb-2 ms-2"><strong>{{ Session::get('message') }}</strong></h5>
     @endif
     <div class="product-review-label">All Comments</div>
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Username</th>
-            <th scope="col">Fullname</th>
-            <th scope="col">Comment</th>
-            <th scope="col">Point</th>
-            <th scope="col">Created At</th>
-            <th scope="col">Thao tác</th>
-          </tr>
-        </thead>
-        <tbody>
-            @foreach ($product->productReview as $comment)
+    <div class="table-responsive">
+
+      <table class="table">
+          <thead>
             <tr>
-                <th scope="row">{{ $comment->pivot->id }}</th>
-                <td>{{ $comment->username }}</td>
-                <td>{{ $comment->fullname }}</td>
-                <td class="comment-table">{{ $comment->pivot->comment }}</td>
-                <td>
-                    @php
-                        $percent = $comment->pivot->point / 5 * 100;
-                    @endphp
-                    <div class="stars-outer">
-                        <div class="stars-inner" style="{{ 'width: ' . $percent . "%" }}">
-                        </div>
-                    </div>
-                </td>
-                <td>@date_format($comment->pivot->updated_at)</td>
-                <td>
-                  <div class="btn-group" role="group" aria-label="Basic example">
-                    <button class="btn btn-outline-danger btn-sm" data-id="{{ $comment->pivot->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
-                  </div>
-                </td>
+              <th scope="col">ID</th>
+              <th scope="col">Username</th>
+              <th scope="col">Fullname</th>
+              <th scope="col" colspan="4">Comment</th>
+              <th scope="col">Point</th>
+              <th scope="col">Created At</th>
+              <th scope="col">Thao tác</th>
             </tr>
-            @endforeach
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+              @foreach ($product->productReview as $comment)
+              <tr>
+                  <th scope="row">{{ $comment->pivot->id }}</th>
+                  <td>{{ $comment->username }}</td>
+                  <td>{{ $comment->fullname }}</td>
+                  <td class="comment-table" colspan="4">{{ $comment->pivot->comment }}</td>
+                  <td>
+                      @php
+                          $percent = $comment->pivot->point / 5 * 100;
+                      @endphp
+                      <div class="stars-outer">
+                          <div class="stars-inner" style="{{ 'width: ' . $percent . "%" }}">
+                          </div>
+                      </div>
+                  </td>
+                  <td>@date_format($comment->pivot->updated_at)</td>
+                  <td>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <button class="btn btn-outline-danger btn-sm" data-id="{{ $comment->pivot->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                    </div>
+                  </td>
+              </tr>
+              @endforeach
+          </tbody>
+        </table>
+    </div>
   </div>
 </div>
 <form method="post" id="deleteForm">

@@ -4,45 +4,49 @@
 
 <div class="page-wrapper">
   <span class="page-title">Danh sách nhà cung cấp</span>
-  
   <div class="page__content-wrapper">
-    <div class="row">
-      <div class="col col-8 d-flex">
-        <div class="me-2">
-          <form class="d-flex" id="form__search" method="GET" action="{{ route('manufacturer.index') }}">
-            <input class="form-control form-search-input" type="text" name="search" placeholder="Search" required/>
+    <div class="row mb-3">
+      <div class="col col-xl-6 col-12 mt-3">
+        <form class="row gx-2" id="form__search" method="GET" action="{{ route('manufacturer.index') }}">
+          <div class="col col-7">
+            <input class="form-control" type="text" name="search" placeholder="Search"/>
+          </div>
 
+          <div class="col col-5">
             <input type="hidden" name="order-type" id="order-type">
             <input type="hidden" name="order-name" id="order-name">
-            <select id="form_order" class="form-select form-search-select">
+            <select id="form_order" class="form-select">
               <option value="">Sắp xếp</option>
               <option value="updated_at desc">Mới nhất</option>
               <option value="updated_at asc">Cũ nhất</option>
             </select>
-          </form>
-        </div>
-
-        <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
-        <a role="button" class="btn btn-outline-secondary" href="{{ route('manufacturer.index') }}">Reset</a>
+          </div>
+        </form>
       </div>
-
-      <div class="col col-4 d-flex justify-content-end">
-        <a role="button" class="btn btn-outline-primary" href="{{ route('manufacturer.create') }}">Thêm Mới<i class="fa-solid fa-plus ms-2"></i></a>
+      <div class="col col-xl-6 col-12 mt-3">
+        <div class="d-flex">
+          <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
+          <a role="button" class="btn btn-outline-secondary me-2" href="{{ route('manufacturer.index') }}">Reset</a>
+          <div class="ms-auto">
+            <a role="button" class="btn btn-outline-primary" href="{{ route('manufacturer.create') }}">Thêm Mới<i class="fa-solid fa-plus ms-2"></i></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
+  
   <div class="page__content-wrapper">
     @if (Session::has('message'))
       <h5 class="text-success mb-2 ms-2"><strong>{{ Session::get('message') }}</strong></h5>
     @endif
-    <table class="table">
+    <div class="table-responsive">
+      <table class="table">
         <thead>
           <tr>
             <th scope="col">ID</th>
             <th scope="col">Logo thương hiệu</th>
             <th scope="col">Nhà cung cấp</th>
-            <th scope="col">Địa chỉ</th>
+            <th scope="col" colspan="2">Địa chỉ</th>
             <th scope="col">Số điện thoại</th>
             <th scope="col">Sản phẩm</th>
             <th scope="col">Created At</th>
@@ -53,32 +57,33 @@
         <tbody>
             @foreach ($manufacturers as $manufacturer)
                 <tr>
-                    <th scope="row">{{ $manufacturer->id }}</th>
-                    <td>
-                      <div class="product__image-wrapper">
-                        <img class="product__image" src="{{ asset('images/manufacturers/' . $manufacturer->image_path) }}" alt="Brand Logo">
-                      </div>
-                    </td>
-                    <td>{{ $manufacturer->ten }}</td>
-                    <td>{{ $manufacturer->diaChi }}</td>
-                    <td>{{ $manufacturer->soDienThoai }}</td>
-                    <td>
-                      <a role="button" href="/admin/manufacturer/{{ $manufacturer->id }}/allproducts" class="btn btn-success btn-sm">View</a>
-                    </td>
-                    <td>@date_format($manufacturer->created_at)</td>
-                    <td>@date_format($manufacturer->updated_at)</td>
-                    <td>
-                      <div class="btn-group" role="group" aria-label="Basic example">
-                        <a role="button" href="/admin/manufacturer/{{ $manufacturer->id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
-                        <button class="btn btn-outline-danger btn-sm" data-id="{{ $manufacturer->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
-                      </div>
-                    </td>
+                  <th scope="row">{{ $manufacturer->id }}</th>
+                  <td>
+                    <div class="product__image-wrapper">
+                      <img class="product__image" src="{{ asset('images/manufacturers/' . $manufacturer->image_path) }}" alt="Brand Logo">
+                    </div>
+                  </td>
+                  <td>{{ $manufacturer->ten }}</td>
+                  <td colspan="2">{{ $manufacturer->diaChi }}</td>
+                  <td>{{ $manufacturer->soDienThoai }}</td>
+                  <td>
+                    <a role="button" href="/admin/manufacturer/{{ $manufacturer->id }}/allproducts" class="btn btn-success btn-sm">View</a>
+                  </td>
+                  <td>@date_format($manufacturer->created_at)</td>
+                  <td>@date_format($manufacturer->updated_at)</td>
+                  <td>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <a role="button" href="/admin/manufacturer/{{ $manufacturer->id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
+                      <button class="btn btn-outline-danger btn-sm" data-id="{{ $manufacturer->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                    </div>
+                  </td>
                 </tr>
             @endforeach
         </tbody>
       </table>
-      <div class="d-flex justify-content-center">
-        {{ $manufacturers->appends($data)->links('pagination::bootstrap-4') }}
+    </div>
+      <div class="d-flex justify-content-center mt-4">
+        {{ $manufacturers->appends($data)->onEachSide(1)->links('pagination::bootstrap-4') }}
       </div>
   </div>
 </div>

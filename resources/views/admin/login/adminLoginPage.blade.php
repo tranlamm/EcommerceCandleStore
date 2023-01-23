@@ -3,15 +3,15 @@
 @section('content')
 <div class="wrapper">
     <div class="container wrapper-container">
-        <div class="row wrapper-row">
+        <div class="wrapper-row">
             <div class="login-wrapper row">
-                <div class="col col-4 d-none d-md-block">
-                    <div data-tilt="">
+                <div class="col col-4 d-none d-lg-block">
+                    <div>
                         <img class="login-img" src="{{ asset('images/login/login.webp') }}" alt="IMG">
                     </div>
                 </div>
 
-                <div class="col col-12 col-md-6 offset-md-2">
+                <div class="col col-12 col-lg-6 ms-auto">
                     <form action="{{ route('login.post') }}" class="login-form" method="POST">
                         @csrf
                         <span class="login-form-title">Administrator Login</span>

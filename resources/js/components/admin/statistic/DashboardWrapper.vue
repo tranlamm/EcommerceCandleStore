@@ -59,7 +59,6 @@ import DataPerMonth from './DataPerMonth.vue';
 
         .dashboard-item_vue {
             height: 100%;
-            margin: 0 32px;
             font-size: 16px;
             padding: 6px 16px;
             color: #333;

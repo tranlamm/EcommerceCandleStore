@@ -5,22 +5,26 @@
 <div class="page-wrapper">
   <span class="page-title">Danh mục sản phẩm tinh dầu</span>
   <div class="page__content-wrapper">
-    <div class="row">
-      <div class="col col-8 d-flex">
-        <div class="me-2">
-          <form class="d-flex" id="form__search" method="GET" action="{{ route('essentialoilproduct.index') }}">
-            <input class="form-control form-search-input" type="text" name="search" placeholder="Search"/>
+    <div class="row mb-3">
+      <div class="col col-xxl-8 col-12 mt-3">
+        <form class="row gx-2" id="form__search" method="GET" action="{{ route('essentialoilproduct.index') }}">
+          <div class="col col-6">
+            <input class="form-control" type="text" name="search" placeholder="Search"/>
+          </div>
 
-            <select name="nhaCungCap" class="form-select form-search-select">
+          <div class="col col-3">
+            <select name="nhaCungCap" class="form-select">
               <option value="">Nhà cung cấp</option>
               @foreach ($manufacturers as $manufacturer)
                   <option value="{{ $manufacturer->id }}">{{ $manufacturer->ten }}</option>
               @endforeach
-            </select>
+          </select>
+          </div>
 
+          <div class="col col-3">
             <input type="hidden" name="order-type" id="order-type">
             <input type="hidden" name="order-name" id="order-name">
-            <select id="form_order" class="form-select form-search-select">
+            <select id="form_order" class="form-select">
               <option value="">Sắp xếp</option>
               <option value="giaNhap asc">Giá nhập tăng dần</option>
               <option value="giaNhap desc">Giá nhập giảm dần</option>
@@ -33,16 +37,17 @@
               <option value="updated_at desc">Mới nhất</option>
               <option value="updated_at asc">Cũ nhất</option>
             </select>
-          </form>
-        </div>
-
-        <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
-
-        <a role="button" class="btn btn-outline-secondary" href="{{ route('essentialoilproduct.index') }}">Reset</a>
+          </div>
+        </form>
       </div>
-
-      <div class="col col-4 d-flex justify-content-end">
-        <a role="button" class="btn btn-outline-primary" href="{{ route('essentialoilproduct.create') }}">Thêm Mới<i class="fa-solid fa-plus ms-2"></i></a>
+      <div class="col col-xxl-4 col-12 mt-3">
+        <div class="d-flex">
+          <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
+          <a role="button" class="btn btn-outline-secondary me-2" href="{{ route('essentialoilproduct.index') }}">Reset</a>
+          <div class="ms-auto">
+            <a role="button" class="btn btn-outline-primary" href="{{ route('essentialoilproduct.create') }}">Thêm Mới<i class="fa-solid fa-plus ms-2"></i></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -51,7 +56,8 @@
     @if (Session::has('message'))
       <h5 class="text-success mb-2 ms-2"><strong>{{ Session::get('message') }}</strong></h5>
     @endif
-    <table class="table">
+    <div class="table-responsive">
+      <table class="table">
         <thead>
           <tr>
             <th scope="col">ID</th>
@@ -97,8 +103,9 @@
             @endforeach
         </tbody>
       </table>
-    <div class="d-flex justify-content-center">
-      {{ $essentialOils->appends($data)->links('pagination::bootstrap-4') }}
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+      {{ $essentialOils->appends($data)->onEachSide(1)->links('pagination::bootstrap-4') }}
     </div>
   </div>
 </div>

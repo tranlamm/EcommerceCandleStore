@@ -1,17 +1,17 @@
 @extends('layouts.admin.admin_layout')
 
 @section('content')
-
 <div class="page-wrapper">
   <span class="page-title">Danh sách tài khoản khách hàng</span>
-  
   <div class="page__content-wrapper">
-    <div class="row">
-      <div class="col col-8 d-flex">
-        <div class="me-2">
-          <form class="d-flex" id="form__search" method="GET" action="{{ route('customeraccount.index') }}">
+    <div class="row mb-3">
+      <div class="col col-xl-6 col-12 mt-3">
+        <form class="row gx-2" id="form__search" method="GET" action="{{ route('customeraccount.index') }}">
+          <div class="col col-7">
             <input class="form-control form-search-input" type="text" name="search" placeholder="Nhập tên khách hàng"/>
+          </div>
 
+          <div class="col col-5">
             <input type="hidden" name="order-type" id="order-type">
             <input type="hidden" name="order-name" id="order-name">
             <select id="form_order" class="form-select form-search-select">
@@ -19,11 +19,14 @@
               <option value="updated_at desc">Mới nhất</option>
               <option value="updated_at asc">Cũ nhất</option>
             </select>
-          </form>
+          </div>
+        </form>
+      </div>
+      <div class="col col-xl-6 col-12 mt-3">
+        <div class="d-flex">
+          <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
+          <a role="button" class="btn btn-outline-secondary me-2" href="{{ route('customeraccount.index') }}">Reset</a>
         </div>
-
-        <button class="btn btn-outline-success me-2" id="form__search-btn">Search</button>
-        <a role="button" class="btn btn-outline-secondary" href="{{ route('customeraccount.index') }}">Reset</a>
       </div>
     </div>
   </div>
@@ -32,42 +35,44 @@
     @if (Session::has('message'))
       <h5 class="text-success mb-2 ms-2"><strong>{{ Session::get('message') }}</strong></h5>
     @endif
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Username</th>
-            <th scope="col">Tên khách hàng</th>
-            <th scope="col">Địa chỉ</th>
-            <th scope="col">Số điện thoại</th>
-            <th scope="col">Email</th>
-            <th scope="col">Created At</th>
-            <th scope="col">Updated At</th>
-            <th scope="col" colspan="1">Thao tác</th>
-          </tr>
-        </thead>
-        <tbody>
-            @foreach ($accounts as $account)
-                <tr>
-                    <th scope="row">{{ $account->id }}</th>
-                    <td>{{ $account->username }}</td>
-                    <td>{{ $account->fullname }}</td>
-                    <td>{{ $account->address }}</td>
-                    <td>{{ $account->phoneNumber }}</td>
-                    <td>{{ $account->email }}</td>
-                    <td>@date_format($account->created_at)</td>
-                    <td>@date_format($account->updated_at)</td>
-                    <td>
-                      <div class="btn-group" role="group" aria-label="Basic example">
-                        <button class="btn btn-outline-danger btn-sm" data-id="{{ $account->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
-                      </div>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-      </table>
-      <div class="d-flex justify-content-center">
-        {{ $accounts->appends($data)->links('pagination::bootstrap-4') }}
+    <div class="table-responsive">
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Username</th>
+              <th scope="col">Tên khách hàng</th>
+              <th scope="col" colspan="4">Địa chỉ</th>
+              <th scope="col">Số điện thoại</th>
+              <th scope="col">Email</th>
+              <th scope="col">Created At</th>
+              <th scope="col">Updated At</th>
+              <th scope="col" colspan="1">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+              @foreach ($accounts as $account)
+                  <tr>
+                      <th scope="row">{{ $account->id }}</th>
+                      <td>{{ $account->username }}</td>
+                      <td>{{ $account->fullname }}</td>
+                      <td colspan="4">{{ $account->address }}</td>
+                      <td>{{ $account->phoneNumber }}</td>
+                      <td>{{ $account->email }}</td>
+                      <td>@date_format($account->created_at)</td>
+                      <td>@date_format($account->updated_at)</td>
+                      <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                          <button class="btn btn-outline-danger btn-sm" data-id="{{ $account->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                        </div>
+                      </td>
+                  </tr>
+              @endforeach
+          </tbody>
+        </table>
+    </div>
+      <div class="d-flex justify-content-center mt-4">
+        {{ $accounts->appends($data)->onEachSide(1)->links('pagination::bootstrap-4') }}
       </div>
   </div>
 </div>

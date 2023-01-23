@@ -30,7 +30,7 @@
                 @include('layouts.admin.components.sidebar')
             </div>
 
-            <div class="col col-xl-10 col-12">
+            <div class="col col-xl-10 col-12 printable">
                 @yield('content')
             </div>
         </div>
