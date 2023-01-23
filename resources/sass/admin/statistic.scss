@@ -1,14 +1,9 @@
 .dashboard {
-    padding: 32px;
     background-color: #eaeff8;
     height: 100%;
 
     .dashboard-header {
-
         .dashboard-navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-bottom: 24px;
 
             .dashboard-search {
@@ -54,14 +49,10 @@
         }
 
         .dashboard-shop {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-top: 12px;
 
             .dashboard-item {
-                flex-grow: 1;
-                margin-right: 18px;
+                height: 100%;
                 padding: 20px 32px;
                 display: flex;
                 align-items: flex-start;
@@ -184,16 +175,12 @@
     .dashboard-main {
         margin-top: 24px;
         .dashboard-chart-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: stretch;
-            margin-top: 24px;
+            margin-top: 8px;
 
             .order-today {
                 padding: 32px;
                 background-color: white;
                 border: 1px solid #d5d6d7;
-                width: 39%;
 
                 .order-today-header {
                     display: flex;
@@ -277,7 +264,7 @@
             }
             
             .toprated-product {
-                width: 60%;
+                height: 100%;
                 padding: 32px;
                 background-color: white;
                 border: 1px solid #d5d6d7;

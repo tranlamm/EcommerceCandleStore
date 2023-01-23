@@ -1,5 +1,5 @@
 <div class="d-xs-block d-xl-none offcanvas_sidebar">
-    <button class="offcanvas_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_sidebar" aria-controls="offcanvas_sidebar">
+    <button class="btn btn-sm offcanvas_btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_sidebar" aria-controls="offcanvas_sidebar">
         <i class="fa-solid fa-bars"></i>
     </button>
     

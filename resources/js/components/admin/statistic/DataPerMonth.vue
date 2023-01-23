@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="income-chart-header">
-            <div>
+            <div class="d-none d-md-block">
                 <div class="income-chart-header-text">Chi tiết doanh thu sản phẩm hàng tháng</div>
                 <div class="income-chart-header-sub">Your sales monitoring dashboard. <a href="/admin/candleproduct">View details</a></div>
             </div>
@@ -224,8 +224,8 @@ import Chart from 'chart.js/auto';
         margin-top: 32px;
         justify-content: space-between;
         .chart-wrapper {
-            width: 48% !important; 
-            height: 80% !important;
+            width: 49% !important; 
+            height: 100% !important;
         }
     }
 </style>

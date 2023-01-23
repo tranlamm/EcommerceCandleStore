@@ -1,16 +1,22 @@
 <template>
     <div>
         <div class="income-chart-header">
-            <div>
-                <div class="income-chart-header-text">Total Expense</div>
-                <div class="income-chart-header-price">{{ this.currencyFormat }}</div>
-                <div class="income-chart-header-sub">Your sales monitoring dashboard. <a href="/admin/invoice/importinvoice">View details</a></div>
-            </div>
-            <div class="date-wrapper">
-                <label class="date-label">Year</label>
-                <input type="number" min="2018" max="2030" class="date-input" v-model="this.year">
-                <div class="date-warning" v-show="this.isWarning">Year is invalid</div>
-                <button class="date-btn" @click="this.handleClick">Submit</button>
+            <div class="row">
+                <div class="col col-6">
+                    <div class="d-none d-md-block">
+                        <div class="income-chart-header-text">Total Expense</div>
+                        <div class="income-chart-header-price">{{ this.currencyFormat }}</div>
+                        <div class="income-chart-header-sub">Your sales monitoring dashboard. <a href="/admin/invoice/importinvoice">View details</a></div>
+                    </div>
+                </div>
+                <div class="col col-6 d-flex justify-content-end align-items-center">
+                    <div class="date-wrapper">
+                        <label class="date-label">Year</label>
+                        <input type="number" min="2018" max="2030" class="date-input" v-model="this.year">
+                        <div class="date-warning" v-show="this.isWarning">Year is invalid</div>
+                        <button class="date-btn" @click="this.handleClick">Submit</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div v-if="!this.isLoading" class="chart-wrapper">
@@ -133,9 +139,6 @@ import Chart from 'chart.js/auto';
 <style lang="scss" scoped>
     .income-chart-header {
         margin-bottom: 14px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
         .income-chart-header-text {
             font-size: 20px;
             font-weight: 600;

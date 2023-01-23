@@ -113,14 +113,11 @@ body {
 }
 
 .offcanvas_sidebar {
-    margin-left: 24px;
-    margin-top: 12px;
+    margin-right: 12px;
+
     .offcanvas_btn {
-        border: none;
-        padding: 8px 16px;
         background-color: black;
         color: white;
-        border-radius: 8px;
         transition: all ease-in-out 200ms;
 
         &:hover {

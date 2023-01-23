@@ -53,7 +53,6 @@
       <h5 class="text-success mb-2 ms-2"><strong>{{ Session::get('message') }}</strong></h5>
     @endif
     <div class="table-responsive">
-
       <table class="table">
           <thead>
             <tr>
@@ -101,7 +100,7 @@
           </tbody>
         </table>
     </div>
-      <div class="d-flex justify-content-center">
+      <div class="d-flex justify-content-center mt-4">
         {{ $candleProducts->appends($data)->links('pagination::bootstrap-4') }}
       </div>
   </div>

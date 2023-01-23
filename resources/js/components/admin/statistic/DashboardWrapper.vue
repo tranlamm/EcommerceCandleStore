@@ -1,9 +1,17 @@
 <template>
     <div class="dashboard-wrapper_vue">
         <div class="dashboard-header_vue">
-            <div class="dashboard-item_vue" :class="{'dashboard-item_vue--active': this.activeChart === 'revenue'}" @click="this.SET_ACTIVE_CHART('revenue')">Total Revenue</div>
-            <div class="dashboard-item_vue" :class="{'dashboard-item_vue--active': this.activeChart === 'expense'}" @click="this.SET_ACTIVE_CHART('expense')">Total Expense</div>
-            <div class="dashboard-item_vue" :class="{'dashboard-item_vue--active': this.activeChart === 'dataMonth'}" @click="this.SET_ACTIVE_CHART('dataMonth')">Data per month</div>
+            <div class="row">
+                <div class="col col-4">
+                    <div class="dashboard-item_vue" :class="{'dashboard-item_vue--active': this.activeChart === 'revenue'}" @click="this.SET_ACTIVE_CHART('revenue')">Total Revenue</div>
+                </div>
+                <div class="col col-4">
+                    <div class="dashboard-item_vue" :class="{'dashboard-item_vue--active': this.activeChart === 'expense'}" @click="this.SET_ACTIVE_CHART('expense')">Total Expense</div>
+                </div>
+                <div class="col col-4">
+                    <div class="dashboard-item_vue" :class="{'dashboard-item_vue--active': this.activeChart === 'dataMonth'}" @click="this.SET_ACTIVE_CHART('dataMonth')">Data per month</div>
+                </div>
+            </div>
         </div>
 
         <div class="dashboard-body_vue">
@@ -48,11 +56,10 @@ import DataPerMonth from './DataPerMonth.vue';
     .dashboard-header_vue {
         padding: 28px 32px;
         border-bottom: 1px solid #d5d6d7;
-        display: flex;
-        justify-content: flex-end;
 
         .dashboard-item_vue {
-            margin-left: 32px;
+            height: 100%;
+            margin: 0 32px;
             font-size: 16px;
             padding: 6px 16px;
             color: #333;

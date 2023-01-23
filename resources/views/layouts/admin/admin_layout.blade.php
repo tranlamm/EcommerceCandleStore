@@ -25,7 +25,6 @@
     <body>
         @include('layouts.admin.components.header')
         <div class="row content-wrapper">
-            @include('layouts.admin.components.offcanvas_sidebar')
             <div class="col col-xl-2 d-none d-xl-block">
                 @include('layouts.admin.components.sidebar')
             </div>

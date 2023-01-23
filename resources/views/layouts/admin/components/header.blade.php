@@ -17,6 +17,7 @@
           <span><strong>Log out</strong></span>
         </button>
       </form>
+      @include('layouts.admin.components.offcanvas_sidebar')
     </div>
   </div>
 </div>
