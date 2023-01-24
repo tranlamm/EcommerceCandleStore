@@ -2,7 +2,7 @@
     <div class="top-bar">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col col-6">
+                <div class="col col-6 d-none d-lg-block">
                     <div class="d-flex justify-content-start align-items-center">
                         <div>
                             <i class="fa-solid fa-phone me-2"></i>(+84) 0813345087
@@ -13,7 +13,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col col-6">
+                <div class="col col-lg-6 col-12">
                     <div class="d-flex justify-content-end align-items-center">
                         <div class="top-bar__social">
                             <a href="" class="top-bar__social-link"><i class="fa-brands fa-facebook"></i></a>
@@ -48,10 +48,14 @@
     <div class="middle-inner">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col col-lg-2 col-md-2 col-12">
-                    <div class="logo"><a href="{{ route('shop.index') }}"><img src="{{ asset('images/shop/logo-brand.png') }}" alt=""></a></div>
+                <div class="col col-lg-2 col-md-4">
+                    <div class="row">
+                        <div class="col col-md-12 col-6 mx-auto">
+                            <div class="logo"><a href="{{ route('shop.index') }}"><img src="{{ asset('images/shop/logo-brand.png') }}" alt=""></a></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col col-lg-8 col-md-7 col-12">
+                <div class="col col-lg-8 col-md-8 mb-4 mb-md-0">
                     <div class="d-flex justify-content-center">
                         <div class="search_bar">
                             <div class="dropdown search_bar-select">
@@ -69,7 +73,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col col-lg-2 col-md-3 col-12">
+                <div class="col col-lg-2 d-none d-lg-block">
                     @if (Auth::guard('customer')->check())
                     <div class="right_bar">
                         <div class="right_bar-item"><i class="fa-regular fa-heart"></i></div>
@@ -143,7 +147,7 @@
     <div class="header-inner" id="header__navbar">
         <div class="container">
             <div class="row">
-                <div class="col col-3">
+                <div class="col col-lg-3 d-none d-lg-block">
                     <div class="dropdown header__category">
                         <div class="header__category-dropdown dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-bars me-2"></i>CATEGORIES
@@ -159,8 +163,8 @@
                     </div>
                 </div>
 
-                <div class="col col-9">
-                    <div class="header__nav">
+                <div class="col col-lg-9 col-6">
+                    <div class="header__nav d-none d-lg-flex">
                         <a href="{{ route('shop.index') }}" class="header__nav-item">Home</a>
                         <a href="{{ route('product.index') }}" class="header__nav-item">Product</a>
                         @if (Auth::guard('customer')->check())
@@ -170,6 +174,22 @@
                         @else
                         <a href="{{ route('login_customer.index') }}" class="header__nav-item">Login</a>
                         @endif
+                    </div>
+                    <div class="dropdown header__category d-block d-lg-none">
+                        <div class="header__category-dropdown dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-bars me-2"></i>MENU
+                        </div>
+                        <div class="header__category-list dropdown-menu">
+                          <li><div class="dropdown-item header__category-item"><a href="{{ route('shop.index') }}">Home</a></div></li>
+                          <li><div class="dropdown-item header__category-item"><a href="{{ route('product.index') }}">Product</a></div></li>
+                          @if (Auth::guard('customer')->check())
+                            <li><div class="dropdown-item header__category-item"><a href="{{ route('cart.index') }}">Shopping Cart</a></div></li>
+                            <li><div class="dropdown-item header__category-item"><a href="{{ route('account.index') }}">My Account</a></div></li>
+                            <li><div class="dropdown-item header__category-item"><a href="{{ route('invoice.index') }}">My Invoices</a></div></li>
+                          @else
+                          <li><div class="dropdown-item header__category-item"><a href="{{ route('login_customer.index') }}">Login</a></div></li>
+                          @endif
+                        </div>
                     </div>
                 </div>
             </div>

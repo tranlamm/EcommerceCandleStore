@@ -3,9 +3,9 @@
 @section('content')
 
 <div class="account_info">
-    <div class="container">
+    <div class="container-md">
         <div class="row">
-            <div class="col col-6 offset-3">
+            <div class="col col-xl-6 col-lg-8 col-md-10 col-12 mx-auto">
                 <div class="info-wrapper" id="info">
                     <div class="info-header">
                         Thông tin tài khoản cá nhân 

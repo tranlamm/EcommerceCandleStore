@@ -2,7 +2,7 @@
     <div class="review__wrapper">
         <div class="review__header">Đánh giá sản phẩm</div>
         <div class="row review__main">
-            <div class="col col-7">
+            <div class="col col-lg-7 col-md-8 col-12">
                 <div class="review-point__wrapper">
                     <div class="d-flex justify-content-center">
                         <div class="point-wrapper">
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="col col-5">
+            <div class="col col-lg-5 col-md-4 col-12 ps-5 ps-md-0">
                 <div class="review-post-wrapper">
                     <div class="review-post-label">Product Review !</div>
                     <div class="star-post-wrapper">

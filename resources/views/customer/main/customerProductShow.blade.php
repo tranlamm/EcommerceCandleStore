@@ -1,15 +1,15 @@
 @extends('layouts.customer.customer_layout_main')
 @section('content')
-<div class="container mt-2">
+<div class="container-lg mt-2">
     <img src="{{ asset('images/shop/banner_sale.jpg') }}" alt="sale merry christmas">
 </div>
 @include('layouts.customer.components.searchbar')
 <div class="content-product-wrapper">
-    <div class="container">
+    <div class="container-lg">
         <div class="row">
             @if (count($products) > 0)
                 @foreach ($products as $product)
-                    <div class="col col-3">
+                    <div class="col col-xl-3 col-lg-4 col-sm-6 col-12">
                         <div class="product">
                             <a href="{{ route('product.detail', ['id' => $product->id]) }}" class="product-wrapper">
                                 <div class="product-img">
@@ -52,7 +52,7 @@
                     </div>
                 @endforeach
             @else
-                <div class="col col-6 offset-3 empty-product-list">
+                <div class="col col-xl-6 col-md-8 col-sm-10 col-12 mx-auto empty-product-list">
                     <img src="{{ asset('images/shop/empty-invoice.webp') }}" alt="empty">
                 </div>
             @endif

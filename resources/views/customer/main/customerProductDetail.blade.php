@@ -2,15 +2,15 @@
 
 @section('content')
 <div class="product-detail">
-    <div class="container">
+    <div class="container-lg">
         <div class="product-detail__wrapper">
             <div class="row">
-                <div class="col col-4">
+                <div class="col col-md-4 col-sm-5 col-8 mx-auto">
                     <div class="product-detail__img">
                         <img src="{{ asset('images/products/' . $product->image_path) }}" alt="">
                     </div>
                 </div>
-                <div class="col col-8">
+                <div class="col col-md-8 col-12 mt-5 mt-md-0">
                     <div class="product-info">
                         <div class="product-name__wrapper">
                             @if ($product->conLai <= 0)

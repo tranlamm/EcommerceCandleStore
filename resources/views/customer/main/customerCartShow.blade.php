@@ -11,7 +11,7 @@
             </div>
         </div>
     @endif
-    <div class="container">
+    <div class="container-lg">
         @if (session()->has('cart'))
             <div class="cart__wrapper">
                 <div class="cart-header">

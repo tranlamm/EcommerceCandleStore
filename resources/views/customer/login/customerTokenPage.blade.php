@@ -4,14 +4,14 @@
 <div class="login">
     <div class="container">
         <div class="row">
-            <div class="col col-6">
-                <div class="login-logo">
+            <div class="col col-lg-6 col-md-4 d-none d-md-block">
+                <div class="login-logo pe-lg-5">
                     <img src="{{ asset('images/shop/logo-brand.png') }}" alt="Logo brand">
                     <div class="login-slogan">Discover your new signature scent</div>
                 </div>
             </div>
-            <div class="col col-6">
-                <div class="login-form">
+            <div class="col col-lg-6 col-md-8 col-12">
+                <div class="ps-lg-5 ps-md-4">
                     {{-- Reset Password --}}
                     <form action="{{ route('reset_customer_token.post') }}" class="form-wrapper" id="form-sign_in" method="POST">
                         @csrf

@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="invoice">
-    <div class="container">
+    <div class="container-lg">
         <div class="invoice-wrapper">
             <div class="invoice-header">
                 <div class="invoice-state invoice-state--active" id="switch-to-finished">Đã mua</div>

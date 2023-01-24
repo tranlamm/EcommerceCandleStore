@@ -10,6 +10,13 @@ $('#bestseller-carousel').owlCarousel({
     animateOut: 'linear',
     nav: false,
     dots:false,
+    responsive:{
+        0:{items:1},
+        576:{items:1},
+        768:{items:2},
+        992:{items:3},
+        1200:{items:4}
+   },
 })
 
 $('#bestseller-carousel-prev-btn').click(function()
@@ -33,6 +40,13 @@ $('#toprated-carousel').owlCarousel({
     animateOut: 'linear',
     nav: false,
     dots:false,
+    responsive:{
+        0:{items:1},
+        576:{items:1},
+        768:{items:2},
+        992:{items:3},
+        1200:{items:4}
+   },
 })
 
 $('#toprated-carousel-prev-btn').click(function()

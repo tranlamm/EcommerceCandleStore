@@ -1,7 +1,7 @@
 <footer class="footer">
     <div class="container">
         <div class="row">
-            <div class="col col-5">
+            <div class="col col-xl-5 col-md-8 col-12 mx-auto">
                 <div class="info">
                     <div class="info-img">
                         <img src="{{ asset('images/shop/logo-brand.png') }}" alt="">
@@ -13,7 +13,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col col-7">
+            <div class="col col-xl-7 d-none d-xl-block">
                 <div class="item">
                     <div class="item-list">
                         <div class="item-title">Information</div>

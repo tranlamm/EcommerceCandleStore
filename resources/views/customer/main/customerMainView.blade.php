@@ -3,7 +3,7 @@
 @section('content')
 <div class="banner container-fluid">
     <div class="row">
-        <div class="col col-6 banner-wrapper">
+        <div class="col col-xl-6 col-lg-5 d-lg-block d-none banner-wrapper">
             <img class="banner-main" src="{{ asset('images/shop/banner_image1.webp') }}" alt="banner img">
             <div class="banner-main-info">
                 <div class="banner-main-name">CANDLE SHOP</div>
@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <div class="col col-6">
+        <div class="col col-xl-6 col-lg-7 col-12">
             <div class="row mb-3">
                 <div class="col col-6 banner-wrapper">
                     <img class="banner-category" src="{{ asset('images/products/uidev6_product.jpg') }}" alt="banner img">
@@ -49,7 +49,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container-lg">
     <img src="{{ asset('images/shop/banner_sale.jpg') }}" alt="sale merry christmas">
 </div>
 
@@ -68,7 +68,7 @@
     </div>
 </div>
 
-<div class="shopping">
+<div class="shopping d-none d-md-block">
     <div class="container">
         <div class="row gx-2">
             <div class="col col-6 shopping-wrapper px-1">
@@ -93,7 +93,7 @@
         <div class="category-label">SHOP BY CATEGORY</div>
         <div class="container">
             <div class="row">
-                <div class="col col-3">
+                <div class="col col-lg-3 col-sm-6 col-12 mt-3 mt-lg-0">
                     <div class="category-item header__search-type" data-type="single wick candle">
                         <div class="category-img">
                             <img src="{{ asset('images/products/uidev6_product.jpg') }}" alt="Product img">
@@ -101,7 +101,7 @@
                         <div class="category-name">Single Wick Candle</div>
                     </div>
                 </div>
-                <div class="col col-3">
+                <div class="col col-lg-3 col-sm-6 col-12 mt-3 mt-lg-0">
                     <div class="category-item header__search-type" data-type="3 wick candle">
                         <div class="category-img">
                             <img src="{{ asset('images/products/uidev2_product.jpg') }}" alt="Product img">
@@ -109,7 +109,7 @@
                         <div class="category-name">3 Wick Candle</div>
                     </div>
                 </div>
-                <div class="col col-3">
+                <div class="col col-lg-3 col-sm-6 col-12 mt-3 mt-lg-0">
                     <div class="category-item header__search-type" data-type="essential oil">
                         <div class="category-img">
                             <img src="{{ asset('images/products/uidev1_product.webp') }}" alt="Product img">
@@ -117,7 +117,7 @@
                         <div class="category-name">Essential Oil</div>
                     </div>
                 </div>
-                <div class="col col-3">
+                <div class="col col-lg-3 col-sm-6 col-12 mt-3 mt-lg-0">
                     <div class="category-item header__search-type" data-type="scented wax">
                         <div class="category-img">
                             <img src="{{ asset('images/products/uidev5_product.jpg') }}" alt="Product img">
@@ -161,7 +161,7 @@
 
         <div class="container">
             <div class="row">
-                <div class="col col-3 d-flex justify-content-center">
+                <div class="col col-lg-3 col-sm-6 col-12 mt-5 mt-lg-0 d-flex justify-content-center">
                     <div class="service-item">
                         <div class="service-icon"><i class="fa-solid fa-truck"></i></div>
                         <div class="service-info">
@@ -170,7 +170,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col col-3 d-flex justify-content-center">
+                <div class="col col-lg-3 col-sm-6 col-12 mt-5 mt-lg-0 d-flex justify-content-center">
                     <div class="service-item">
                         <div class="service-icon"><i class="fa-solid fa-arrows-rotate"></i></div>
                         <div class="service-info">
@@ -179,7 +179,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col col-3 d-flex justify-content-center">
+                <div class="col col-lg-3 col-sm-6 col-12 mt-5 mt-lg-0 d-flex justify-content-center">
                     <div class="service-item">
                         <div class="service-icon"><i class="fa-solid fa-lock"></i></div>
                         <div class="service-info">
@@ -188,7 +188,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col col-3 d-flex justify-content-center">
+                <div class="col col-lg-3 col-sm-6 col-12 mt-5 mt-lg-0 d-flex justify-content-center">
                     <div class="service-item">
                         <div class="service-icon"><i class="fa-solid fa-tag"></i></div>
                         <div class="service-info">

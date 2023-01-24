@@ -1,11 +1,11 @@
 <div class="search-bar">
-    <div class="container">
+    <div class="container-lg">
         <form action="{{ route('product.index') }}" method="GET" id="submit-form">
             @csrf
             <div class="row">
                 <div class="search-bar__header">
                     <div class="row">
-                        <div class="col col-4">
+                        <div class="col col-md-4 d-none d-md-block">
                             <div class="search-bar__label">
                                 @if (old('type'))
                                     {{ old('type') . 's' }}
@@ -14,7 +14,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="col col-8">
+                        <div class="col col-md-8 col-sm-10 col-12 mx-auto">
                             <div class="search-bar__input-wrapper">
                                 <input type="text" class="search-bar__input" placeholder="Search..." spellcheck="false" name="search" value="{{ old('search') }}">
                                 <button class="search-bar__btn"><i class="fa-solid fa-magnifying-glass" type="submit"></i></button>
@@ -25,9 +25,9 @@
                 <div class="row mt-4">
                     <div class="col col-10">
                         <div class="search-bar__filter">
-                            <div class="search-bar__filter-label">Filter By:</div>
+                            <div class="search-bar__filter-label d-none d-lg-block">Filter By:</div>
                             <div class="row search-bar__filter-list">
-                                <div class="col col-4">
+                                <div class="col col-md-4 col-sm-6 col-12 mt-4 mt-md-0">
                                     <div class="dropdown h-100">
                                         <div class="dropdown-toggle search-bar__option" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                             Product Type
@@ -42,7 +42,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col col-4">
+                                <div class="col col-md-4 col-sm-6 col-12 mt-4 mt-md-0">
                                     <div class="dropdown h-100">
                                         <div class="dropdown-toggle search-bar__option" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                             Manufacturer
@@ -59,7 +59,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col col-4">
+                                <div class="col col-md-4 col-sm-6 col-12 mt-4 mt-md-0">
                                     <div class="dropdown h-100">
                                         <div class="dropdown-toggle search-bar__option" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                             Fragrance Category
@@ -104,37 +104,49 @@
                 <div class="row">
                     <div class="col col-10">
                         <div class="has-filtered">
-                            @if(old('search'))
-                            <div class="has-filtered-item">
-                                <div class="has-filtered-name">{{ 'Search: ' . old('search') }}</div>
-                                <div class="clear-filtered-item"  id="clear-search" ><i class="fa-solid fa-xmark"></i></div>
+                            <div class="row">
+                                @if(old('search'))
+                                <div class="col col-lg-3 col-md-4 col-sm-6 col-12 mt-3">
+                                    <div class="has-filtered-item">
+                                        <div class="has-filtered-name">{{ 'Search: ' . old('search') }}</div>
+                                        <div class="clear-filtered-item"  id="clear-search" ><i class="fa-solid fa-xmark"></i></div>
+                                    </div>
+                                </div>
+                                @endif
+                                @if (old('type'))
+                                <div class="col col-lg-3 col-md-4 col-sm-6 col-12 mt-3">
+                                    <div class="has-filtered-item">
+                                        <div class="has-filtered-name">{{ 'Mặt hàng: ' . old('type') }}</div>
+                                        <div class="clear-filtered-item" id="clear-type" ><i class="fa-solid fa-xmark"></i></div>
+                                    </div>
+                                </div>
+                                @endif
+                                @if (old('manufacturer'))
+                                <div class="col col-lg-3 col-md-4 col-sm-6 col-12 mt-3">
+                                    <div class="has-filtered-item">
+                                        <div class="has-filtered-name">{{ 'Nhà cung cấp: ' . $nhaCungCap }}</div>
+                                        <div class="clear-filtered-item" id="clear-manufacturer"><i class="fa-solid fa-xmark"></i></div>
+                                    </div>
+                                </div>
+                                @endif
+                                @if (old('fragrance'))
+                                <div class="col col-lg-3 col-md-4 col-sm-6 col-12 mt-3">
+                                    <div class="has-filtered-item">
+                                        <div class="has-filtered-name">{{ 'Loại mùi hương: ' . $muiHuong }}</div>
+                                        <div class="clear-filtered-item"  id="clear-fragrance" ><i class="fa-solid fa-xmark"></i></div>
+                                    </div>
+                                </div>
+                                @endif
+    
+                                @if (old('order-fullname'))
+                                <div class="col col-lg-3 col-md-4 col-sm-6 col-12 mt-3">
+                                    <div class="has-filtered-item has-filtered-item-sort">
+                                        <div class="has-filtered-name">{{ 'Sắp xếp: ' . old('order-fullname') }}</div>
+                                        <div class="clear-filtered-item"  id="clear-sort" ><i class="fa-solid fa-xmark"></i></div>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
-                            @endif
-                            @if (old('type'))
-                                <div class="has-filtered-item">
-                                    <div class="has-filtered-name">{{ 'Mặt hàng: ' . old('type') }}</div>
-                                    <div class="clear-filtered-item" id="clear-type" ><i class="fa-solid fa-xmark"></i></div>
-                                </div>
-                            @endif
-                            @if (old('manufacturer'))
-                                <div class="has-filtered-item">
-                                    <div class="has-filtered-name">{{ 'Nhà cung cấp: ' . $nhaCungCap }}</div>
-                                    <div class="clear-filtered-item" id="clear-manufacturer"><i class="fa-solid fa-xmark"></i></div>
-                                </div>
-                            @endif
-                            @if (old('fragrance'))
-                                <div class="has-filtered-item">
-                                    <div class="has-filtered-name">{{ 'Loại mùi hương: ' . $muiHuong }}</div>
-                                    <div class="clear-filtered-item"  id="clear-fragrance" ><i class="fa-solid fa-xmark"></i></div>
-                                </div>
-                            @endif
-
-                            @if (old('order-fullname'))
-                                <div class="has-filtered-item has-filtered-item-sort">
-                                    <div class="has-filtered-name">{{ 'Sắp xếp: ' . old('order-fullname') }}</div>
-                                    <div class="clear-filtered-item"  id="clear-sort" ><i class="fa-solid fa-xmark"></i></div>
-                                </div>
-                            @endif
                         </div>
                     </div>
                 </div>
